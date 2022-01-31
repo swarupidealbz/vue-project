@@ -63,25 +63,25 @@ mix.copy('resources/scss/loader.css', 'public/css')
 // Please Change below 'publicPath' and 'setResourceRoot' options as per your sub-directory path. We have kept our current live demo options which is deployed in sub-folder.
 // ------------------------------------------------
 
-/*
+
  if (mix.inProduction()) {
    mix.version()
    mix.webpackConfig({
      output: {
-       publicPath: '/demo/vuexy-vuejs-laravel-admin-template/demo-1/',
+       publicPath: '/public/',
        chunkFilename: 'js/chunks/[name].[chunkhash].js'
      }
    })
-   mix.setResourceRoot('/demo/vuexy-vuejs-laravel-admin-template/demo-1/')
+   mix.setResourceRoot('/public/')
  }
- */
+ 
 
 // ------------------------------------------------
 // If you are deploying on subdomain/subfolder then comment out below code before running 'yarn prod' or 'npm run production' command.
 // ------------------------------------------------
-
+/*
 mix.webpackConfig({
   output: {
     chunkFilename: 'js/chunks/[name].[chunkhash].js'
   }
-})
+})*/
