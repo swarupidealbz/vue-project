@@ -63,7 +63,7 @@ mix.copy('resources/scss/loader.css', 'public/css')
 // Please Change below 'publicPath' and 'setResourceRoot' options as per your sub-directory path. We have kept our current live demo options which is deployed in sub-folder.
 // ------------------------------------------------
 
-
+/*
  if (mix.inProduction()) {
    mix.version()
    mix.webpackConfig({
@@ -74,15 +74,15 @@ mix.copy('resources/scss/loader.css', 'public/css')
    })
    mix.setResourceRoot('/public/')
  }
- 
+ */
 
 // ------------------------------------------------
 // If you are deploying on subdomain/subfolder then comment out below code before running 'yarn prod' or 'npm run production' command.
 // ------------------------------------------------
 
-/*
+
 mix.webpackConfig({
   output: {
     chunkFilename: 'js/chunks/[name].[chunkhash].js'
   }
-})*/
+})
