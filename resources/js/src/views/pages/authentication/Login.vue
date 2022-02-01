@@ -292,17 +292,17 @@ export default {
     login() {
       this.$refs.loginForm.validate().then(success => {
         if (success) {
-          //useJwt
-          //  .login({
-          //  email: this.userEmail,
-          //  password: this.password,
-          //  })
-          axios.post('/api/login', {username: this.userEmail, password: this.password})
+          useJwt
+            .login({
+            email: this.userEmail,
+            password: this.password,
+            })
+          //axios.post('/api/login', {username: this.userEmail, password: this.password})
             .then(response => {
               console.log(response.data)
-              const userData = response.data.data
-              useJwt.setToken(response.data.data.access_token)
-              //useJwt.setRefreshToken(response.data.refreshToken)
+              const { userData } = response.data
+              useJwt.setToken(response.data.accessToken)
+              useJwt.setRefreshToken(response.data.refreshToken)
               localStorage.setItem('userData', JSON.stringify(userData))
               this.$ability.update(userData.ability)
 
@@ -311,15 +311,15 @@ export default {
               this.$store.commit('app-ecommerce/UPDATE_CART_ITEMS_COUNT', userData.extras.eCommerceCartItemsCount)
 
               // ? This is just for demo purpose. Don't think CASL is role based in this case, we used role in if condition just for ease
-              this.$router.replace(getHomeRouteForLoggedInUser(userData.user.role)).then(() => {
+              this.$router.replace(getHomeRouteForLoggedInUser(userData.role)).then(() => {
                 this.$toast({
                   component: ToastificationContent,
                   position: 'top-right',
                   props: {
-                    title: `Welcome ${userData.user.name || userData.username}`,
+                    title: `Welcome ${userData.fullname || userData.username}`,
                     icon: 'CoffeeIcon',
                     variant: 'success',
-                    text: `You have successfully logged in as ${userData.user.role}. Now you can start to explore!`,
+                    text: `You have successfully logged in as ${userData.role}. Now you can start to explore!`,
                   },
                 })
               })
