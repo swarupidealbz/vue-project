@@ -292,26 +292,27 @@ export default {
     login() {
       this.$refs.loginForm.validate().then(success => {
         if (success) {
-          useJwt
-            .login({
-            email: this.userEmail,
-            password: this.password,
-            })
-          //axios.post('/api/login', {username: this.userEmail, password: this.password})
+          //useJwt
+          //  .login({
+          //  email: this.userEmail,
+          //  password: this.password,
+          //  })
+          axios.post('/api/login', {username: this.userEmail, password: this.password})
             .then(response => {
               console.log(response.data)
-              const { userData } = response.data
-              useJwt.setToken(response.data.accessToken)
+              const userData = response.data
+              useJwt.setToken(response.data.data.access_token)
               useJwt.setRefreshToken(response.data.refreshToken)
               localStorage.setItem('userData', JSON.stringify(userData))
-              this.$ability.update(userData.ability)
+              this.$ability.update({ action: "manage", subject: "all" })//userData.ability)
 
               // ? This is just for demo purpose as well.
               // ? Because we are showing eCommerce app's cart items count in navbar
-              this.$store.commit('app-ecommerce/UPDATE_CART_ITEMS_COUNT', userData.extras.eCommerceCartItemsCount)
+              this.$store.commit('app-ecommerce/UPDATE_CART_ITEMS_COUNT', 2) //userData.extras.eCommerceCartItemsCount)
 
               // ? This is just for demo purpose. Don't think CASL is role based in this case, we used role in if condition just for ease
-              this.$router.replace(getHomeRouteForLoggedInUser(userData.role)).then(() => {
+              //this.$router.replace(getHomeRouteForLoggedInUser(userData.role)).then(() => {
+              this.$router.replace('/').then(() => {
                 this.$toast({
                   component: ToastificationContent,
                   position: 'top-right',
