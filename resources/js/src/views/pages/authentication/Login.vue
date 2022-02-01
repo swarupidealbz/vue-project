@@ -297,7 +297,7 @@ export default {
           //  email: this.userEmail,
           //  password: this.password,
           //  })
-          axiox.post(route('login'), {username: this.userEmail, password: this.password})
+          axios.post(route('login'), {username: this.userEmail, password: this.password})
             .then(response => {
               const { userData } = response.data
               useJwt.setToken(response.data.accessToken)
