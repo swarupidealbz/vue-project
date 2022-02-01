@@ -58,7 +58,20 @@ export default [
     name: 'auth-register-v2',
     component: () => import('@/views/pages/authentication/Register-v2.vue'),
     meta: {
-      layout: 'full',
+      // layout: 'full',
+      pageTitle: 'Register2',
+      breadcrumb: [
+        {
+          text: 'Pages',
+        },
+        {
+          text: 'Authentication',
+        },
+        {
+          text: 'Profile',
+          active: true,
+        },
+      ],
     },
   },
   {
