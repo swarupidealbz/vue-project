@@ -297,11 +297,11 @@ export default {
           //  email: this.userEmail,
           //  password: this.password,
           //  })
-          axios.post(route('login'), {username: this.userEmail, password: this.password})
+          axios.post(this.$store.state.apiBaseUrl+'login', {username: this.userEmail, password: this.password})
             .then(response => {
-              const { userData } = response.data
-              useJwt.setToken(response.data.accessToken)
-              useJwt.setRefreshToken(response.data.refreshToken)
+              const { userData } = response.data.data
+              //useJwt.setToken(response.data.accessToken)
+              //useJwt.setRefreshToken(response.data.refreshToken)
               localStorage.setItem('userData', JSON.stringify(userData))
               this.$ability.update(userData.ability)
 
@@ -315,7 +315,7 @@ export default {
                   component: ToastificationContent,
                   position: 'top-right',
                   props: {
-                    title: `Welcome ${userData.fullName || userData.username}`,
+                    title: `Welcome ${userData.name || userData.username}`,
                     icon: 'CoffeeIcon',
                     variant: 'success',
                     text: `You have successfully logged in as ${userData.role}. Now you can start to explore!`,
