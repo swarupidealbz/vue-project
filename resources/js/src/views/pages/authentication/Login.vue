@@ -299,9 +299,9 @@ export default {
           //  })
           axios.post('/api/login', {username: this.userEmail, password: this.password})
             .then(response => {
-              console.log(response)
-              const { userData } = response.data
-              useJwt.setToken(response.data.access_token)
+              console.log(response.data)
+              const { userData } = response.data.data
+              useJwt.setToken(response.data.data.access_token)
               //useJwt.setRefreshToken(response.data.refreshToken)
               localStorage.setItem('userData', JSON.stringify(userData))
               this.$ability.update(userData.ability)
@@ -316,16 +316,16 @@ export default {
                   component: ToastificationContent,
                   position: 'top-right',
                   props: {
-                    title: `Welcome ${userData.name || userData.username}`,
+                    title: `Welcome ${userData.user.name || userData.username}`,
                     icon: 'CoffeeIcon',
                     variant: 'success',
-                    text: `You have successfully logged in as ${userData.role}. Now you can start to explore!`,
+                    text: `You have successfully logged in as ${userData.user.role}. Now you can start to explore!`,
                   },
                 })
               })
             })
             .catch(error => {
-              console.log(error)
+              console.log(error.response.data)
               this.$refs.loginForm.setErrors(error.response.data.message)
             })
         }
