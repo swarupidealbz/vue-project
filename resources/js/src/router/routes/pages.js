@@ -68,7 +68,7 @@ export default [
           text: 'Authentication',
         },
         {
-          text: 'Profile',
+          text: 'Register v2',
           active: true,
         },
       ],
