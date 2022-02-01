@@ -5,6 +5,7 @@ export default {
   state: {
     windowWidth: 0,
     shallShowOverlay: false,
+    apiBaseUrl: 'https://cl.99ideaz.com/api/',
   },
   getters: {
     currentBreakPoint: state => {

@@ -235,6 +235,7 @@ import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
 import { getHomeRouteForLoggedInUser } from '@/auth/utils'
+import axios from '@axios'
 
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
@@ -291,11 +292,12 @@ export default {
     login() {
       this.$refs.loginForm.validate().then(success => {
         if (success) {
-          useJwt
-            .login({
-              email: this.userEmail,
-              password: this.password,
-            })
+          //useJwt
+          //  .login({
+          //  email: this.userEmail,
+          //  password: this.password,
+          //  })
+          axiox.post(route('login'), {username: this.userEmail, password: this.password})
             .then(response => {
               const { userData } = response.data
               useJwt.setToken(response.data.accessToken)
