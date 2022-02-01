@@ -299,8 +299,9 @@ export default {
           //  })
           axios.post('/api/login', {username: this.userEmail, password: this.password})
             .then(response => {
-              const { userData } = response.data.data
-              //useJwt.setToken(response.data.accessToken)
+              console.log(response)
+              const { userData } = response.data
+              useJwt.setToken(response.data.access_token)
               //useJwt.setRefreshToken(response.data.refreshToken)
               localStorage.setItem('userData', JSON.stringify(userData))
               this.$ability.update(userData.ability)
@@ -324,7 +325,8 @@ export default {
               })
             })
             .catch(error => {
-              this.$refs.loginForm.setErrors(error.response.data.error)
+              console.log(error)
+              this.$refs.loginForm.setErrors(error.response.data.message)
             })
         }
       })
