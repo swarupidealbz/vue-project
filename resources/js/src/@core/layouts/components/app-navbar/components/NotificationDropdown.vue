@@ -11,6 +11,7 @@
         class="text-body"
         icon="BellIcon"
         size="21"
+        @click="assign"
       />
     </template>
 
@@ -143,6 +144,11 @@ export default {
   watch:{
     count() {
       this.notifications = store.state.app.topBar.notifications.data;
+    }
+  },
+  methods: {
+    assign() {
+      this.notifications = this.data;
     }
   },
 }
