@@ -152,7 +152,7 @@ export default {
     //    type: 'light-warning',
     //    icon: 'AlertTriangleIcon',
     //  },
-    ]
+    //]
 
     const perfectScrollbarSettings = {
       maxScrollbarLength: 60,
