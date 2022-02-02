@@ -312,7 +312,7 @@ export default {
                 let ability = [];
                 ability.push({ action: "manage", subject: "all" });
                 userData.ability = ability;
-                userdata.fullName = response.data.data.user.name;
+                userData.fullName = userData.name;
                 useJwt.setToken(response.data.data.access_token)
                 //useJwt.setRefreshToken(response.data.refreshToken)
 
@@ -357,7 +357,8 @@ export default {
           })
           .catch(error => {
             console.log(error);
-            console.log(error.data);
+            console.log(error.message);
+            console.log(error.data.message);
             this.$refs.loginForm.setErrors(error.response.data)
           })
             
