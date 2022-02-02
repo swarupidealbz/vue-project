@@ -132,7 +132,7 @@ export default {
   },
   setup() {
     
-
+    const systemNotifications = []
     // const systemNotifications = [
     //  {
     //    title: 'Server down',
