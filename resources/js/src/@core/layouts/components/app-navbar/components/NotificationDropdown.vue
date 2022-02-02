@@ -11,6 +11,7 @@
         class="text-body"
         icon="BellIcon"
         size="21"
+        @click="assignData"
       />
     </template>
 
@@ -119,52 +120,30 @@ export default {
   directives: {
     Ripple,
   },
+  data: {
+    return {
+      systemNotifications: [],
+      perfectScrollbarSettings:{
+        maxScrollbarLength: 60,
+        wheelPropagation: false,
+      },
+      notifications: [],
+    }
+  },
   computed: {
     count() {
       return store.state.app.topBar.notifications.count;
     },
-    notifications() {
+    notificationsData() {
       return store.state.app.topBar.notifications.data;
     },
     isAdmin() {
       return isAdmin();
     }
   },
-  loaded() {
-    let notify = this.notifications;
-  },
-  setup() {
-    
-    const systemNotifications = []
-    // const systemNotifications = [
-    //  {
-    //    title: 'Server down',
-    //    subtitle: 'USA Server is down due to hight CPU usage',
-    //    type: 'light-danger',
-    //    icon: 'XIcon',
-    //  },
-    //  {
-    //    title: 'Sales report generated',
-    //    subtitle: 'Last month sales report generated',
-    //    type: 'light-success',
-    //    icon: 'CheckIcon',
-    //  },
-    //  {
-    //    title: 'High memory usage',
-    //    subtitle: 'BLR Server using high memory',
-    //    type: 'light-warning',
-    //    icon: 'AlertTriangleIcon',
-    //  },
-    //]
-
-    const perfectScrollbarSettings = {
-      maxScrollbarLength: 60,
-      wheelPropagation: false,
-    }
-
-    return {
-      systemNotifications,
-      perfectScrollbarSettings,
+  methods: {
+    assignData() {
+      this.notifications = this.notificationsData;
     }
   },
 }
