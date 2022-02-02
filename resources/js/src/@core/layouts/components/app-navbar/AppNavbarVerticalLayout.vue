@@ -28,7 +28,7 @@
       <dark-Toggler class="d-none d-lg-block" />
       <search-bar />
       <cart-dropdown v-if="isAdmin"/>
-      <notification-dropdown :data="data"/>
+      <notification-dropdown />
       <user-dropdown />
     </b-navbar-nav>
   </div>
@@ -73,12 +73,6 @@ export default {
     isAdmin() {
       return isAdmin();
     },
-    data() {
-      setTimeout(() => {
-        console.log('getting');
-        return store.state.app.topBar.notifications.data;
-      }, 5000);
-    }
   },
   beforeCreate() {
     axios.post(store.state.app.apiBaseUrl+'dashboard/data').then(response => {
@@ -98,9 +92,14 @@ export default {
         topic_lists: response.data.data.topic_lists,
         article_lists: response.data.data.article_lists
       };
+      const userData = JSON.parse(localStorage.getItem('userData'));
       store.commit('app/setTopBar', top);
+      userData.top_bar = top;
       store.commit('app/setMenu', menu);
+      userData.menu = menu;
       store.commit('app/setDashboardData', data);
+      userData.stat = data;
+      localStorage.setItem('userData', JSON.stringify(userData))
     })
     .catch(error => {
       console.log('error from loading dashboard api');

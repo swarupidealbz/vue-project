@@ -11,7 +11,6 @@
         class="text-body"
         icon="BellIcon"
         size="21"
-        @click="assign"
       />
     </template>
 
@@ -130,9 +129,6 @@ export default {
       notifications: this.data,
     }
   },
-  props: {
-    data: {}
-  },
   computed: {
     count() {
       return store.state.app.topBar.notifications.count;
@@ -140,15 +136,14 @@ export default {
     isAdmin() {
       return isAdmin();
     },
-  },
-  watch:{
-    count() {
-      this.notifications = store.state.app.topBar.notifications.data;
-    }
-  },
-  methods: {
-    assign() {
-      this.notifications = this.data;
+    notifications() {
+      let notify = store.state.app.topBar.notifications.data || null;
+      if(!notify) {
+        let userData = JSON.parse(localStorage.getItem('userData'))
+        notify = userData.top_bar
+      }
+
+      return notify;
     }
   },
 }

@@ -134,12 +134,22 @@ export default {
       data: {},
     }
   },
+  computed: {
+    stat() {
+      let stat = Object.values(this.$store.state.app.dashboardData.statistics)
+      if(!stat) {
+        let userData = JSON.parse(localStorage.getItem('userData'));
+        stat = userData.stat;
+      }
+      return stat;
+    }
+  },
   created() {
     // data
     this.$http.get('/ecommerce/data').then(response => {
       this.data = response.data
 
-      this.data.statistics = Object.values(this.$store.state.app.dashboardData.statistics);
+      this.data.statistics = this.stat;
       // ? Your API will return name of logged in user or you might just directly get name of logged in user
       // ? This is just for demo purpose
       const userData = getUserData()
