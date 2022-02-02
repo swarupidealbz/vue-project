@@ -139,7 +139,7 @@ export default {
       let notify = store.state.app.topBar.notifications.data || null;
       if(!notify) {
         let userData = JSON.parse(localStorage.getItem('userData'))
-        notify = userData.top_bar
+        notify = userData.top_bar.notifications
       }
 
       return notify;

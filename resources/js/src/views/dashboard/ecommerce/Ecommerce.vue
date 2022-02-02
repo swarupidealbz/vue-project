@@ -139,7 +139,7 @@ export default {
       let stat = Object.values(this.$store.state.app.dashboardData.statistics)
       if(!stat) {
         let userData = JSON.parse(localStorage.getItem('userData'));
-        stat = userData.stat;
+        stat = userData.stat.statistics;
       }
       return stat;
     }
