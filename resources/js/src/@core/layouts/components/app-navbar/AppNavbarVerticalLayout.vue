@@ -67,5 +67,10 @@ export default {
       default: () => {},
     },
   },
+  computed: {
+    isAdmin() {
+      return isAdmin();
+    }
+  }
 }
 </script>
