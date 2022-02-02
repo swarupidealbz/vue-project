@@ -357,6 +357,7 @@ export default {
             }
           })
           .catch(error => {
+            console.log('else part');
             console.log(error);
             console.log(error.message);
             console.log(error.data.message);
