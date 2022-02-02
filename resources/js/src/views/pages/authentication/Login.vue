@@ -301,6 +301,9 @@ export default {
             .then(response => {
               console.log(response.data)
               const userData = response.data.data
+              let ability = [];
+              ability.push({ action: "manage", subject: "all" });
+              userData.ability = ability;
               console.log('set userdata');
               console.log(userData);
               useJwt.setToken(response.data.data.access_token)
@@ -309,7 +312,7 @@ export default {
               localStorage.setItem('userData', JSON.stringify(userData))
               console.log('set localStorage');
               //this.$ability.update(userData.ability)
-              this.$ability.update({ action: "manage", subject: "all" })
+              this.$ability.update(ability[0])
               console.log('set ability');
 
               // ? This is just for demo purpose as well.
