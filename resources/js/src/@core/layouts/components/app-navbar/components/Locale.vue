@@ -44,35 +44,19 @@ export default {
     currentLocale() {
       return this.locales.find(l => l.locale === this.$i18n.locale)
     },
-  },
-  setup() {
-    /* eslint-disable global-require */
-    const locales = [
-      {
-        locale: 'en',
-        img: require('@/assets/images/flags/en.png'),
-        name: 'English',
-      },
-      {
-        locale: 'fr',
-        img: require('@/assets/images/flags/fr.png'),
-        name: 'French',
-      },
-      {
-        locale: 'de',
-        img: require('@/assets/images/flags/de.png'),
-        name: 'German',
-      },
-      {
-        locale: 'pt',
-        img: require('@/assets/images/flags/pt.png'),
-        name: 'Portuguese',
-      },
-    ]
-    /* eslint-disable global-require */
-
-    return {
-      locales,
+    locales() {
+      var lan = store.state.app.topBar.languages || null;
+      if(!lan) {
+        let userData = JSON.parse(localStorage.getItem('userData'))
+        lan = userData.top_bar.languages
+      }
+      return lan.map(m => {
+        return {
+          locale: m.sort_name.toLower,
+          img: require(`@/assets/images/flags/${m.sort_name.toLower}.png`),
+          name: m.name
+        }
+      });
     }
   },
 }

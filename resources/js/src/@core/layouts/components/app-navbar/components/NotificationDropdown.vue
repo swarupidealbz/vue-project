@@ -141,7 +141,6 @@ export default {
         let userData = JSON.parse(localStorage.getItem('userData'))
         notify = userData.top_bar.notifications.data
       }
-console.log(notify)
       return notify;
     }
   },
