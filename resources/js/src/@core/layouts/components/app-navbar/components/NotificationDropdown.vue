@@ -132,6 +132,7 @@ export default {
   },
   setup() {
     
+    const notifications = this.notifications;
     const systemNotifications = []
     // const systemNotifications = [
     //  {
