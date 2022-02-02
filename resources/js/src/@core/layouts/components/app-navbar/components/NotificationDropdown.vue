@@ -136,7 +136,7 @@ export default {
       return isAdmin();
     },    
     notifications() {
-      return store.state.app.topBar.notifications.data;
+      return store.state.app.topBar.notifications.data || [];
     },
   },
 }
