@@ -120,7 +120,7 @@ export default {
   directives: {
     Ripple,
   },
-  data: {
+  data() {
     return {
       systemNotifications: [],
       perfectScrollbarSettings:{
