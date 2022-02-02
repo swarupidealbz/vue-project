@@ -312,7 +312,7 @@ export default {
               localStorage.setItem('userData', JSON.stringify(userData))
               console.log('set localStorage');
               //this.$ability.update(userData.ability)
-              this.$ability.update(ability[0])
+              this.$ability.update(ability)
               console.log('set ability');
 
               // ? This is just for demo purpose as well.
