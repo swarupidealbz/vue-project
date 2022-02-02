@@ -160,7 +160,7 @@ export default {
     }
 
     return {
-      notifications
+      notifications,
       systemNotifications,
       perfectScrollbarSettings,
     }
