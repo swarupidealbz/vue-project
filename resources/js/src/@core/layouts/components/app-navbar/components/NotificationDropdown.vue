@@ -144,8 +144,8 @@ export default {
     },
   },
   watch:{
-    notificationsData() {
-      this.notifications = this.notificationsData;
+    count() {
+      this.notifications = store.state.app.topBar.notifications.data;
     }
   },
 }
