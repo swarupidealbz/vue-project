@@ -338,6 +338,16 @@ export default {
             }
             else {
               this.$refs.loginForm.setErrors(response.data.message)
+              this.$toast({
+                component: ToastificationContent,
+                position: 'top-right',
+                props: {
+                  title: `Error`,
+                  //icon: 'CoffeeIcon',
+                  variant: 'error',
+                  text: response.data.message,
+                },
+              })
             }
           })
           .catch(error => {
