@@ -24,7 +24,7 @@
           pill
           variant="light-primary"
         >
-          {{ notifications.length }} New
+          {{ count }} New
         </b-badge>
       </div>
     </li>
@@ -129,6 +129,9 @@ export default {
     isAdmin() {
       return isAdmin();
     }
+  },
+  loaded() {
+    let notify = this.notifications;
   },
   setup() {
     
