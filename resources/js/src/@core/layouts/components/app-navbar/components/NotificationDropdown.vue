@@ -135,18 +135,10 @@ export default {
     },
     isAdmin() {
       return isAdmin();
-    },    
-    notificationsData() {
-      if(!store.state.app.topBar.notifications.length) {
-        return []
-      }
-      return store.state.app.topBar.notifications.data;
     },
   },
-  watch:{
-    count() {
-      this.notifications = store.state.app.topBar.notifications.data;
-    }
+  created() {
+    this.notifications = store.state.app.topBar.notifications.data;
   },
 }
 </script>
