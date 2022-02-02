@@ -45,7 +45,7 @@ export default {
       return this.locales.find(l => l.locale === this.$i18n.locale)
     },
     locales() {
-      var lan = store.state.app.topBar.languages || null;
+      var lan = this.$store.state.app.topBar.languages || null;
       if(!lan) {
         let userData = JSON.parse(localStorage.getItem('userData'))
         lan = userData.top_bar.languages
