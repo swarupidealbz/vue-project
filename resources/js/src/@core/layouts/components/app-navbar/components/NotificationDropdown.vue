@@ -146,6 +146,9 @@ export default {
       this.notifications = this.notificationsData;
     }
   },
+  loaded() {
+    this.assignData();
+  },
 }
 </script>
 
