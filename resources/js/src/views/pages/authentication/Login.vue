@@ -365,7 +365,10 @@ export default {
           })
             
         }
-      })
+      }).catch(error => {
+        console.log('outer part');
+            console.log(error);
+      });
     },
   },
 }
