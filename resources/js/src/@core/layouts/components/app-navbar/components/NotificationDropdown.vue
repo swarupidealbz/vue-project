@@ -132,26 +132,7 @@ export default {
   },
   setup() {
     
-    const notifications = [
-      {
-        heading: 'Congratulation Sam 🎉',
-        avatar: require('@/assets/images/avatars/6-small.png'),
-        details: 'Won the monthly best seller badge',
-        type: 'light-success',
-      },
-      {
-        heading: 'New message received',
-        avatar: require('@/assets/images/avatars/9-small.png'),
-        details: 'You have 10 unread messages',
-        type: 'light-info',
-      },
-      {
-        heading: 'Revised Order 👋',
-        avatar: 'MD',
-        details: 'MD Inc. order updated',
-        type: 'light-danger',
-      },
-    ]
+    const notifications = this.notificationsData
     const systemNotifications = []
     // const systemNotifications = [
     //  {
