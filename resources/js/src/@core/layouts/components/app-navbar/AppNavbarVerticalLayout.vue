@@ -75,6 +75,7 @@ export default {
     },
     data() {
       setTimeout(() => {
+        console.log('getting');
         return store.state.app.topBar.notifications.data;
       }, 2000);
     }
