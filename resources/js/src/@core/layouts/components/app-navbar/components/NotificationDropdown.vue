@@ -24,7 +24,7 @@
           pill
           variant="light-primary"
         >
-          {{ count }} New
+          {{ count }} {{ notifications.length }} New
         </b-badge>
       </div>
     </li>
@@ -123,16 +123,15 @@ export default {
     count() {
       return store.state.app.topBar.notifications.count;
     },
-    //notifications() {
-    //  return store.state.app.topBar.notifications.data;
-    //},
+    notifications() {
+      return store.state.app.topBar.notifications.data;
+    },
     isAdmin() {
       return isAdmin();
     }
   },
   setup() {
     
-    const notifications = store.state.app.topBar.notifications.data
     const systemNotifications = []
     // const systemNotifications = [
     //  {
@@ -161,7 +160,6 @@ export default {
     }
 
     return {
-      notifications,
       systemNotifications,
       perfectScrollbarSettings,
     }
