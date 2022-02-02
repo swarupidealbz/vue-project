@@ -344,7 +344,7 @@ export default {
                 props: {
                   title: `Error`,
                   //icon: 'CoffeeIcon',
-                  variant: 'error',
+                  variant: 'danger',
                   text: response.data.message,
                 },
               })
