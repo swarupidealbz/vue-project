@@ -123,16 +123,16 @@ export default {
     count() {
       return store.state.app.topBar.notifications.count;
     },
-    notifications() {
-      return store.state.app.topBar.notifications.data;
-    },
+    //notifications() {
+    //  return store.state.app.topBar.notifications.data;
+    //},
     isAdmin() {
       return isAdmin();
     }
   },
   setup() {
     
-    //const notifications = this.notificationsData
+    const notifications = store.state.app.topBar.notifications.data
     const systemNotifications = []
     // const systemNotifications = [
     //  {
@@ -161,6 +161,7 @@ export default {
     }
 
     return {
+      notifications,
       systemNotifications,
       perfectScrollbarSettings,
     }
