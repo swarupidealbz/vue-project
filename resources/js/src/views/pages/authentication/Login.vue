@@ -305,7 +305,7 @@ export default {
           //  })
           axios.post(store.state.app.apiBaseUrl + 'login', {username: this.username, password: this.password})
             .then(response => {
-              if(response.data.success) {
+              if(response.data.success === true) {
 
                 console.log(response.data)
                 const userData = response.data.data.user
