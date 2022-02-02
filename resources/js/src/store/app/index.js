@@ -6,9 +6,19 @@ export default {
     windowWidth: 0,
     shallShowOverlay: false,
     apiBaseUrl: 'https://cl.99ideaz.com/api/',
-    topBar: [],
-    dashboardData: [],
-    menu: [],
+    topBar: {
+      websites: [],
+      languages: [],
+      notifications: []
+    },
+    dashboardData: {
+      statistics: [],
+      topic_lists: [],
+      article_lists: []
+    },
+    menu: {
+      side_menus: []
+    },
   },
   getters: {
     currentBreakPoint: state => {
