@@ -52,8 +52,8 @@ export default {
       }
       return lan.map(m => {
         return {
-          locale: m.sort_name.toLower,
-          img: require(`@/assets/images/flags/${m.sort_name.toLower}.png`),
+          locale: m.sort_name.toLowerCase(),
+          img: require(`@/assets/images/flags/${m.sort_name.toLowerCase()}.png`),
           name: m.name
         }
       });
