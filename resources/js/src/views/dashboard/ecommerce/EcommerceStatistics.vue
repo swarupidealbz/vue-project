@@ -36,10 +36,10 @@
             </b-media-aside>
             <b-media-body class="my-auto">
               <h4 class="font-weight-bolder mb-0">
-                {{ item.title }}
+                {{ item.stat }}
               </h4>
               <b-card-text class="font-small-3 mb-0">
-                {{ item.subtitle }}
+                {{ item.text }}
               </b-card-text>
             </b-media-body>
           </b-media>

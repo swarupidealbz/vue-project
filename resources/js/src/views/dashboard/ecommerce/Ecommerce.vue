@@ -11,7 +11,7 @@
         xl="8"
         md="6"
       >
-        <ecommerce-statistics :data="data.statisticsItems" />
+        <ecommerce-statistics :data="data.statistics" />
       </b-col>
     </b-row>
 
@@ -139,6 +139,7 @@ export default {
     this.$http.get('/ecommerce/data').then(response => {
       this.data = response.data
 
+      this.data.statistics = this.$store.state.app.dashboardData.statistics;
       // ? Your API will return name of logged in user or you might just directly get name of logged in user
       // ? This is just for demo purpose
       const userData = getUserData()
