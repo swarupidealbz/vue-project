@@ -41,6 +41,7 @@
     <b-dropdown-item
       :to="{ name: 'apps-email' }"
       link-class="d-flex align-items-center"
+      v-if="isAdmin"
     >
       <feather-icon
         size="16"
@@ -52,6 +53,7 @@
     <b-dropdown-item
       :to="{ name: 'apps-todo' }"
       link-class="d-flex align-items-center"
+      v-if="isAdmin"
     >
       <feather-icon
         size="16"
@@ -63,6 +65,7 @@
     <b-dropdown-item
       :to="{ name: 'apps-chat' }"
       link-class="d-flex align-items-center"
+      v-if="isAdmin"
     >
       <feather-icon
         size="16"
@@ -88,6 +91,7 @@
     <b-dropdown-item
       :to="{ name: 'pages-pricing' }"
       link-class="d-flex align-items-center"
+      v-if="isAdmin"
     >
       <feather-icon
         size="16"
@@ -99,6 +103,7 @@
     <b-dropdown-item
       :to="{ name: 'pages-faq' }"
       link-class="d-flex align-items-center"
+      v-if="isAdmin"
     >
       <feather-icon
         size="16"
@@ -127,6 +132,7 @@ import {
 import { initialAbility } from '@/libs/acl/config'
 import useJwt from '@/auth/jwt/useJwt'
 import { avatarText } from '@core/utils/filter'
+import { isUserLoggedIn, getUserData, isAdmin } from '@/auth/utils'
 
 export default {
   components: {
@@ -139,6 +145,11 @@ export default {
     return {
       userData: JSON.parse(localStorage.getItem('userData')),
       avatarText,
+    }
+  },
+  computed: {
+    isAdmin() {
+      return isAdmin();
     }
   },
   methods: {

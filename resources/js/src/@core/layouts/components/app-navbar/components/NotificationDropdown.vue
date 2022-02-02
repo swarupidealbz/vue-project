@@ -6,7 +6,7 @@
   >
     <template #button-content>
       <feather-icon
-        badge="6"
+        badge="count"
         badge-classes="bg-danger"
         class="text-body"
         icon="BellIcon"
@@ -24,7 +24,7 @@
           pill
           variant="light-primary"
         >
-          6 New
+          {{ count }} New
         </b-badge>
       </div>
     </li>
@@ -39,23 +39,15 @@
       <!-- Account Notification -->
       <b-link
         v-for="notification in notifications"
-        :key="notification.subtitle"
+        :key="notification.id+notification.heading"
       >
         <b-media>
-          <template #aside>
-            <b-avatar
-              size="32"
-              :src="notification.avatar"
-              :text="notification.avatar"
-              :variant="notification.type"
-            />
-          </template>
           <p class="media-heading">
             <span class="font-weight-bolder">
-              {{ notification.title }}
+              {{ notification.heading }}
             </span>
           </p>
-          <small class="notification-text">{{ notification.subtitle }}</small>
+          <small class="notification-text">{{ notification.details }}</small>
         </b-media>
       </b-link>
 
@@ -110,6 +102,7 @@ import {
 } from 'bootstrap-vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import Ripple from 'vue-ripple-directive'
+import store from '@/store/index'
 
 export default {
   components: {
@@ -125,29 +118,16 @@ export default {
   directives: {
     Ripple,
   },
+  computed: {
+    count() {
+      return store.state.app.notifications.count;
+    },
+    notifications() {
+      return store.state.app.notifications.data;
+    }
+  },
   setup() {
-    /* eslint-disable global-require */
-    const notifications = [
-      {
-        title: 'Congratulation Sam 🎉',
-        avatar: require('@/assets/images/avatars/6-small.png'),
-        subtitle: 'Won the monthly best seller badge',
-        type: 'light-success',
-      },
-      {
-        title: 'New message received',
-        avatar: require('@/assets/images/avatars/9-small.png'),
-        subtitle: 'You have 10 unread messages',
-        type: 'light-info',
-      },
-      {
-        title: 'Revised Order 👋',
-        avatar: 'MD',
-        subtitle: 'MD Inc. order updated',
-        type: 'light-danger',
-      },
-    ]
-    /* eslint-disable global-require */
+    
 
     const systemNotifications = [
       {

@@ -46,6 +46,8 @@ import CartDropdown from './components/CartDropdown.vue'
 import NotificationDropdown from './components/NotificationDropdown.vue'
 import UserDropdown from './components/UserDropdown.vue'
 import { isUserLoggedIn, getUserData, isAdmin } from '@/auth/utils'
+import store from '@/store/index'
+import axios from '@axios'
 
 export default {
   components: {
@@ -71,6 +73,31 @@ export default {
     isAdmin() {
       return isAdmin();
     }
-  }
+  },
+  mounted() {
+    axios.post(store.state.app.apiBaseUrl+'dashboard/data').then(response => {
+      console.log('dashboard data');
+      let top = {
+        websites: response.data.websites,
+        languages: response.data.languages,
+        notifications: response.data.notifications
+      };
+      let menu = {
+        side_menus: response.data.side_menus
+      };
+      let data = {
+        statistics: response.data.statistics,
+        topic_lists: response.data.topic_lists,
+        article_lists: response.data.article_lists
+      };
+      store.commit('app/setTopBar', top);
+      store.commit('app/setMenu', menu);
+      store.commit('app/setDashboardData', data);
+    })
+    .catch(error => {
+      console.log('error from loading dashboard api');
+      console.log(error);
+    });
+  },
 }
 </script>

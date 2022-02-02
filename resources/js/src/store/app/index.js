@@ -6,6 +6,9 @@ export default {
     windowWidth: 0,
     shallShowOverlay: false,
     apiBaseUrl: 'https://cl.99ideaz.com/api/',
+    topBar: [],
+    dashboardData: [],
+    menu: [],
   },
   getters: {
     currentBreakPoint: state => {
@@ -24,6 +27,15 @@ export default {
     TOGGLE_OVERLAY(state, val) {
       state.shallShowOverlay = val !== undefined ? val : !state.shallShowOverlay
     },
+    setTopBar(state, val) {
+      state.topBar = val;
+    },
+    setMenu(state, val) {
+      state.menu = val;
+    },
+    setDashboardData(state, val) {
+      state.dashboardData = val;
+    }
   },
   actions: {},
 }
