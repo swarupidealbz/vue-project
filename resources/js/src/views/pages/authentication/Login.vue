@@ -297,7 +297,7 @@ export default {
           //  email: this.userEmail,
           //  password: this.password,
           //  })
-          axios.post('/api/login', {username: this.userEmail, password: this.password})
+          axios.post(store.state.app.apiBaseUrl + '/api/login', {username: this.userEmail, password: this.password})
             .then(response => {
               if(response.data.success) {
 
