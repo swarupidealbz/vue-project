@@ -119,9 +119,6 @@ export default {
   directives: {
     Ripple,
   },
-  props: {
-    notifications: []
-  },
   data() {
     return {
       systemNotifications: [],
