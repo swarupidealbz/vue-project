@@ -36,7 +36,7 @@
             </b-media-aside>
             <b-media-body class="my-auto">
               <h4 class="font-weight-bolder mb-0">
-                {{ item.stat }}
+                {{ item.count }}
               </h4>
               <b-card-text class="font-small-3 mb-0">
                 {{ item.text }}
