@@ -74,8 +74,5 @@ export default {
       return isAdmin();
     },
   },
-  beforeMount() {
-    
-  },
 }
 </script>
