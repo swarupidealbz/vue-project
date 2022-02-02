@@ -77,6 +77,8 @@ export default {
   mounted() {
     axios.post(store.state.app.apiBaseUrl+'dashboard/data').then(response => {
       console.log('dashboard data');
+      console.log(response);
+      console.log(response.data);
       let top = {
         websites: response.data.websites,
         languages: response.data.languages,
