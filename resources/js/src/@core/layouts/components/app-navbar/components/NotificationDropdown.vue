@@ -11,7 +11,6 @@
         class="text-body"
         icon="BellIcon"
         size="21"
-        @click="assignData"
       />
     </template>
 
