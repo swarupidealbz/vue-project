@@ -123,9 +123,6 @@ export default {
     count() {
       return store.state.app.topBar.notifications.count;
     },
-    notifications() {
-      return store.state.app.topBar.notifications.data;
-    },
     isAdmin() {
       return isAdmin();
     }
