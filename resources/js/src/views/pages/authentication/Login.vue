@@ -92,7 +92,7 @@
                 >
                   <b-form-input
                     id="login-email"
-                    v-model="userEmail"
+                    v-model="username"
                     :state="errors.length > 0 ? false:null"
                     name="login-email"
                     placeholder="john@example.com"
@@ -270,7 +270,7 @@ export default {
     return {
       status: '',
       password: '',
-      userEmail: '',
+      username: '',
       sideImg: require('@/assets/images/pages/login-v2.svg'),
 
       // validation rules
@@ -300,10 +300,10 @@ export default {
         if (success) {
           //useJwt
           //  .login({
-          //  email: this.userEmail,
+          //  email: this.username,
           //  password: this.password,
           //  })
-          axios.post(store.state.app.apiBaseUrl + 'login', {username: this.userEmail, password: this.password})
+          axios.post(store.state.app.apiBaseUrl + 'login', {username: this.username, password: this.password})
             .then(response => {
               if(response.data.success) {
 

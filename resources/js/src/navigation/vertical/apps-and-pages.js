@@ -1,9 +1,9 @@
 export default [
+  // {
+  //   header: 'Apps & Pages',
+  // },
   {
-    header: 'Apps & Pages',
-  },
-  {
-    title: 'Email',
+    title: 'Topics',
     route: 'apps-email',
     icon: 'MailIcon',
   },
@@ -13,7 +13,7 @@ export default [
   //   icon: 'MessageSquareIcon',
   // },
   {
-    title: 'Todo',
+    title: 'Content',
     route: 'apps-todo',
     icon: 'CheckSquareIcon',
   },
