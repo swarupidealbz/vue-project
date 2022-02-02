@@ -126,6 +126,7 @@ export default {
         maxScrollbarLength: 60,
         wheelPropagation: false,
       },
+      notifications: [],
     }
   },
   computed: {
@@ -135,12 +136,17 @@ export default {
     isAdmin() {
       return isAdmin();
     },    
-    notifications() {
+    notificationsData() {
       if(!store.state.app.topBar.notifications.length) {
         return []
       }
       return store.state.app.topBar.notifications.data;
     },
+  },
+  watch:{
+    notificationsData() {
+      this.notifications = this.notificationsData;
+    }
   },
 }
 </script>
