@@ -126,8 +126,11 @@ export default {
         maxScrollbarLength: 60,
         wheelPropagation: false,
       },
-      notifications: [],
+      notifications: this.data,
     }
+  },
+  props: {
+    data: {}
   },
   computed: {
     count() {
