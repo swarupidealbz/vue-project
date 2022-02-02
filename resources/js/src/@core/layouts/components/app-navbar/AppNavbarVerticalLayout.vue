@@ -74,7 +74,7 @@ export default {
       return isAdmin();
     }
   },
-  mounted() {
+  beforeMount() {
     axios.post(store.state.app.apiBaseUrl+'dashboard/data').then(response => {
       console.log('dashboard data');
       console.log(response);

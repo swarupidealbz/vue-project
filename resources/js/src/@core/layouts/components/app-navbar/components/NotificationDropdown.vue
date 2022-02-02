@@ -39,7 +39,7 @@
       <!-- Account Notification -->
       <b-link
         v-for="notification in notifications"
-        :key="notification.id"
+        :key="notification.heading"
       >
         <b-media>
           <p class="media-heading">
