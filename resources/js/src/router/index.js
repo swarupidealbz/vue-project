@@ -43,7 +43,6 @@ router.beforeEach((to, _, next) => {
   console.log(canNavigate(to));
   console.log(isLoggedIn);
   console.log(to.meta.redirectIfLoggedIn);
-  console.log(getHomeRouteForLoggedInUser(userData ? userData.user.role : null));
   if (!canNavigate(to)) {
     // Redirect to login if not logged in
     if (!isLoggedIn) return next({ name: 'auth-login' })
@@ -55,6 +54,7 @@ router.beforeEach((to, _, next) => {
   // Redirect if logged in
   if (to.meta.redirectIfLoggedIn && isLoggedIn) {
     const userData = getUserData()
+    console.log(getHomeRouteForLoggedInUser(userData ? userData.user.role : null));
     next(getHomeRouteForLoggedInUser(userData ? userData.user.role : null))
   }
 
