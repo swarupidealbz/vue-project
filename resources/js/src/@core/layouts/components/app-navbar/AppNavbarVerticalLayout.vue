@@ -17,7 +17,7 @@
     </ul>
 
     <!-- Left Col -->
-    <div class="bookmark-wrapper align-items-center flex-grow-1 d-none d-lg-flex">
+    <div class="bookmark-wrapper align-items-center flex-grow-1 d-none d-lg-flex" v-if="isAdmin">
 
       <!-- Bookmarks Container -->
       <bookmarks />
@@ -27,7 +27,7 @@
       <locale />
       <dark-Toggler class="d-none d-lg-block" />
       <search-bar />
-      <cart-dropdown />
+      <cart-dropdown v-if="isAdmin"/>
       <notification-dropdown />
       <user-dropdown />
     </b-navbar-nav>
@@ -45,6 +45,7 @@ import DarkToggler from './components/DarkToggler.vue'
 import CartDropdown from './components/CartDropdown.vue'
 import NotificationDropdown from './components/NotificationDropdown.vue'
 import UserDropdown from './components/UserDropdown.vue'
+import { isUserLoggedIn, getUserData, isAdmin } from '@/auth/utils'
 
 export default {
   components: {

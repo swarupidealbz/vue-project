@@ -1,4 +1,5 @@
 import useJwt from '@/auth/jwt/useJwt'
+import { $themeColors, $themeBreakpoints, $themeConfig } from "@themeConfig";
 
 /**
  * Return if user is logged in
@@ -11,6 +12,10 @@ export const isUserLoggedIn = () => {
 }
 
 export const getUserData = () => JSON.parse(localStorage.getItem('userData'))
+
+export const isAdmin = () => {
+  return getUserData.role == $themeConfig.app.role;
+}
 
 /**
  * This function is used for demo purpose route navigation

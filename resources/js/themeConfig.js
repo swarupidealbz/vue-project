@@ -11,7 +11,8 @@ export const $themeConfig = {
   app: {
     appName: 'Content Labz', // Will update name in navigation menu (Branding)
     // eslint-disable-next-line global-require
-    appLogoImage: require('@/assets/images/logo/logo.svg') // Will update logo in navigation menu (Branding)
+    appLogoImage: require('@/assets/images/logo/logo.svg'), // Will update logo in navigation menu (Branding)
+    role: 'super admin'
   },
   layout: {
     isRTL: false,
