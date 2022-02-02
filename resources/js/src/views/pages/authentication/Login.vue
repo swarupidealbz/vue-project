@@ -269,8 +269,8 @@ export default {
   data() {
     return {
       status: '',
-      password: 'admin',
-      userEmail: 'admin@demo.com',
+      password: '',
+      userEmail: '',
       sideImg: require('@/assets/images/pages/login-v2.svg'),
 
       // validation rules
@@ -313,7 +313,7 @@ export default {
                 console.log('set user');
                 ability.push({ action: "manage", subject: "all" });
                 userData.ability = ability;
-                userdata.fullName = userData.name;
+                //userdata.fullName = userData.name;
                 useJwt.setToken(response.data.data.access_token)
                 console.log('set to');
                 //useJwt.setRefreshToken(response.data.refreshToken)
@@ -358,6 +358,8 @@ export default {
             }
           })
           .catch(error => {
+            console.log(error);
+            console.log(error.data);
             this.$refs.loginForm.setErrors(error.response.data)
           })
             
