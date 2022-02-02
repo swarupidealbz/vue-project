@@ -137,8 +137,10 @@ export default {
       return isAdmin();
     },
   },
-  created() {
-    this.notifications = store.state.app.topBar.notifications.data;
+  watch:{
+    count() {
+      this.notifications = store.state.app.topBar.notifications.data;
+    }
   },
 }
 </script>
