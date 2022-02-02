@@ -24,7 +24,7 @@
           pill
           variant="light-primary"
         >
-          {{ count }} New
+          {{ notifications.length }} New
         </b-badge>
       </div>
     </li>
@@ -41,7 +41,6 @@
         v-for="notification in notifications"
         :key="notification.heading"
       >
-        <template #aside>
         <b-media>
           <p class="media-heading">
             <span class="font-weight-bolder">
@@ -50,7 +49,6 @@
           </p>
           <small class="notification-text">{{ notification.details }}</small>
         </b-media>
-        </template>
       </b-link>
 
       <!-- System Notification Toggler -->
