@@ -24,7 +24,7 @@
           pill
           variant="light-primary"
         >
-          {{ notifications.length }} New
+          {{ count }} New
         </b-badge>
       </div>
     </li>
