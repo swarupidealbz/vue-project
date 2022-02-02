@@ -327,26 +327,14 @@ export default {
                 //this.$store.commit('app-ecommerce/UPDATE_CART_ITEMS_COUNT', userData.extras.eCommerceCartItemsCount)
                 //this.$store.commit('app-ecommerce/UPDATE_CART_ITEMS_COUNT', 2) //userData.extras.eCommerceCartItemsCount)
 
-                axios.post(store.state.app.apiBaseUrl+'dashboard/data').then(response => {
-        console.log('dashboard data');
-        console.log(response);
-        console.log(response.data);
-        let top = {
-          websites: response.data.data.websites,
-          languages: response.data.data.languages,
-          notifications: response.data.data.notifications
-        };
-        let menu = {
-          side_menus: response.data.data.side_menus
-        };
-        let data = {
-          statistics: response.data.data.statistics,
-          topic_lists: response.data.data.topic_lists,
-          article_lists: response.data.data.article_lists
-        };
-        store.commit('app/setTopBar', top);
-        store.commit('app/setMenu', menu);
-        store.commit('app/setDashboardData', data);
+                axios.post(store.state.app.apiBaseUrl+'dashboard/data', {parts: 'top_bar'}).then(response => {
+                    console.log('dashboard data');
+                    let top = {
+                      websites: response.data.data.websites,
+                      languages: response.data.data.languages,
+                      notifications: response.data.data.notifications
+                    };
+                    store.commit('app/setTopBar', top);
                   // ? This is just for demo purpose. Don't think CASL is role based in this case, we used role in if condition just for ease
                   this.$router.replace(getHomeRouteForLoggedInUser(userData.role)).then(() => {
                     this.$toast({
@@ -391,33 +379,6 @@ export default {
             console.log(error);
       });
     },
-    setAppData() {
-      axios.post(store.state.app.apiBaseUrl+'dashboard/data').then(response => {
-        console.log('dashboard data');
-        console.log(response);
-        console.log(response.data);
-        let top = {
-          websites: response.data.data.websites,
-          languages: response.data.data.languages,
-          notifications: response.data.data.notifications
-        };
-        let menu = {
-          side_menus: response.data.data.side_menus
-        };
-        let data = {
-          statistics: response.data.data.statistics,
-          topic_lists: response.data.data.topic_lists,
-          article_lists: response.data.data.article_lists
-        };
-        store.commit('app/setTopBar', top);
-        store.commit('app/setMenu', menu);
-        store.commit('app/setDashboardData', data);
-      })
-      .catch(error => {
-        console.log('error from loading dashboard api');
-        console.log(error);
-      });
-    }
   },
 }
 </script>
