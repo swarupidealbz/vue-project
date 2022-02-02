@@ -54,6 +54,29 @@
               class="auth-register-form mt-2"
               @submit.prevent="register"
             >
+
+              <!-- firstname -->
+              <b-form-group
+                label="Firstname"
+                label-for="register-firstname"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  name="Firstname"
+                  vid="firstname"
+                  rules="required"
+                >
+                  <b-form-input
+                    id="register-firstname"
+                    v-model="firstname"
+                    name="register-firstname"
+                    :state="errors.length > 0 ? false:null"
+                    placeholder="johndoe"
+                  />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+
               <!-- username -->
               <b-form-group
                 label="Username"

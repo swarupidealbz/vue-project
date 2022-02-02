@@ -74,7 +74,9 @@ export default {
       return isAdmin();
     },
     data() {
-      return store.state.app.topBar.notifications.data;
+      setTimeout(() => {
+        return store.state.app.topBar.notifications.data;
+      }, 2000);
     }
   },
   beforeCreate() {
