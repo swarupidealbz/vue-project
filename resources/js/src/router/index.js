@@ -38,11 +38,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, _, next) => {
   const isLoggedIn = isUserLoggedIn()
-  console.log('before each route');
-  console.log(to);
-  console.log(canNavigate(to));
-  console.log(isLoggedIn);
-  console.log(to.meta.redirectIfLoggedIn);
+
   if (!canNavigate(to)) {
     // Redirect to login if not logged in
     if (!isLoggedIn) return next({ name: 'auth-login' })
@@ -54,8 +50,7 @@ router.beforeEach((to, _, next) => {
   // Redirect if logged in
   if (to.meta.redirectIfLoggedIn && isLoggedIn) {
     const userData = getUserData()
-    console.log(getHomeRouteForLoggedInUser(userData ? userData.user.role : null));
-    next(getHomeRouteForLoggedInUser(userData ? userData.user.role : null))
+    next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
   }
 
   return next()
