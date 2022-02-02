@@ -136,8 +136,8 @@ export default {
   },
   computed: {
     stat() {
-      let stat = Object.values(this.$store.state.app.dashboardData.statistics)
-      if(!stat) {
+      var stat = Object.values(this.$store.state.app.dashboardData.statistics)
+      if(!stat.length) {
         let userData = JSON.parse(localStorage.getItem('userData'));
         stat = userData.stat.statistics;
       }

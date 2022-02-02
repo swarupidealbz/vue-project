@@ -136,12 +136,13 @@ export default {
       return isAdmin();
     },
     notifications() {
-      let notify = store.state.app.topBar.notifications.data || null;
+      var notify = store.state.app.topBar.notifications.data || null;
       if(!notify) {
         let userData = JSON.parse(localStorage.getItem('userData'))
         notify = userData.top_bar.notifications
+        console.log(notify);
       }
-
+console.log(notify)
       return notify;
     }
   },
