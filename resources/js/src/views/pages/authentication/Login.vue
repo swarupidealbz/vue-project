@@ -310,11 +310,12 @@ export default {
                 console.log(response.data)
                 const userData = response.data.data.user
                 let ability = [];
+                console.log('set user');
                 ability.push({ action: "manage", subject: "all" });
                 userData.ability = ability;
                 userdata.fullName = userData.name;
                 useJwt.setToken(response.data.data.access_token)
-
+                console.log('set to');
                 //useJwt.setRefreshToken(response.data.refreshToken)
 
                 localStorage.setItem('userData', JSON.stringify(userData))
