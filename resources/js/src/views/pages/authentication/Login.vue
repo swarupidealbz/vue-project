@@ -301,7 +301,7 @@ export default {
             .then(response => {
               console.log(response.data)
               const userData = response.data.data
-              console.log('set userdata);
+              console.log('set userdata');
               console.log(userData);
               useJwt.setToken(response.data.data.access_token)
               console.log('set access_token');
