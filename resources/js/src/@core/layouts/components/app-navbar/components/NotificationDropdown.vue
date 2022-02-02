@@ -123,7 +123,7 @@ export default {
     count() {
       return store.state.app.topBar.notifications.count;
     },
-    notifications() {
+    notificationsData() {
       return store.state.app.topBar.notifications.data;
     },
     isAdmin() {
@@ -132,7 +132,7 @@ export default {
   },
   setup() {
     
-    const notifications = notifications;
+    const notifications = notificationsData;
     const systemNotifications = []
     // const systemNotifications = [
     //  {
