@@ -132,7 +132,7 @@ export default {
   },
   setup() {
     
-    const notifications = this.notifications;
+    const notifications = store.state.app.topBar.notifications.data;
     const systemNotifications = []
     // const systemNotifications = [
     //  {
