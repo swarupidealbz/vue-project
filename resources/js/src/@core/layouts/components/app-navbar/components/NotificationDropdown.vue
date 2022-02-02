@@ -6,7 +6,7 @@
   >
     <template #button-content>
       <feather-icon
-        badge="count"
+        :badge="count"
         badge-classes="bg-danger"
         class="text-body"
         icon="BellIcon"
@@ -39,7 +39,7 @@
       <!-- Account Notification -->
       <b-link
         v-for="notification in notifications"
-        :key="notification.id+notification.heading"
+        :key="notification.id"
       >
         <b-media>
           <p class="media-heading">
@@ -52,7 +52,7 @@
       </b-link>
 
       <!-- System Notification Toggler -->
-      <div class="media d-flex align-items-center">
+      <div class="media d-flex align-items-center" v-if="isAdmin">
         <h6 class="font-weight-bolder mr-auto mb-0">
           System Notifications
         </h6>
@@ -103,6 +103,7 @@ import {
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import Ripple from 'vue-ripple-directive'
 import store from '@/store/index'
+import { isUserLoggedIn, getUserData, isAdmin } from '@/auth/utils'
 
 export default {
   components: {
@@ -124,30 +125,33 @@ export default {
     },
     notifications() {
       return store.state.app.topBar.notifications.data;
+    },
+    isAdmin() {
+      return isAdmin();
     }
   },
   setup() {
     
 
-    const systemNotifications = [
-      {
-        title: 'Server down',
-        subtitle: 'USA Server is down due to hight CPU usage',
-        type: 'light-danger',
-        icon: 'XIcon',
-      },
-      {
-        title: 'Sales report generated',
-        subtitle: 'Last month sales report generated',
-        type: 'light-success',
-        icon: 'CheckIcon',
-      },
-      {
-        title: 'High memory usage',
-        subtitle: 'BLR Server using high memory',
-        type: 'light-warning',
-        icon: 'AlertTriangleIcon',
-      },
+    // const systemNotifications = [
+    //  {
+    //    title: 'Server down',
+    //    subtitle: 'USA Server is down due to hight CPU usage',
+    //    type: 'light-danger',
+    //    icon: 'XIcon',
+    //  },
+    //  {
+    //    title: 'Sales report generated',
+    //    subtitle: 'Last month sales report generated',
+    //    type: 'light-success',
+    //    icon: 'CheckIcon',
+    //  },
+    //  {
+    //    title: 'High memory usage',
+    //    subtitle: 'BLR Server using high memory',
+    //    type: 'light-warning',
+    //    icon: 'AlertTriangleIcon',
+    //  },
     ]
 
     const perfectScrollbarSettings = {
