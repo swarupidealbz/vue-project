@@ -28,7 +28,7 @@
       <dark-Toggler class="d-none d-lg-block" />
       <search-bar />
       <cart-dropdown v-if="isAdmin"/>
-      <notification-dropdown :notifications="notifications"/>
+      <notification-dropdown />
       <user-dropdown />
     </b-navbar-nav>
   </div>
@@ -72,9 +72,6 @@ export default {
   computed: {
     isAdmin() {
       return isAdmin();
-    },
-    notifications() {
-      return store.state.app.topBar.notifications.data;
     },
   },
   beforeMount() {
