@@ -141,6 +141,7 @@ export default {
         let userData = JSON.parse(localStorage.getItem('userData'));
         stat = userData.stat.statistics;
       }
+      console.log(stat);
       return stat;
     }
   },
