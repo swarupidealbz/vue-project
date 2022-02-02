@@ -120,6 +120,9 @@ export default {
   directives: {
     Ripple,
   },
+  props: {
+    notifications: []
+  },
   data() {
     return {
       systemNotifications: [],
@@ -134,20 +137,9 @@ export default {
     count() {
       return store.state.app.topBar.notifications.count;
     },
-    notificationsData() {
-      return store.state.app.topBar.notifications.data;
-    },
     isAdmin() {
       return isAdmin();
     }
-  },
-  methods: {
-    assignData() {
-      this.notifications = this.notificationsData;
-    }
-  },
-  loaded() {
-    this.assignData();
   },
 }
 </script>

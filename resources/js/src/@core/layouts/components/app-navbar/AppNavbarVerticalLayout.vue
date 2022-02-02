@@ -28,7 +28,7 @@
       <dark-Toggler class="d-none d-lg-block" />
       <search-bar />
       <cart-dropdown v-if="isAdmin"/>
-      <notification-dropdown />
+      <notification-dropdown :notifications="notifications"/>
       <user-dropdown />
     </b-navbar-nav>
   </div>
@@ -72,7 +72,10 @@ export default {
   computed: {
     isAdmin() {
       return isAdmin();
-    }
+    },
+    notifications() {
+      return store.state.app.topBar.notifications.data;
+    },
   },
   beforeMount() {
     axios.post(store.state.app.apiBaseUrl+'dashboard/data').then(response => {
