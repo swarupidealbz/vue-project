@@ -129,7 +129,6 @@ export default {
         maxScrollbarLength: 60,
         wheelPropagation: false,
       },
-      notifications: [],
     }
   },
   computed: {
