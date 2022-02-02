@@ -41,12 +41,13 @@
             class="mb-1 font-weight-bold"
             title-tag="h2"
           >
-            Welcome to Vuexy! 👋
+            Welcome to {{ appName }}! 👋
           </b-card-title>
           <b-card-text class="mb-2">
             Please sign-in to your account and start the adventure
           </b-card-text>
 
+          <!--
           <b-alert
             variant="primary"
             show
@@ -67,6 +68,7 @@
               style="top: 10; right: 10;"
             />
           </b-alert>
+          -->
 
           <!-- form -->
           <validation-observer
@@ -213,6 +215,7 @@
 /* eslint-disable global-require */
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import VuexyLogo from '@core/layouts/components/Logo.vue'
+import { $themeColors, $themeBreakpoints, $themeConfig } from "@themeConfig";
 import {
   BRow,
   BCol,
@@ -287,6 +290,9 @@ export default {
       }
       return this.sideImg
     },
+    appName() {
+      return $themeConfig.app.appName;
+    }
   },
   methods: {
     login() {
