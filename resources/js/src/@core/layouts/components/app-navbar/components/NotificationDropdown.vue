@@ -120,10 +120,10 @@ export default {
   },
   computed: {
     count() {
-      return store.state.app.notifications.count;
+      return store.state.app.topBar.notifications.count;
     },
     notifications() {
-      return store.state.app.notifications.data;
+      return store.state.app.topBar.notifications.data;
     }
   },
   setup() {
