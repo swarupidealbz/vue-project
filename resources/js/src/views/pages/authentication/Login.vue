@@ -328,7 +328,7 @@ export default {
                 //this.$store.commit('app-ecommerce/UPDATE_CART_ITEMS_COUNT', 2) //userData.extras.eCommerceCartItemsCount)
 
                 axios.post(store.state.app.apiBaseUrl+'dashboard/data', {parts: 'top_bar'}).then(response => {
-                    console.log('dashboard data');
+                    console.log('dashboard top bar');
                     let top = {
                       websites: response.data.data.websites,
                       languages: response.data.data.languages,

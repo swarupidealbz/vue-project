@@ -79,21 +79,11 @@ export default {
       console.log('dashboard data');
       console.log(response);
       console.log(response.data);
-      let top = {
-        websites: response.data.data.websites,
-        languages: response.data.data.languages,
-        notifications: response.data.data.notifications
-      };
-      let menu = {
-        side_menus: response.data.data.side_menus
-      };
       let data = {
         statistics: response.data.data.statistics,
         topic_lists: response.data.data.topic_lists,
         article_lists: response.data.data.article_lists
       };
-      store.commit('app/setTopBar', top);
-      store.commit('app/setMenu', menu);
       store.commit('app/setDashboardData', data);
     })
     .catch(error => {
