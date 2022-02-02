@@ -300,7 +300,7 @@ export default {
           //axios.post('/api/login', {username: this.userEmail, password: this.password})
             .then(response => {
               console.log(response.data)
-              const userData = response.data
+              const { userData } = response.data
               useJwt.setToken(response.data.accessToken)
               useJwt.setRefreshToken(response.data.refreshToken)
               localStorage.setItem('userData', JSON.stringify(userData))
