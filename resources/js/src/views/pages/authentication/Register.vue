@@ -274,6 +274,7 @@ export default {
   data() {
     return {
       status: '',
+      firstname: '',
       username: '',
       userEmail: '',
       password: '',
