@@ -300,7 +300,9 @@ export default {
   methods: {
     checkUser(){
       var email_verify = this.$cookies.get('email_verify')
+      console.log(email_verify);
       if(email_verify) {
+        console.log('get in')
         var verify = JSON.parse(email_verify)
         if(verify.status === true) {
            this.$toast({
