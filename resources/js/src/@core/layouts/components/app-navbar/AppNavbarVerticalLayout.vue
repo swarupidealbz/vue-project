@@ -77,8 +77,5 @@ export default {
       return store.state.app.topBar.notifications.data;
     }
   },
-  created() {
-    store.dispatch('app/loadAppData');
-  },
 }
 </script>
