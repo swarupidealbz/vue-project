@@ -50,32 +50,57 @@ export default {
   },
   actions: {
     loadAppData({commit, state, dispatch}, payload){
-      axios.post(store.state.app.apiBaseUrl+'dashboard/data').then(response => {
-        console.log('dashboard data');
-        console.log(response);
+      dispatch('app/loadTop');
+      dispatch('app/loadData');
+      dispatch('app/loadMenu');
+    },
+    loadTop({commit, state, dispatch}) {
+      axios.post(store.state.app.apiBaseUrl+'dashboard/data', {parts: 'top_bar'}).then(response => {
+        console.log('top data');
         console.log(response.data);
         let top = {
           websites: response.data.data.websites,
           languages: response.data.data.languages,
           notifications: response.data.data.notifications
         };
-        let menu = {
-          side_menus: response.data.data.side_menus
-        };
+        var userData = JSON.parse(localStorage.getItem('userData'));
+        commit('app/setTopBar', top);
+        userData.top_bar = top;
+        localStorage.setItem('userData', JSON.stringify(userData))
+      }).catch(error => {
+        console.log('error load top data');
+      })
+    },
+    loadData({commit, state, dispatch}) {
+      axios.post(store.state.app.apiBaseUrl+'dashboard/data', {parts: 'data'}).then(response => {
+        console.log('dash data');
+        console.log(response.data);
         let data = {
           statistics: response.data.data.statistics,
           topic_lists: response.data.data.topic_lists,
           article_lists: response.data.data.article_lists
         };
-        commit('app/setTopBar', top);
-        userData.top_bar = top;
-        commit('app/setMenu', menu);
-        userData.menu = menu;
+        var userData = JSON.parse(localStorage.getItem('userData'));
         commit('app/setDashboardData', data);
         userData.stat = data;
         localStorage.setItem('userData', JSON.stringify(userData))
       }).catch(error => {
-
+        console.log('error load dash data');
+      })
+    },
+    loadMenu({commit, state, dispatch}) {
+      axios.post(store.state.app.apiBaseUrl+'dashboard/data', {parts: 'side_menu'}).then(response => {
+        console.log('menu data');
+        console.log(response.data);
+        let menu = {
+          side_menus: response.data.data.side_menus
+        };
+        var userData = JSON.parse(localStorage.getItem('userData'));
+        commit('app/setMenu', menu);
+        userData.menu = menu;
+        localStorage.setItem('userData', JSON.stringify(userData))
+      }).catch(error => {
+        console.log('error load menu data');
       })
     }
   },

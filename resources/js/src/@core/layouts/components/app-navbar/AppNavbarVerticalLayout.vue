@@ -74,7 +74,7 @@ export default {
       return isAdmin();
     },
     list() {
-      return this.$store.state.app.topBar.notifications.data;
+      return store.state.app.topBar.notifications.data;
     }
   },
   created() {
