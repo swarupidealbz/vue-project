@@ -303,6 +303,7 @@ export default {
       var email_verify = this.$cookies.get('password_reset')
       console.log(email_verify);
       console.log(this.$cookies.get('email_verify'));
+      console.log(this.$cookies.get('user_value'))
       if(email_verify) {
         console.log('get in')
         var verify = JSON.parse(email_verify)
