@@ -11,7 +11,7 @@
         xl="8"
         md="6"
       >
-        <ecommerce-statistics :data="data.statistics" />
+        <ecommerce-statistics :data="stat" />
       </b-col>
     </b-row>
 
@@ -136,12 +136,7 @@ export default {
   },
   computed: {
     stat() {
-      var stat = Object.values(this.$store.state.app.dashboardData.statistics)
-      if(!stat.length) {
-        let userData = JSON.parse(localStorage.getItem('userData'));
-        stat = Object.values(userData.stat.statistics);
-      }
-      return stat;
+      return  Object.values(this.$store.state.app.dashboardData.statistics) || []
     }
   },
   created() {
