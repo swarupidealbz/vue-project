@@ -296,7 +296,7 @@ export default {
   },
   created() {
     this.checkUser();
-    this.$cookies.delete('email_verify')
+    this.$cookies.remove('email_verify')
   },
   methods: {
     checkUser(){
