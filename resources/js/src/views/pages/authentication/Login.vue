@@ -309,7 +309,7 @@ export default {
               component: ToastificationContent,
               position: 'top-right',
               props: {
-                title: `Error`,
+                title: `Verified`,
                 icon: 'UserXIcon',
                 variant: 'success',
                 text: email_verify.message,
@@ -321,7 +321,7 @@ export default {
               component: ToastificationContent,
               position: 'top-right',
               props: {
-                title: `Error`,
+                title: `Failed Verification`,
                 icon: 'UserXIcon',
                 variant: 'danger',
                 text: email_verify.message,
