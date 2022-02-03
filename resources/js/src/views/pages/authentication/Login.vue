@@ -294,7 +294,40 @@ export default {
       return $themeConfig.app.appName;
     }
   },
+  loaded() {
+    this.checkUser();
+  },
   methods: {
+    checkUser(){
+      var email_verify = this.$cookies.get('email_verify')
+      if(email_verify) {
+        var verify = JSON.parse(email_verify)
+        if(verify.status === true) {
+           this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Error`,
+                icon: 'UserXIcon',
+                variant: 'success',
+                text: verify.message,
+              },
+            })
+        }
+        else if(verify.status === false) {
+          this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Error`,
+                icon: 'UserXIcon',
+                variant: 'danger',
+                text: verify.message,
+              },
+            })
+        }
+      }
+    },
     login() {
       this.$refs.loginForm.validate().then(success => {
         if (success) {
