@@ -177,14 +177,14 @@
                       id="register-confirm-password"
                       v-model="confirm_password"
                       class="form-control-merge"
-                      :type="passwordFieldType"
+                      :type="confirmPasswordFieldType"
                       :state="errors.length > 0 ? false:null"
                       name="register-confirm-password"
                       placeholder="············"
                     />
                     <b-input-group-append is-text>
                       <feather-icon
-                        :icon="passwordToggleIcon"
+                        :icon="confirmPasswordToggleIcon"
                         class="cursor-pointer"
                         @click="togglePasswordVisibility"
                       />
@@ -351,6 +351,9 @@ export default {
   computed: {
     passwordToggleIcon() {
       return this.passwordFieldType === 'password' ? 'EyeIcon' : 'EyeOffIcon'
+    },
+    confirmPasswordToggleIcon() {
+      return this.confirmPasswordFieldType === 'password' ? 'EyeIcon' : 'EyeOffIcon'
     },
     imgUrl() {
       if (store.state.appConfig.layout.skin === 'dark') {
