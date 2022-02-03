@@ -275,6 +275,7 @@ export default {
     return {
       status: '',
       firstname: '',
+      firstname: '',
       username: '',
       userEmail: '',
       password: '',

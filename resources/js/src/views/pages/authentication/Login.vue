@@ -305,6 +305,8 @@ export default {
           //  })
           axios.post(store.state.app.apiBaseUrl + 'login', {username: this.username, password: this.password})
             .then(response => {
+              console.log('api');
+              console.log(response.data);
               if(response.data.success === true) {
                 console.log(response.data)
                 const userData = response.data.data.user
@@ -362,6 +364,16 @@ export default {
             console.log(error.message);
             console.log(error.data.message);
             this.$refs.loginForm.setErrors(error.response.data)
+            // this.$toast({
+            //     component: ToastificationContent,
+            //     position: 'top-right',
+            //     props: {
+            //       title: `Error`,
+            //       //icon: 'CoffeeIcon',
+            //       variant: 'danger',
+            //       text: response.data.message,
+            //     },
+            //   })
           })
             
         }
