@@ -45,7 +45,7 @@ class AuthController extends BaseController
             ]);
 
             if ($validator->fails()) {
-                return $this->handleError('Required field missing.', $validator->errors()->all()[0].' Please check and try again.', 422);
+                return $this->handleError('Required field missing.', $validator->errors()->all()[0].' Please check and try again.', 400);
             }
 
             $user = User::create([
@@ -71,7 +71,7 @@ class AuthController extends BaseController
         }
         catch(Exception $e) {
             logger('registration error');
-            return $this->handleError('Something went wrong', [], 500);
+            return $this->handleError('Something went wrong', [], 400);
         }
     }
 
@@ -93,17 +93,17 @@ class AuthController extends BaseController
             ]);
 
             if ($validator->fails()) {
-                return $this->handleError('Required field missing.', $validator->errors()->all(), 422);
+                return $this->handleError('Required field missing.', $validator->errors()->all(), 400);
             }
 
             if (!Auth::attempt($request->only('username', 'password'))) {
-                return $this->handleError('Email/Password are invalid. Please check your details and try again.', [], 401);
+                return $this->handleError('Email/Password are invalid. Please check your details and try again.', [], 400);
             }
             $user = User::select('id','first_name', 'last_name', 'mobile', 'email', 'role', 'email_verified_at')
             ->where('username', $request['username'])->firstOrFail();
             
 			if(!$user->email_verified_at) {
-                return $this->handleError('Email not verified',[], 422);
+                return $this->handleError('Email not verified',[], 400);
             }
 			
             $token = $user->createToken('auth_token')->plainTextToken;
@@ -119,7 +119,7 @@ class AuthController extends BaseController
         }
         catch(Exception $e) {
             logger('login error');
-            return $this->handleError('Something went wrong', [], 500);
+            return $this->handleError('Something went wrong', [], 400);
         }
     }
 
@@ -139,7 +139,7 @@ class AuthController extends BaseController
             );
             
             if ($validator->fails()) {
-                return $this->handleError([], $validator->errors()->all(), 422);
+                return $this->handleError([], $validator->errors()->all(), 400);
             }
             $response =  Password::sendResetLink($input);
             
@@ -148,12 +148,12 @@ class AuthController extends BaseController
             }
             logger($response);
                     
-            return $this->handleError('Email could not be sent to this email address', [], 401);
+            return $this->handleError('Email could not be sent to this email address', [], 400);
             
         }
         catch(Exception $e) {
             logger('reset list send error: '.$e->getMessage());
-            return $this->handleError('Something went wrong', [], 500);
+            return $this->handleError('Something went wrong', [], 400);
         }
     }
 
@@ -177,7 +177,7 @@ class AuthController extends BaseController
                 ]);
             
             if ($validator->fails()) {
-                return $this->handleError([], $validator->errors()->all(), 422);
+                return $this->handleError([], $validator->errors()->all(), 400);
             }
                 
             $response = Password::reset($input, function ($user, $password) {
@@ -190,12 +190,12 @@ class AuthController extends BaseController
                 return $this->handleResponse([], "Password reset successfully");
             }
                 
-            return $this->handleError([], 'Email could not be sent to this email address', 401);
+            return $this->handleError([], 'Email could not be sent to this email address', 400);
             
         }
         catch(Exception $e) {
             logger('send reset response error');
-            return $this->handleError('Something went wrong', [], 500);
+            return $this->handleError('Something went wrong', [], 400);
         }
     }
 
@@ -218,7 +218,7 @@ class AuthController extends BaseController
                 ]);
             
             if ($validator->fails()) {
-                return $this->handleError([], $validator->errors()->all(), 422);
+                return $this->handleError([], $validator->errors()->all(), 400);
             }
 	
             if((sha1($request['email']) !=  $request['hash']) || ($request['expires'] < Carbon::now()->timestamp)) {
@@ -258,7 +258,7 @@ class AuthController extends BaseController
         }
         catch(Exception $e) {
             logger('reset password error');
-            return $this->handleError('Something went wrong', [], 500);
+            return $this->handleError('Something went wrong', [], 400);
         }
     }
 	
@@ -269,7 +269,7 @@ class AuthController extends BaseController
 				'status' => false,
 				'message' => "The link seems to have expired or invalid, please check or verify again."
 			];
-			return redirect()->to(env('APP_FRONTEND_URL'))->withCookie(cookie('email_verify', json_encode($response), time() + 10*60, '/', '99ideaz.com', false));
+			return redirect()->to(env('APP_URL'))->withCookie(cookie('email_verify', json_encode($response), time() + 10*60, '/', 'cl.99ideaz.com', false));
         }
     
         $user = User::findOrFail($user_id);
@@ -283,7 +283,7 @@ class AuthController extends BaseController
 			'status' => true,
 			'message' => "Your email verified successfully"
 		];
-		return redirect()->to(env('APP_FRONTEND_URL'))->withCookie(cookie('email_verify', json_encode($response), time() + 10*60, '/', '99ideaz.com', false));
+		return redirect()->to(env('APP_URL'))->withCookie(cookie('email_verify', json_encode($response), time() + 10*60, '/', 'cl.99ideaz.com', false));
 		//return $this->handleResponse([], "Email verified successfully");
 		//return 'Email verified'; 
     }
