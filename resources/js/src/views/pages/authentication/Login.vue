@@ -303,9 +303,8 @@ export default {
       var email_verify = this.$cookies.get('email_verify')
       console.log(email_verify)
       if(email_verify) {
-        var verify = JSON.parse(email_verify)
-        console.log(verify)
-        if(verify.status === true) {
+        console.log(email_verify)
+        if(email_verify.status === true) {
            this.$toast({
               component: ToastificationContent,
               position: 'top-right',
@@ -313,11 +312,11 @@ export default {
                 title: `Error`,
                 icon: 'UserXIcon',
                 variant: 'success',
-                text: verify.message,
+                text: email_verify.message,
               },
             })
         }
-        else if(verify.status === false) {
+        else if(email_verify.status === false) {
           this.$toast({
               component: ToastificationContent,
               position: 'top-right',
@@ -325,7 +324,7 @@ export default {
                 title: `Error`,
                 icon: 'UserXIcon',
                 variant: 'danger',
-                text: verify.message,
+                text: email_verify.message,
               },
             })
         }
