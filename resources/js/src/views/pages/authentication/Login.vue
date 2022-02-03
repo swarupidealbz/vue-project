@@ -294,7 +294,7 @@ export default {
       return $themeConfig.app.appName;
     }
   },
-  loaded() {
+  created() {
     this.checkUser();
   },
   methods: {
