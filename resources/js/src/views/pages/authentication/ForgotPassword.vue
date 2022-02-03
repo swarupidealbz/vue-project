@@ -145,6 +145,7 @@ export default {
     validationForm() {
       this.$refs.simpleRules.validate().then(success => {
         if (success) {
+          this.userEmail = '';
           this.$http.post(this.$store.state.app.apiBaseUrl+'password/forgot-password', {
             email: this.userEmail
           }).then(response => {
@@ -158,6 +159,7 @@ export default {
                 text: response.data.message,
               },
             })
+            this.$router.push('/')
           }).catch(error => {
             this.$toast({
               component: ToastificationContent,
