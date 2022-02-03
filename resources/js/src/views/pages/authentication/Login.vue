@@ -350,7 +350,7 @@ export default {
               position: 'top-right',
               props: {
                 title: `Error`,
-                //icon: 'CoffeeIcon',
+                icon: 'UserXIcon',
                 variant: 'danger',
                 text: error.response.data.message,
               },
