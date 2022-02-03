@@ -296,6 +296,7 @@ export default {
   },
   created() {
     this.checkUser();
+    this.$cookies.set('user_value', 'hello')
   },
   methods: {
     checkUser(){
