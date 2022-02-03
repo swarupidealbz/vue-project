@@ -55,7 +55,7 @@ export default {
       dispatch('loadMenu');
     },
     loadTop({commit, state, dispatch}) {
-      axios.post(state.app.apiBaseUrl+'dashboard/data', {parts: 'top_bar'}).then(response => {
+      axios.post(state.apiBaseUrl+'dashboard/data', {parts: 'top_bar'}).then(response => {
         console.log('top data');
         console.log(response.data);
         let top = {
@@ -72,7 +72,7 @@ export default {
       })
     },
     loadData({commit, state, dispatch}) {
-      axios.post(state.app.apiBaseUrl+'dashboard/data', {parts: 'data'}).then(response => {
+      axios.post(state.apiBaseUrl+'dashboard/data', {parts: 'data'}).then(response => {
         console.log('dash data');
         console.log(response.data);
         let data = {
@@ -89,7 +89,7 @@ export default {
       })
     },
     loadMenu({commit, state, dispatch}) {
-      axios.post(state.app.apiBaseUrl+'dashboard/data', {parts: 'side_menu'}).then(response => {
+      axios.post(state.apiBaseUrl+'dashboard/data', {parts: 'side_menu'}).then(response => {
         console.log('menu data');
         console.log(response.data);
         let menu = {
