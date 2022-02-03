@@ -364,16 +364,6 @@ export default {
             console.log(error.message);
             console.log(error.data.message);
             this.$refs.loginForm.setErrors(error.response.data)
-            // this.$toast({
-            //     component: ToastificationContent,
-            //     position: 'top-right',
-            //     props: {
-            //       title: `Error`,
-            //       //icon: 'CoffeeIcon',
-            //       variant: 'danger',
-            //       text: response.data.message,
-            //     },
-            //   })
           })
             
         }
