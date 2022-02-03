@@ -59,7 +59,8 @@ router.beforeEach((to, _, next) => {
   // Redirect if logged in
   if (to.meta.redirectIfLoggedIn && isLoggedIn) {
     const userData = getUserData()
-    if(!find && (userData.role == 'client' || userData.role == 'writer')) {
+    if(!find && ((userData.role == 'client') || (userData.role == 'writer'))) {
+      console.log('not listed');
       return next({ name: 'error-404' })
     }
     next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
