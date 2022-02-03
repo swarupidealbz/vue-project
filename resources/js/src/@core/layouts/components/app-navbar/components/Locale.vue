@@ -45,7 +45,7 @@ export default {
   // ! Need to move this computed property to comp function once we get to Vue 3
   computed: {
     currentLocale() {
-      return this.locales.find(l => l.locale === this.$i18n.locale)
+      return this.locales.find(l => l.locale === this.$i18n.locale) || {}
     },
   },
 }
