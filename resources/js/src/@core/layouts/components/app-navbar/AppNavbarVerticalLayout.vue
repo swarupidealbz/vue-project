@@ -78,7 +78,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('app/loadAppData');
+    store.dispatch('app/loadAppData');
   },
 }
 </script>
