@@ -67,11 +67,11 @@ export default {
           topic_lists: response.data.data.topic_lists,
           article_lists: response.data.data.article_lists
         };
-        store.commit('app/setTopBar', top);
+        commit('app/setTopBar', top);
         userData.top_bar = top;
-        store.commit('app/setMenu', menu);
+        commit('app/setMenu', menu);
         userData.menu = menu;
-        store.commit('app/setDashboardData', data);
+        commit('app/setDashboardData', data);
         userData.stat = data;
         localStorage.setItem('userData', JSON.stringify(userData))
       }).catch(error => {
