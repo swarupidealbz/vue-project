@@ -186,7 +186,7 @@
                       <feather-icon
                         :icon="confirmPasswordToggleIcon"
                         class="cursor-pointer"
-                        @click="togglePasswordVisibility"
+                        @click="toggleConfirmPasswordVisibility"
                       />
                     </b-input-group-append>
                   </b-input-group>
