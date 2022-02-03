@@ -167,7 +167,7 @@
                   #default="{ errors }"
                   name="Confirm Password"
                   vid="confirm-password"
-                  rules="required|confirmed:Password"
+                  rules="required|confirmed:password"
                 >
                   <b-input-group
                     class="input-group-merge"
