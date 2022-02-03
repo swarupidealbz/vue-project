@@ -298,12 +298,12 @@ export default {
     login() {
       this.$refs.loginForm.validate().then(success => {
         if (success) {
-          useJwt
-           .login({
-           email: this.username,
-           password: this.password,
-           })
-          // this.$http.post(store.state.app.apiBaseUrl + 'login', {username: this.username, password: this.password})
+          // useJwt
+          //  .login({
+          //  email: this.username,
+          //  password: this.password,
+          //  })
+          this.$http.post(store.state.app.apiBaseUrl + 'login', {username: this.username, password: this.password})
             .then(response => {
               console.log('api');
               console.log(response.data);
