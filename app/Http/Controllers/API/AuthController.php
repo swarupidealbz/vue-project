@@ -273,10 +273,18 @@ class AuthController extends BaseController
         }
     
         $user = User::findOrFail($user_id);
+		if($user->email_verified_at) {
+			$response = [
+				'status' => false,
+				'message' => "The link seems to have expired or invalid, please check or verify again."
+			];
+			return redirect()->to(env('APP_URL'))->withCookie(cookie('email_verify', json_encode($response), time() + 10*60, '/', '99ideaz.com', false, false));
+		}
     
         if (!$user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
         }
+		
     
         //return redirect()->to(env('APP_FRONTEND_URL'))->withCookie(cookie('email_verified', true));
 		$response = [
