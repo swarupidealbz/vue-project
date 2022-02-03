@@ -7,7 +7,7 @@
         <vuexy-logo />
 
         <h2 class="brand-text text-primary ml-1">
-          Vuexy
+          {{ appName }}
         </h2>
       </b-link>
       <!-- /Brand logo-->
@@ -57,12 +57,12 @@
 
               <!-- firstname -->
               <b-form-group
-                label="Firstname"
+                label="First Name"
                 label-for="register-firstname"
               >
                 <validation-provider
                   #default="{ errors }"
-                  name="Firstname"
+                  name="First Name"
                   vid="firstname"
                   rules="required"
                 >
@@ -71,33 +71,34 @@
                     v-model="firstname"
                     name="register-firstname"
                     :state="errors.length > 0 ? false:null"
-                    placeholder="johndoe"
+                    placeholder="john"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
 
-              <!-- username -->
+              <!-- lastname -->
               <b-form-group
-                label="Username"
-                label-for="register-username"
+                label="Last Name"
+                label-for="register-lastname"
               >
                 <validation-provider
                   #default="{ errors }"
-                  name="Username"
-                  vid="username"
+                  name="Last Name"
+                  vid="lastname"
                   rules="required"
                 >
                   <b-form-input
-                    id="register-username"
-                    v-model="username"
-                    name="register-username"
+                    id="register-lastname"
+                    v-model="firstname"
+                    name="register-lastname"
                     :state="errors.length > 0 ? false:null"
-                    placeholder="johndoe"
+                    placeholder="doe"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
+
 
               <!-- email -->
               <b-form-group
@@ -153,6 +154,64 @@
                       />
                     </b-input-group-append>
                   </b-input-group>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+
+              <!-- confirm password -->
+              <b-form-group
+                label-for="register-confirm-password"
+                label="Confirm Password"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  name="Confirm Password"
+                  vid="confirm-password"
+                  rules="required|confirmed:Password"
+                >
+                  <b-input-group
+                    class="input-group-merge"
+                    :class="errors.length > 0 ? 'is-invalid':null"
+                  >
+                    <b-form-input
+                      id="register-confirm-password"
+                      v-model="confirm_password"
+                      class="form-control-merge"
+                      :type="passwordFieldType"
+                      :state="errors.length > 0 ? false:null"
+                      name="register-confirm-password"
+                      placeholder="············"
+                    />
+                    <b-input-group-append is-text>
+                      <feather-icon
+                        :icon="passwordToggleIcon"
+                        class="cursor-pointer"
+                        @click="togglePasswordVisibility"
+                      />
+                    </b-input-group-append>
+                  </b-input-group>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+
+              <!-- mobile -->
+              <b-form-group
+                label="Mobile"
+                label-for="register-mobile"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  name="Mobile"
+                  vid="mobile"
+                  rules="required"
+                >
+                  <b-form-input
+                    id="register-mobile"
+                    v-model="mobile"
+                    name="register-mobile"
+                    :state="errors.length > 0 ? false:null"
+                    placeholder="johndoe"
+                  />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
@@ -230,6 +289,7 @@
 /* eslint-disable global-require */
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import VuexyLogo from '@core/layouts/components/Logo.vue'
+import { $themeColors, $themeBreakpoints, $themeConfig } from "@themeConfig";
 import {
   BRow,
   BCol,
@@ -275,10 +335,13 @@ export default {
     return {
       status: '',
       firstname: '',
-      firstname: '',
+      lastname: '',
       username: '',
       userEmail: '',
       password: '',
+      confirm_password: '',
+      mobile: '',
+      role: '',
       sideImg: require('@/assets/images/pages/register-v2.svg'),
       // validation
       required,
@@ -296,7 +359,10 @@ export default {
         return this.sideImg
       }
       return this.sideImg
-    },
+    },    
+    appName() {
+      return $themeConfig.app.appName;
+    }
   },
   methods: {
     register() {

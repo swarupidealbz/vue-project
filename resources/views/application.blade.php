@@ -8,7 +8,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- <link rel="icon" href="<%= BASE_URL %>favicon.ico"> -->
 
-  <title>Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template</title>
+  <title>{{ env('APP_NAME') }}</title>
 
   <!-- Splash Screen/Loader Styles -->
   <link rel="stylesheet" type="text/css" href="{{ asset(mix('css/loader.css')) }}" />
@@ -26,7 +26,7 @@
 
 <body>
   <noscript>
-    <strong>We're sorry but Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template doesn't work properly without
+    <strong>We're sorry but {{ env('APP_NAME') }} doesn't work properly without
       JavaScript enabled. Please enable it to continue.</strong>
   </noscript>
   <div id="loading-bg">

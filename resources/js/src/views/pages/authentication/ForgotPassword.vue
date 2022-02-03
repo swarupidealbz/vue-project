@@ -7,7 +7,7 @@
         <vuexy-logo />
 
         <h2 class="brand-text text-primary ml-1">
-          Vuexy
+          {{ appName }}
         </h2>
       </b-link>
       <!-- /Brand logo-->
@@ -97,6 +97,7 @@
 /* eslint-disable global-require */
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import VuexyLogo from '@core/layouts/components/Logo.vue'
+import { $themeColors, $themeBreakpoints, $themeConfig } from "@themeConfig";
 import { BRow, BCol, BLink, BCardTitle, BCardText, BImg, BForm, BFormGroup, BFormInput, BButton } from 'bootstrap-vue'
 import { required, email } from '@validations'
 import store from '@/store/index'
@@ -136,6 +137,9 @@ export default {
       }
       return this.sideImg
     },
+    appName() {
+      return $themeConfig.app.appName;
+    }
   },
   methods: {
     validationForm() {
