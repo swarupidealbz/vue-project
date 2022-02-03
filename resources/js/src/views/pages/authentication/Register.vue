@@ -90,7 +90,7 @@
                 >
                   <b-form-input
                     id="register-lastname"
-                    v-model="firstname"
+                    v-model="lastname"
                     name="register-lastname"
                     :state="errors.length > 0 ? false:null"
                     placeholder="doe"
@@ -216,6 +216,7 @@
                 </validation-provider>
               </b-form-group>
 
+              <!-- register as -->
               <b-form-group
                 label="Register As"
                 label-for="register-role"
@@ -236,7 +237,7 @@
                 </validation-provider>
               </b-form-group>
 
-              <b-form-group>
+              <!-- <b-form-group>
                 <b-form-checkbox
                   id="register-privacy-policy"
                   v-model="status"
@@ -245,7 +246,7 @@
                   I agree to
                   <b-link>privacy policy & terms</b-link>
                 </b-form-checkbox>
-              </b-form-group>
+              </b-form-group> -->
 
               <b-button
                 variant="primary"
@@ -330,6 +331,7 @@ import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
 import useJwt from '@/auth/jwt/useJwt'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
   components: {
@@ -398,22 +400,57 @@ export default {
     register() {
       this.$refs.registerForm.validate().then(success => {
         if (success) {
-          useJwt
-            .register({
-              username: this.username,
-              email: this.userEmail,
-              password: this.password,
+          // useJwt
+          //   .register({
+          //     username: this.username,
+          //     email: this.userEmail,
+          //     password: this.password,
+          //   })
+          //   .then(response => {
+          //     useJwt.setToken(response.data.accessToken)
+          //     useJwt.setRefreshToken(response.data.refreshToken)
+          //     localStorage.setItem('userData', JSON.stringify(response.data.userData))
+          //     this.$ability.update(response.data.userData.ability)
+          //     this.$router.push('/')
+          //   })
+          //   .catch(error => {
+          //     this.$refs.registerForm.setErrors(error.response.data.error)
+          //   })
+          this.$http.post(this.$store.state.app.apiBaseUrl+'register', 
+          {
+            first_name: this.firstname,
+            last_name: this.lastname,
+            email: this.userEmail,
+            username: this.userEmail,
+            password: this.password,
+            confirm_password: this.confirm_password,
+            mobile: this.mobile,
+            role: this.role
+          }).then(response => {
+            this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Welcome ${this.firstname} ${this.lastname}`,
+                icon: 'CoffeeIcon',
+                variant: 'success',
+                text: response.data.message,
+              },
             })
-            .then(response => {
-              useJwt.setToken(response.data.accessToken)
-              useJwt.setRefreshToken(response.data.refreshToken)
-              localStorage.setItem('userData', JSON.stringify(response.data.userData))
-              this.$ability.update(response.data.userData.ability)
-              this.$router.push('/')
+            this.$router.push('/')
+          }).catch(error => {
+            this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Error`,
+                icon: 'UserXIcon',
+                variant: 'danger',
+                text: error.response.data.message,
+              },
             })
-            .catch(error => {
-              this.$refs.registerForm.setErrors(error.response.data.error)
-            })
+            this.$refs.registerForm.setErrors(error.response.data)
+          })
         }
       })
     },
