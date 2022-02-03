@@ -44,12 +44,10 @@ router.beforeEach((to, _, next) => {
     'auth-login',
     'auth-register',
     'auth-forgot-password'
-  ]
+  ]  
   const find = rList.find(i => i === to.name)
-  if(!find) {
-    next('/')
-  }
   console.log(to);
+  console.log(find);
   if (!canNavigate(to)) {
     // Redirect to login if not logged in
     if (!isLoggedIn) return next({ name: 'auth-login' })
@@ -61,6 +59,9 @@ router.beforeEach((to, _, next) => {
   // Redirect if logged in
   if (to.meta.redirectIfLoggedIn && isLoggedIn) {
     const userData = getUserData()
+    if(!find && (userData.role == 'client' || userData.role == 'writer')) {
+      next('/')
+    }
     next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
   }
 
