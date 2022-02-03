@@ -359,6 +359,19 @@ export default {
             }
           })
           .catch(error => {
+            if(error.response.status === 401) {
+              console.log('else part'+error.response.status);
+              this.$toast({
+                component: ToastificationContent,
+                position: 'top-right',
+                props: {
+                  title: `Error`,
+                  //icon: 'CoffeeIcon',
+                  variant: 'danger',
+                  text: error.response.data.message,
+                },
+              })
+            }
             console.log('else part');
             console.log(error);
             console.log(error.message);
