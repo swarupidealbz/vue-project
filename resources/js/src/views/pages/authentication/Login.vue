@@ -342,21 +342,21 @@ export default {
                       },
                     })
                   })
-            }
-            else {
-              console.log('else part');
-              this.$refs.loginForm.setErrors(response.data.message)
-              this.$toast({
-                component: ToastificationContent,
-                position: 'top-right',
-                props: {
-                  title: `Error`,
-                  //icon: 'CoffeeIcon',
-                  variant: 'danger',
-                  text: response.data.message,
-                },
-              })
-            }
+              }
+              else {
+                console.log('else part');
+                this.$refs.loginForm.setErrors(response.data.message)
+                this.$toast({
+                  component: ToastificationContent,
+                  position: 'top-right',
+                  props: {
+                    title: `Error`,
+                    //icon: 'CoffeeIcon',
+                    variant: 'danger',
+                    text: response.data.message,
+                  },
+                })
+              }
           })
           .catch(error => {
             if(error.response.status === 401) {
@@ -374,6 +374,7 @@ export default {
             }
             console.log('else part');
             console.log(error);
+            console.log(error.response);
             console.log(error.message);
             console.log(error.data.message);
             this.$refs.loginForm.setErrors(error.response.data)
@@ -382,7 +383,7 @@ export default {
         }
       }).catch(error => {
         console.log('outer part');
-            console.log(error);
+            console.log(error.response);
       });
     },
   },
