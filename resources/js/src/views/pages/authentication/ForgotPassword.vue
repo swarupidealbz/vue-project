@@ -158,7 +158,7 @@ export default {
                 text: response.data.message,
               },
             })
-            this.$router.push('/')
+            this.$router.push('/login')
           }).catch(error => {
             this.$toast({
               component: ToastificationContent,
@@ -170,8 +170,8 @@ export default {
                 text: error.response.data.message,
               },
             })
+            this.userEmail = '';
           })          
-          this.userEmail = '';
           // this.$toast({
           //   component: ToastificationContent,
           //   props: {
