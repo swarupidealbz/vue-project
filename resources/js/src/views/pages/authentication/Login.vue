@@ -303,7 +303,7 @@ export default {
           //  email: this.username,
           //  password: this.password,
           //  })
-          axios.post(store.state.app.apiBaseUrl + 'login', {username: this.username, password: this.password})
+          this.$http.post(store.state.app.apiBaseUrl + 'login', {username: this.username, password: this.password})
             .then(response => {
               console.log('api');
               console.log(response.data);
