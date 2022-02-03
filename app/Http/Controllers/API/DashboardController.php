@@ -83,8 +83,8 @@ class DashboardController extends BaseController
                 'sort_name' => 'EN'
             ],
             [
-                'name' => 'Denmark',
-                'sort_name' => 'DN'
+                'name' => 'France',
+                'sort_name' => 'FR'
             ]
         ];
     }
@@ -128,7 +128,7 @@ class DashboardController extends BaseController
             'topics' => $topics,
             'articles' => $articles,
             'outlines' => $outlines,
-            'comments' => $comments
+            'comments' => $comments,
         ];       
 
     }
@@ -157,7 +157,9 @@ class DashboardController extends BaseController
             'count' => $currentMonthTopics,
             'stat' => $topicInc,
             'stat_text' => $incText,
-            'stat_review_text' => $topicStartText
+            'stat_review_text' => $topicStartText,
+			'color' => 'light-primary',
+			'icon' => 'TrendingUpIcon'
         ];
 
         return $topicContent;
@@ -191,7 +193,9 @@ class DashboardController extends BaseController
             'count' => $currentMonthContent,
             'stat' => $contentInc,
             'stat_text' => $incText,
-            'stat_review_text' => $contentStartText
+            'stat_review_text' => $contentStartText,
+			'color' => 'light-info',
+			'icon' => 'UserIcon'
         ];
 
         return $articleContent;
@@ -217,7 +221,7 @@ class DashboardController extends BaseController
             $outlineStartText = 'Since Last Month';
             $diffLastCurrent = $currentMonthOutline - $lastMonthOutline;
             $incText = $diffLastCurrent > 0 ? 'inc' : 'dec';
-            $inc = (abs($diffLastCurrent) / $currentMonthOutline) * 100;
+            $inc = (abs($diffLastCurrent) / $lastMonthOutline) * 100;
             $outlineInc = number_format($inc, 2).'%';
         }
         $outlineContent = [
@@ -225,7 +229,9 @@ class DashboardController extends BaseController
             'count' => $currentMonthOutline,
             'stat' => $outlineInc,
             'stat_text' => $incText,
-            'stat_review_text' => $outlineStartText
+            'stat_review_text' => $outlineStartText,
+			'color' => 'light-danger',
+			'icon' => 'BoxIcon'
         ];
 
         return $outlineContent;
@@ -254,7 +260,9 @@ class DashboardController extends BaseController
             'count' => $currentMonthComment,
             'stat' => $commentInc,
             'stat_text' => $incText,
-            'stat_review_text' => $commentStartText
+            'stat_review_text' => $commentStartText,
+			'color' => 'light-success',
+			'icon' => 'DollarSignIcon'
         ];
 
         return $commentContent;
