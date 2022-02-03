@@ -210,7 +210,27 @@
                     v-model="mobile"
                     name="register-mobile"
                     :state="errors.length > 0 ? false:null"
-                    placeholder="johndoe"
+                    placeholder="Ex:9000000000"
+                  />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+
+              <b-form-group
+                label="Register As"
+                label-for="register-role"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  name="Register As"
+                  vid="role"
+                  rules="required"
+                >
+                  <b-form-select
+                    id="register-role"
+                    name="register-role"
+                    v-model="role"
+                    :options="options"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
@@ -342,6 +362,11 @@ export default {
       confirm_password: '',
       mobile: '',
       role: '',
+      options: [
+        { value: '', text: 'select' },
+        { value: 'client', text: 'Client' },
+        { value: 'writer', text: 'Writer' }
+      ],
       sideImg: require('@/assets/images/pages/register-v2.svg'),
       // validation
       required,
