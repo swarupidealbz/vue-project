@@ -227,7 +227,7 @@ class AuthController extends BaseController
 					'status' => false,
 					'message' => "The link seems to have expired, please check or reset your password again."
 				];
-				return redirect()->to(env('APP_FRONTEND_URL'))->withCookie(cookie('password_reset', json_encode($response), time() + 10*60, '/', '99ideaz.com', false));
+				return redirect()->to(env('APP_FRONTEND_URL'))->withCookie(cookie('password_reset', json_encode($response), time() + 10*60, '/', '99ideaz.com', false, false));
             }
 
             $user = User::select('id','first_name', 'last_name', 'mobile', 'email', 'role')
@@ -245,7 +245,7 @@ class AuthController extends BaseController
 					'status' => true,
 					'message' => "You're password has been reset successfully and sent on email, please check."
 				];
-				return redirect()->to(env('APP_FRONTEND_URL'))->withCookie(cookie('password_reset', json_encode($response), time() + 10*60, '/', '99ideaz.com', false));
+				return redirect()->to(env('APP_FRONTEND_URL'))->withCookie(cookie('password_reset', json_encode($response), time() + 10*60, '/', '99ideaz.com', false, false));
             }          
                 
             //return redirect()->to(env('APP_FRONTEND_URL'))->withCookie(cookie('password_reset', false));
@@ -253,7 +253,7 @@ class AuthController extends BaseController
 				'status' => false,
 				'message' => "You're password reset failed, please try again later."
 			];
-			return redirect()->to(env('APP_FRONTEND_URL'))->withCookie(cookie('password_reset', json_encode($response), time() + 10*60, '/', '99ideaz.com', false));
+			return redirect()->to(env('APP_FRONTEND_URL'))->withCookie(cookie('password_reset', json_encode($response), time() + 10*60, '/', '99ideaz.com', false, false));
             
         }
         catch(Exception $e) {
@@ -269,7 +269,7 @@ class AuthController extends BaseController
 				'status' => false,
 				'message' => "The link seems to have expired or invalid, please check or verify again."
 			];
-			return redirect()->to(env('APP_URL'))->withCookie(cookie('email_verify', json_encode($response), time() + 10*60, '/', 'cl.99ideaz.com', false));
+			return redirect()->to(env('APP_URL'))->withCookie(cookie('email_verify', json_encode($response), time() + 10*60, '/', '99ideaz.com', false, false));
         }
     
         $user = User::findOrFail($user_id);
@@ -283,7 +283,7 @@ class AuthController extends BaseController
 			'status' => true,
 			'message' => "Your email verified successfully"
 		];
-		return redirect()->to(env('APP_URL'))->withCookie(cookie('email_verify', json_encode($response), time() + 10*60, '/', 'cl.99ideaz.com', false));
+		return redirect()->to(env('APP_URL'))->withCookie(cookie('email_verify', json_encode($response), time() + 10*60, '/', '99ideaz.com', false, false));
 		//return $this->handleResponse([], "Email verified successfully");
 		//return 'Email verified'; 
     }
