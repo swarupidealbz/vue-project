@@ -39,25 +39,14 @@ export default {
     BDropdownItem,
     BImg,
   },
+  props: {
+    locales: {}
+  },
   // ! Need to move this computed property to comp function once we get to Vue 3
   computed: {
     currentLocale() {
       return this.locales.find(l => l.locale === this.$i18n.locale)
     },
-    locales() {
-      var lan = this.$store.state.app.topBar.languages || null;
-      if(!lan) {
-        let userData = JSON.parse(localStorage.getItem('userData'))
-        lan = userData.top_bar.languages
-      }
-      return lan.map(m => {
-        return {
-          locale: m.sort_name.toLowerCase(),
-          img: require(`@/assets/images/flags/${m.sort_name.toLowerCase()}.png`),
-          name: m.name
-        }
-      });
-    }
   },
 }
 </script>

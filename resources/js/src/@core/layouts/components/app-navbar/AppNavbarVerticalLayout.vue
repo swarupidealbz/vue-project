@@ -24,7 +24,7 @@
     </div>
 
     <b-navbar-nav class="nav align-items-center ml-auto">
-      <locale />
+      <locale :locales="languages"/>
       <dark-Toggler class="d-none d-lg-block" />
       <search-bar />
       <cart-dropdown v-if="isAdmin"/>
@@ -75,6 +75,15 @@ export default {
     },
     list() {
       return store.state.app.topBar.notifications.data;
+    },
+    languages() {
+      return store.state.app.topBar.languages.map(m => {
+        return {
+          locale: m.sort_name.toLowerCase(),
+          img: require(`@/assets/images/flags/${m.sort_name.toLowerCase()}.png`),
+          name: m.name
+        }
+      });
     }
   },
 }
