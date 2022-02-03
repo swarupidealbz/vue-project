@@ -145,14 +145,39 @@ export default {
     validationForm() {
       this.$refs.simpleRules.validate().then(success => {
         if (success) {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'This is for UI purpose only.',
-              icon: 'EditIcon',
-              variant: 'success',
-            },
+          this.$http.post(this.$store.state.app.apiBaseUrl+'password/forgot-password', {
+            email: this.userEmail
+          }).then(response => {
+            this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Password Changed`,
+                icon: 'CoffeeIcon',
+                variant: 'success',
+                text: response.data.message,
+              },
+            })
+          }).catch(error => {
+            this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Error`,
+                icon: 'UserXIcon',
+                variant: 'danger',
+                text: error.response.data.message,
+              },
+            })
           })
+          // this.$toast({
+          //   component: ToastificationContent,
+          //   props: {
+          //     title: 'This is for UI purpose only.',
+          //     icon: 'EditIcon',
+          //     variant: 'success',
+          //   },
+          // })
         }
       })
     },

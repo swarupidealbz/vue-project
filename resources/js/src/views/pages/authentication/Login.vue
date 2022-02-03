@@ -297,6 +297,8 @@ export default {
   created() {
     this.checkUser();
     this.$cookies.remove('email_verify', '/', '.99ideaz.com')
+    this.checkForPassword();
+    this.$cookies.remove('password_reset', '/', '.99ideaz.com')
   },
   methods: {
     checkUser(){
@@ -325,6 +327,37 @@ export default {
                 icon: 'UserXIcon',
                 variant: 'danger',
                 text: email_verify.message,
+              },
+            })
+        }
+      }
+    },
+    checkForPassword(){
+      var password_reset = this.$cookies.get('password_reset')
+      console.log(password_reset)
+      if(password_reset) {
+        console.log(password_reset)
+        if(password_reset.status === true) {
+           this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Password Changed`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: password_reset.message,
+              },
+            })
+        }
+        else if(password_reset.status === false) {
+          this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserXIcon',
+                variant: 'danger',
+                text: password_reset.message,
               },
             })
         }
