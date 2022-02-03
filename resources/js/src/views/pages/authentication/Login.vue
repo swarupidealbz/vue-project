@@ -344,31 +344,24 @@ export default {
               
           })
           .catch(error => {
-            if(error.response.status === 401) {
-              console.log('else part'+error.response.status);
-              this.$toast({
-                component: ToastificationContent,
-                position: 'top-right',
-                props: {
-                  title: `Error`,
-                  //icon: 'CoffeeIcon',
-                  variant: 'danger',
-                  text: error.response.data.message,
-                },
-              })
-            }
-            console.log('else part');
-            console.log(error);
-            console.log(error.response);
-            console.log(error.message);
-            console.log(error.data.message);
+            console.log('else part'+error.response.status);
+            this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Error`,
+                //icon: 'CoffeeIcon',
+                variant: 'danger',
+                text: error.response.data.message,
+              },
+            })
             this.$refs.loginForm.setErrors(error.response.data)
           })
             
         }
       }).catch(error => {
         console.log('outer part');
-            console.log(error.response);
+        console.log(error.response);
       });
     },
   },
