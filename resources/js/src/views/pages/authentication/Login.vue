@@ -310,7 +310,7 @@ export default {
               position: 'top-right',
               props: {
                 title: `Verified`,
-                icon: 'UserXIcon',
+                icon: 'UserCheckIcon',
                 variant: 'success',
                 text: email_verify.message,
               },
