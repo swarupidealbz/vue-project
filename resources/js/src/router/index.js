@@ -58,7 +58,7 @@ router.beforeEach((to, _, next) => {
     return next({ name: 'misc-not-authorized' })
   }
 
-  if(!find && isLoggedIn && ((userData.role == 'client') || (userData.role == 'writer'))) {
+  if(!find && isLoggedIn && ((user.role == 'client') || (user.role == 'writer'))) {
     console.log('not listed');
     return next({ name: 'error-404' })
   }
