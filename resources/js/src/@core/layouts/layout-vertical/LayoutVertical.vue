@@ -118,17 +118,15 @@ export default {
   },
   computed: {
     layoutContentRenderer() {
-      this.$store.dispatch('app/loadAppData').then(res => {
-        const rendererType = this.$route.meta.contentRenderer
-        if (rendererType === 'sidebar-left') return 'layout-content-renderer-left'
-        if (rendererType === 'sidebar-left-detached') return 'layout-content-renderer-left-detached'
-        return 'layout-content-renderer-default'
-      })
+      const rendererType = this.$route.meta.contentRenderer
+      if (rendererType === 'sidebar-left') return 'layout-content-renderer-left'
+      if (rendererType === 'sidebar-left-detached') return 'layout-content-renderer-left-detached'
+      return 'layout-content-renderer-default'
     },
   },  
-  // beforeCreate() {
-  //   this.$store.dispatch('app/loadAppData');
-  // },
+  beforeCreate() {
+    this.$store.dispatch('app/loadAppData');
+  },
   setup() {
     const {
       routerTransition, navbarBackgroundColor, navbarType, footerType, isNavMenuHidden,

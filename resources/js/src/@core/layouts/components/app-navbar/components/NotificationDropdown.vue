@@ -1,4 +1,5 @@
 <template>
+  
   <b-nav-item-dropdown
     class="dropdown-notification mr-25"
     menu-class="dropdown-menu-media"
@@ -28,7 +29,9 @@
         </b-badge>
       </div>
     </li>
-
+  <div v-for="n in list" :key="n.heading">
+    {{ n.heading}}
+  </div>
     <!-- Notifications -->
     <vue-perfect-scrollbar
       v-once
