@@ -45,7 +45,7 @@ router.beforeEach((to, _, next) => {
     'auth-register',
     'auth-forgot-password'
   ]  
-  const find = rList.find(i => i === to.name)
+  const find = rList.includes(to.name)
   console.log(to);
   console.log(find);
   if (!canNavigate(to)) {
@@ -59,8 +59,8 @@ router.beforeEach((to, _, next) => {
   // Redirect if logged in
   if (to.meta.redirectIfLoggedIn && isLoggedIn) {
     const userData = getUserData()
-    if(find && find != 'undefined' && (userData.role == 'client' || userData.role == 'writer')) {
-      next('/')
+    if(!find && (userData.role == 'client' || userData.role == 'writer')) {
+      return next({ name: 'error-404' })
     }
     next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
   }
