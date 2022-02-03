@@ -306,7 +306,7 @@ export default {
           axios.post(store.state.app.apiBaseUrl + 'login', {username: this.username, password: this.password})
             .then(response => {
               if(response.data.success === true) {
-
+                this.$store.dispatch('app/loadAppData');
                 console.log(response.data)
                 const userData = response.data.data.user
                 let ability = [];
