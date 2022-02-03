@@ -218,7 +218,7 @@ class AuthController extends BaseController
                 ]);
             
             if ($validator->fails()) {
-                return $this->handleError([], $validator->errors()->all(), 400);
+                return $this->handleError('Enter your registered email address.', $validator->errors()->all(), 400);
             }
 	
             if((sha1($request['email']) !=  $request['hash']) || ($request['expires'] < Carbon::now()->timestamp)) {
