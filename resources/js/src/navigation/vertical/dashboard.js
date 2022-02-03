@@ -2,7 +2,7 @@ export default [
   {
     title: 'Dashboards',
     icon: 'HomeIcon',
-    route: 'dashboard-ecommerce',
+    route: 'dashboard',
     // tag: '2',
     // tagVariant: 'light-warning',
     // children: [

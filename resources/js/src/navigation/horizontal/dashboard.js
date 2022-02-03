@@ -5,7 +5,7 @@ export default [
     children: [
       {
         title: 'eCommerce',
-        route: 'dashboard-ecommerce',
+        route: 'dashboard',
         icon: 'ShoppingCartIcon',
       },
       {
