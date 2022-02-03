@@ -152,7 +152,7 @@ export default {
               component: ToastificationContent,
               position: 'top-right',
               props: {
-                title: `Password Changed`,
+                title: `Password Reset Link Sent`,
                 icon: 'CoffeeIcon',
                 variant: 'success',
                 text: response.data.message,
