@@ -299,7 +299,7 @@ export default {
   },
   methods: {
     checkUser(){
-      var email_verify = this.$cookie.get('email_verify')
+      var email_verify = this.$cookies.get()
       console.log(email_verify);
       if(email_verify) {
         console.log('get in')
