@@ -324,6 +324,7 @@ import {
   BImg,
   BCardTitle,
   BCardText,
+  BFormSelect
 } from 'bootstrap-vue'
 import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
@@ -346,6 +347,7 @@ export default {
     BFormInput,
     BInputGroup,
     BInputGroupAppend,
+    BFormSelect,
     // validations
     ValidationProvider,
     ValidationObserver,
