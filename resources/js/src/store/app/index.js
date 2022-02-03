@@ -50,9 +50,9 @@ export default {
   },
   actions: {
     loadAppData({commit, state, dispatch}, payload){
-      dispatch('app/loadTop');
-      dispatch('app/loadData');
-      dispatch('app/loadMenu');
+      dispatch('loadTop');
+      dispatch('loadData');
+      dispatch('loadMenu');
     },
     loadTop({commit, state, dispatch}) {
       axios.post(store.state.app.apiBaseUrl+'dashboard/data', {parts: 'top_bar'}).then(response => {
@@ -64,7 +64,7 @@ export default {
           notifications: response.data.data.notifications
         };
         var userData = JSON.parse(localStorage.getItem('userData'));
-        commit('app/setTopBar', top);
+        commit('setTopBar', top);
         userData.top_bar = top;
         localStorage.setItem('userData', JSON.stringify(userData))
       }).catch(error => {
@@ -81,7 +81,7 @@ export default {
           article_lists: response.data.data.article_lists
         };
         var userData = JSON.parse(localStorage.getItem('userData'));
-        commit('app/setDashboardData', data);
+        commit('setDashboardData', data);
         userData.stat = data;
         localStorage.setItem('userData', JSON.stringify(userData))
       }).catch(error => {
@@ -96,7 +96,7 @@ export default {
           side_menus: response.data.data.side_menus
         };
         var userData = JSON.parse(localStorage.getItem('userData'));
-        commit('app/setMenu', menu);
+        commit('setMenu', menu);
         userData.menu = menu;
         localStorage.setItem('userData', JSON.stringify(userData))
       }).catch(error => {
