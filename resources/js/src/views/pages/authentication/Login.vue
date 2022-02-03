@@ -298,16 +298,15 @@ export default {
     login() {
       this.$refs.loginForm.validate().then(success => {
         if (success) {
-          //useJwt
-          //  .login({
-          //  email: this.username,
-          //  password: this.password,
-          //  })
-          this.$http.post(store.state.app.apiBaseUrl + 'login', {username: this.username, password: this.password})
+          useJwt
+           .login({
+           email: this.username,
+           password: this.password,
+           })
+          // this.$http.post(store.state.app.apiBaseUrl + 'login', {username: this.username, password: this.password})
             .then(response => {
               console.log('api');
               console.log(response.data);
-              if(response.data.success === true) {
                 console.log(response.data)
                 const userData = response.data.data.user
                 let ability = [];
@@ -342,21 +341,7 @@ export default {
                       },
                     })
                   })
-              }
-              else {
-                console.log('else part');
-                this.$refs.loginForm.setErrors(response.data.message)
-                this.$toast({
-                  component: ToastificationContent,
-                  position: 'top-right',
-                  props: {
-                    title: `Error`,
-                    //icon: 'CoffeeIcon',
-                    variant: 'danger',
-                    text: response.data.message,
-                  },
-                })
-              }
+              
           })
           .catch(error => {
             if(error.response.status === 401) {
