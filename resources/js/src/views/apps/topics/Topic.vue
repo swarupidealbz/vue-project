@@ -136,7 +136,6 @@
             size="22"
             class="cursor-pointer ml-1 text-danger"
           />
-
         </div>
       </div>
 
