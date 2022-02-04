@@ -4,7 +4,7 @@ export default [
   // },
   {
     title: 'Topics',
-    route: 'apps-email',
+    route: 'topics',
     icon: 'MailIcon',
   },
   // {

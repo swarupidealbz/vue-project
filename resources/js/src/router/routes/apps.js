@@ -221,4 +221,15 @@ export default [
     name: 'apps-invoice-edit',
     component: () => import('@/views/apps/invoice/invoice-edit/InvoiceEdit.vue'),
   },
+
+  /// using route
+  {
+    path: '/topics',
+    name: 'topics',
+    component: () => import('@/views/apps/topics/Topic.vue'),
+    meta: {
+      contentRenderer: 'sidebar-left',
+      contentClass: 'email-application',
+    },
+  },
 ]

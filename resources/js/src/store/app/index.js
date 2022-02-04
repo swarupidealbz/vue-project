@@ -20,6 +20,11 @@ export default {
     menu: {
       side_menus: []
     },
+    groups: [],
+    topics: [],
+    contents: [],
+    comments:[],
+    selectedOrder: {},
   },
   getters: {
     currentBreakPoint: state => {
@@ -46,6 +51,21 @@ export default {
     },
     setDashboardData(state, val) {
       state.dashboardData = val;
+    },
+    setGroups(state, val) {
+      state.groups = val;
+    },
+    setTopics(state, val) {
+      state.topics = val;
+    },
+    setContents(state, val) {
+      state.contents = val;
+    },
+    setComments(state, val) {
+      state.comments = val;
+    },
+    setSelectedOrder(state, val) {
+      state.selectedOrder = val;
     }
   },
   actions: {
@@ -53,11 +73,12 @@ export default {
       dispatch('loadTop');
       dispatch('loadData');
       dispatch('loadMenu');
+      dispatch('loadTopics');
     },
     loadTop({commit, state, dispatch}) {
       axios.post(state.apiBaseUrl+'dashboard/data', {parts: 'top_bar'}).then(response => {
         console.log('top data');
-        console.log(response.data);
+        // console.log(response.data);
         let top = {
           websites: response.data.data.websites,
           languages: response.data.data.languages,
@@ -74,7 +95,7 @@ export default {
     loadData({commit, state, dispatch}) {
       axios.post(state.apiBaseUrl+'dashboard/data', {parts: 'data'}).then(response => {
         console.log('dash data');
-        console.log(response.data);
+        // console.log(response.data);
         let data = {
           statistics: response.data.data.statistics,
           topic_lists: response.data.data.topic_lists,
@@ -91,7 +112,7 @@ export default {
     loadMenu({commit, state, dispatch}) {
       axios.post(state.apiBaseUrl+'dashboard/data', {parts: 'side_menu'}).then(response => {
         console.log('menu data');
-        console.log(response.data);
+        // console.log(response.data);
         let menu = {
           side_menus: response.data.data.side_menus
         };
@@ -102,6 +123,24 @@ export default {
       }).catch(error => {
         console.log('error load menu data');
       })
+    },
+    loadTopics({commit, state, dispatch}, payload) {
+      axios.post(state.apiBaseUrl+'primary-topic/list-by-website', payload).then((res) => {
+        console.log('topics list');
+        commit('setTopics', res.data.topics);
+        commit('setGroups', res.data.groups);
+      }).catch(() => {
+        console.log('error load topics data');
+      })
+    },
+    sortRecord({commit, state, dispatch}, payload) {
+      axios.post(state.apiBaseUrl+'topic/sort-record', payload).then((res) => {
+        console.log('sort topics');
+        commit('setTopics', res.data);
+      }).catch(() => {
+        console.log('error load sort record data');
+      })
     }
+    
   },
 }
