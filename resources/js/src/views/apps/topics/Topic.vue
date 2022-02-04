@@ -128,13 +128,15 @@
           <feather-icon
             icon="CheckCircleIcon"
             size="17"
-            class="cursor-pointer ml-1 success"
+            class="cursor-pointer ml-1"
+            variant="success"
           />
 
           <feather-icon
             icon="XCircleIcon"
             size="17"
-            class="cursor-pointer ml-1 danger"
+            class="cursor-pointer ml-1"
+            variant="danger"
           />
 
         </div>
@@ -210,10 +212,10 @@
                   <b-dropdown-item >
                     View Content
                   </b-dropdown-item>
-                  <b-dropdown-item class="success">
+                  <b-dropdown-item variant="success">
                     Accept
                   </b-dropdown-item>
-                  <b-dropdown-item class="danger">
+                  <b-dropdown-item variant="danger">
                     Reject
                   </b-dropdown-item>
                 </b-dropdown>
