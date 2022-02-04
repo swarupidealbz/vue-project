@@ -192,37 +192,32 @@
                 </p>
               </div>
             </b-media-body>
-             <b-media-aside class="media-right ml-50">                          
-              <div class="user-action">
-                 <!-- Dropdown -->
-                <div class="dropdown">
-                  <b-dropdown
-                    variant="link"
-                    no-caret
-                    toggle-class="p-0 mr-1"
-                    right
-                  >
-                    <template #button-content>
-                      <feather-icon
-                        icon="MoreVerticalIcon"
-                        size="16"
-                        class="align-middle text-body"
-                      />
-                    </template>
-                    <b-dropdown-item >
-                      View Content
-                    </b-dropdown-item>
-                    <b-dropdown-item variant="success">
-                      Accept
-                    </b-dropdown-item>
-                    <b-dropdown-item variant="danger">
-                      Reject
-                    </b-dropdown-item>
-                  </b-dropdown>
-                </div>
+              <!-- Dropdown -->
+              <div class="dropdown">
+                <b-dropdown
+                  variant="link"
+                  no-caret
+                  toggle-class="p-0 ml-1"
+                  right
+                >
+                  <template #button-content>
+                    <feather-icon
+                      icon="MoreVerticalIcon"
+                      size="16"
+                      class="align-middle text-body"
+                    />
+                  </template>
+                  <b-dropdown-item >
+                    View Content
+                  </b-dropdown-item>
+                  <b-dropdown-item variant="success">
+                    Accept
+                  </b-dropdown-item>
+                  <b-dropdown-item variant="danger">
+                    Reject
+                  </b-dropdown-item>
+                </b-dropdown>
               </div>
-            </b-media-aside>
-              
           </b-media>
         </ul>
         <div
@@ -560,7 +555,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+@media(mix-width: 600px) {
+ .mail-meta-item {
+   display: none !important;
+ } 
+}
 </style>
 
 <style lang="scss">
