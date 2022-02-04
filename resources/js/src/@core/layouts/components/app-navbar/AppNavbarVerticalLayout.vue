@@ -24,6 +24,7 @@
     </div>
 
     <b-navbar-nav class="nav align-items-center ml-auto">
+      <website :websites="websites"/>
       <locale :locales="languages"/>
       <dark-Toggler class="d-none d-lg-block" />
       <search-bar />
@@ -39,6 +40,7 @@ import {
   BLink, BNavbarNav,
 } from 'bootstrap-vue'
 import Bookmarks from './components/Bookmarks.vue'
+import Website from './components/Website.vue'
 import Locale from './components/Locale.vue'
 import SearchBar from './components/SearchBar.vue'
 import DarkToggler from './components/DarkToggler.vue'
@@ -56,6 +58,7 @@ export default {
     // Navbar Components
     BNavbarNav,
     Bookmarks,
+    Website,
     Locale,
     SearchBar,
     DarkToggler,
@@ -84,6 +87,9 @@ export default {
           name: m.name
         }
       });
+    },
+    websites() {
+      return store.state.app.topBar.websites;
     }
   },
 }

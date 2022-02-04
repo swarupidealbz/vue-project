@@ -25,6 +25,7 @@ export default {
     contents: [],
     comments:[],
     selectedOrder: {},
+    selectedWebsite: {},
   },
   getters: {
     currentBreakPoint: state => {
@@ -66,7 +67,10 @@ export default {
     },
     setSelectedOrder(state, val) {
       state.selectedOrder = val;
-    }
+    },
+    setSelectedWebsite(state, val) {
+      state.selectedWebsite = val;
+    },
   },
   actions: {
     loadAppData({commit, state, dispatch}, payload){
@@ -86,6 +90,7 @@ export default {
         };
         var userData = JSON.parse(localStorage.getItem('userData'));
         commit('setTopBar', top);
+        commit('setSelectedWebsite', response.data.data.websites[0]);
         userData.top_bar = top;
         localStorage.setItem('userData', JSON.stringify(userData))
       }).catch(error => {
@@ -141,6 +146,6 @@ export default {
         console.log('error load sort record data');
       })
     }
-    
+
   },
 }
