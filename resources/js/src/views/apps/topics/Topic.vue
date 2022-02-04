@@ -192,32 +192,37 @@
                 </p>
               </div>
             </b-media-body>
-              <!-- Dropdown -->
-              <div class="dropdown">
-                <b-dropdown
-                  variant="link"
-                  no-caret
-                  toggle-class="p-0 mr-1"
-                  right
-                >
-                  <template #button-content>
-                    <feather-icon
-                      icon="MoreVerticalIcon"
-                      size="16"
-                      class="align-middle text-body"
-                    />
-                  </template>
-                  <b-dropdown-item >
-                    View Content
-                  </b-dropdown-item>
-                  <b-dropdown-item variant="success">
-                    Accept
-                  </b-dropdown-item>
-                  <b-dropdown-item variant="danger">
-                    Reject
-                  </b-dropdown-item>
-                </b-dropdown>
+             <b-media-aside class="media-right ml-50">                          
+              <div class="user-action">
+                 <!-- Dropdown -->
+                <div class="dropdown">
+                  <b-dropdown
+                    variant="link"
+                    no-caret
+                    toggle-class="p-0 mr-1"
+                    right
+                  >
+                    <template #button-content>
+                      <feather-icon
+                        icon="MoreVerticalIcon"
+                        size="16"
+                        class="align-middle text-body"
+                      />
+                    </template>
+                    <b-dropdown-item >
+                      View Content
+                    </b-dropdown-item>
+                    <b-dropdown-item variant="success">
+                      Accept
+                    </b-dropdown-item>
+                    <b-dropdown-item variant="danger">
+                      Reject
+                    </b-dropdown-item>
+                  </b-dropdown>
+                </div>
               </div>
+            </b-media-aside>
+              
           </b-media>
         </ul>
         <div
