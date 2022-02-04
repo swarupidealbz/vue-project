@@ -127,16 +127,14 @@
 
           <feather-icon
             icon="CheckCircleIcon"
-            size="17"
-            class="cursor-pointer ml-1"
-            variant="success"
+            size="25"
+            class="cursor-pointer ml-1 text-success"
           />
 
           <feather-icon
             icon="XCircleIcon"
-            size="17"
-            class="cursor-pointer ml-1"
-            variant="danger"
+            size="25"
+            class="cursor-pointer ml-1 text-danger"
           />
 
         </div>
@@ -224,7 +222,7 @@
         </ul>
         <div
           class="no-results"
-          :class="{'show': !emails.length}"
+          :class="{'show': !topics.length}"
         >
           <h5>No Items Found</h5>
         </div>
