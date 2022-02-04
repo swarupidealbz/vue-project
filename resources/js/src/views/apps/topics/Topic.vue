@@ -555,7 +555,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media(mix-width: 600px) {
+@media(max-width: 460px) {
  .mail-meta-item {
    display: none !important;
  } 
