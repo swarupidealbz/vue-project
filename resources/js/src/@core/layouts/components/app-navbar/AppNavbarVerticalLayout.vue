@@ -17,15 +17,14 @@
     </ul>
 
     <!-- Left Col -->
-    <div class="bookmark-wrapper align-items-center flex-grow-1 d-none d-lg-flex">
+    <div class="bookmark-wrapper align-items-center flex-grow-1 d-none d-lg-flex" v-if="isAdmin">
 
       <!-- Bookmarks Container -->
-      <bookmarks v-if="isAdmin"/>
-      <website :websites="websites"/>
+      <bookmarks />
     </div>
 
     <b-navbar-nav class="nav align-items-center ml-auto">
-      
+      <website :websites="websites"/>
       <locale :locales="languages"/>
       <dark-Toggler class="d-none d-lg-block" />
       <search-bar />
