@@ -130,13 +130,15 @@ export default {
       })
     },
     loadTopics({commit, state, dispatch}, payload) {
-      axios.post(state.apiBaseUrl+'primary-topic/list-by-website', payload).then((res) => {
-        console.log('topics list');
-        commit('setTopics', res.data.topics);
-        commit('setGroups', res.data.groups);
-      }).catch(() => {
-        console.log('error load topics data');
-      })
+      if(payload.website) {        
+        axios.post(state.apiBaseUrl+'primary-topic/list-by-website', payload).then((res) => {
+          console.log('topics list');
+          commit('setTopics', res.data.topics);
+          commit('setGroups', res.data.groups);
+        }).catch(() => {
+          console.log('error load topics data');
+        })
+      }
     },
     sortRecord({commit, state, dispatch}, payload) {
       axios.post(state.apiBaseUrl+'topic/sort-record', payload).then((res) => {
