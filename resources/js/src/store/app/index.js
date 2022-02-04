@@ -91,6 +91,7 @@ export default {
         var userData = JSON.parse(localStorage.getItem('userData'));
         commit('setTopBar', top);
         commit('setSelectedWebsite', response.data.data.websites[0]);
+        dispatch('loadTopics', {website:response.data.data.websites[0].id})
         userData.top_bar = top;
         localStorage.setItem('userData', JSON.stringify(userData))
       }).catch(error => {
