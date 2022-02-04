@@ -13,10 +13,6 @@
               Compose
             </b-button>
           </div>
-          <!-- <vue-perfect-scrollbar
-            :settings="perfectScrollbarSettings"
-            class="sidebar-menu-list scroll-area"
-          > -->
             <!-- Filters -->
             <b-list-group class="list-group-messages">
               <b-list-group-item
@@ -30,7 +26,6 @@
               </b-list-group-item>
             </b-list-group>
 
-          <!-- </vue-perfect-scrollbar> -->
         </div>
       </div>
     </div>

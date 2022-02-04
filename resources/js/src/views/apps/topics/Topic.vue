@@ -150,33 +150,21 @@
       >
         <ul class="email-media-list">
           <b-media
-            v-for="email in emails"
-            :key="email.id"
+            v-for="topic in topics"
+            :key="topic.id"
             tag="li"
             no-body
-            :class="{ 'mail-read': email.isRead }"
-            @click="updateEmailViewData(email)"
+            @click="updateEmailViewData(topic)"
           >
 
-            <b-media-aside class="media-left mr-50">
-              <b-avatar
-                class="avatar"
-                size="40"
-                variant="primary"
-                :src="email.from.avatar"
-              />
+            <b-media-aside class="media-left mr-50">              
               <div class="user-action">
-                <b-form-checkbox
-                  :checked="selectedEmails.includes(email.id)"
-                  @change="toggleSelectedMail(email.id)"
-                  @click.native.stop
-                />
                 <div class="email-favorite">
                   <feather-icon
                     icon="StarIcon"
                     size="17"
-                    :class="{ 'text-warning fill-current': email.isStarred }"
-                    @click.stop="toggleStarred(email)"
+                    :class="{ 'text-warning fill-current': topic.is_favorite }"
+                    @click.stop="toggleStarred(topic)"
                   />
                 </div>
               </div>
@@ -185,32 +173,49 @@
             <b-media-body>
               <div class="mail-details">
                 <div class="mail-items">
-                  <h5 class="mb-25">
-                    {{ email.from.name }}
-                  </h5>
-                  <span class="text-truncate">{{ email.subject }}</span>
+                  <span class="text-truncate">{{ topic.topic }}</span>
                 </div>
                 <div class="mail-meta-item">
-                  <feather-icon
-                    v-if="email.attachments.length"
-                    icon="PaperclipIcon"
-                  />
                   <span
-                    v-for="label in email.labels"
-                    :key="label"
                     class="mx-50 bullet bullet-sm"
-                    :class="`bullet-${resolveLabelColor(label)}`"
+                    :class="`bullet-${topic.status == 'approved' ? 'success' : 'danger'}`"
                   />
-                  <span class="mail-date">{{ formatDateToMonthShort(email.time, { hour: 'numeric', minute: 'numeric', }) }}</span>
+                  <span class="mail-date">{{ formatDateToMonthShort(topic.created_at, { hour: 'numeric', minute: 'numeric', }) }}</span>
                 </div>
               </div>
 
               <div class="mail-message">
                 <p class="text-truncate mb-0">
-                  {{ filterTags(email.message) }}
+                  {{ filterTags(topic.description) }}
                 </p>
               </div>
             </b-media-body>
+              <!-- Dropdown -->
+              <div class="dropdown">
+                <b-dropdown
+                  variant="link"
+                  no-caret
+                  toggle-class="p-0 mr-1"
+                  right
+                >
+                  <template #button-content>
+                    <feather-icon
+                      icon="MoreVerticalIcon"
+                      size="16"
+                      class="align-middle text-body"
+                    />
+                  </template>
+                  <b-dropdown-item >
+                    View Content
+                  </b-dropdown-item>
+                  <b-dropdown-item class="text-success">
+                    Accept
+                  </b-dropdown-item>
+                  <b-dropdown-item class="text-danger">
+                    Reject
+                  </b-dropdown-item>
+                </b-dropdown>
+              </div>
           </b-media>
         </ul>
         <div
@@ -290,6 +295,11 @@ export default {
     TopicLeftSidebar,
     EmailView,
     EmailCompose,
+  },
+  computed: {
+    topics() {
+      return this.$store.state.app.topics;
+    }
   },
   setup() {
     const EMAIL_APP_STORE_MODULE_NAME = 'app-email'
