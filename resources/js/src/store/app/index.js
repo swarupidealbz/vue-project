@@ -74,10 +74,11 @@ export default {
   },
   actions: {
     loadAppData({commit, state, dispatch}, payload){
-      dispatch('loadTop');
+      dispatch('loadTop').then((res) => {
+        dispatch('loadTopics', {website:state.selectedWebsite.id});
+      });
       dispatch('loadData');
       dispatch('loadMenu');
-      dispatch('loadTopics', {website:state.selectedWebsite.id});
     },
     loadTop({commit, state, dispatch}) {
       axios.post(state.apiBaseUrl+'dashboard/data', {parts: 'top_bar'}).then(response => {
