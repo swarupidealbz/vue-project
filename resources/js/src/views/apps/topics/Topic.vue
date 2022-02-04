@@ -180,7 +180,7 @@
                 <div class="mail-meta-item">
                   <span
                     class="mx-50 bullet bullet-sm"
-                    :class="`bullet-${topic.status == 'approved' ? 'success' : 'danger'}`"
+                    :class="`bullet-${topic.status == 'approved' ? 'success' : (topic.status == 'rejected' ? 'danger' : 'warning')}`"
                   />
                   <span class="mail-date">{{ formatDateToMonthShort(topic.created_at, { hour: 'numeric', minute: 'numeric', }) }}</span>
                 </div>
