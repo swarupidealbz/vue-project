@@ -157,7 +157,12 @@
             @click="updateEmailViewData(topic)"
           >
 
-            <b-media-aside class="media-left mr-50">              
+            <b-media-aside class="media-left mr-50">  
+              <b-form-checkbox
+                  :checked="selectedEmails.includes(topic.id)"
+                  @change="toggleSelectedMail(topic.id)"
+                  @click.native.stop
+                />            
               <div class="user-action">
                 <div class="email-favorite">
                   <feather-icon
