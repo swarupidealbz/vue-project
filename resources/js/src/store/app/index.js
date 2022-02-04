@@ -144,7 +144,7 @@ export default {
     sortRecord({commit, state, dispatch}, payload) {
       axios.post(state.apiBaseUrl+'topic/sort-record', payload).then((res) => {
         console.log('sort topics');
-        commit('setTopics', res.data);
+        commit('setTopics', res.data.data);
       }).catch(() => {
         console.log('error load sort record data');
       })

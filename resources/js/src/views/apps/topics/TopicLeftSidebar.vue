@@ -24,12 +24,8 @@
                 :key="group.name"
                 :active="isActive(group)"
                 @click="sortGroup(group)"
+                class="hand"
               >
-                <feather-icon
-                  icon="Edit2Icon"
-                  size="18"
-                  class="mr-75"
-                />
                 <span class="align-text-bottom line-height-1">{{ group.name }}</span>                
               </b-list-group-item>
               <!-- <b-list-group-item
@@ -174,5 +170,7 @@ export default {
 </script>
 
 <style>
-
+.hand {
+  cursor: pointer;
+}
 </style>
