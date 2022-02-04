@@ -125,7 +125,9 @@ export default {
     },
   },  
   beforeCreate() {
-    this.$store.dispatch('app/loadAppData');
+    this.$store.dispatch('app/loadAppData').then(() => {
+      this.$store.dispatch('app/loadTopics', {website:this.$store.state.app.selectedWebsite.id});
+    });
   },
   setup() {
     const {

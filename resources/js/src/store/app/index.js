@@ -74,11 +74,10 @@ export default {
   },
   actions: {
     loadAppData({commit, state, dispatch}, payload){
-      dispatch('loadTop').then((res) => {
-        dispatch('loadTopics', {website:state.selectedWebsite.id});
-      });
+      dispatch('loadTop');
       dispatch('loadData');
       dispatch('loadMenu');
+      
     },
     loadTop({commit, state, dispatch}) {
       axios.post(state.apiBaseUrl+'dashboard/data', {parts: 'top_bar'}).then(response => {
@@ -131,8 +130,6 @@ export default {
       })
     },
     loadTopics({commit, state, dispatch}, payload) {
-      console.log('payload');
-      console.log(payload);
       axios.post(state.apiBaseUrl+'primary-topic/list-by-website', payload).then((res) => {
         console.log('topics list');
         commit('setTopics', res.data.topics);
