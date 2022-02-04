@@ -94,3 +94,10 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+@media(max-width: 460px) {
+ .website-dropdown {
+   display: none !important;
+ } 
+}
+</style>

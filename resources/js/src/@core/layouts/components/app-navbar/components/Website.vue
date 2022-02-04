@@ -2,7 +2,7 @@
   <b-nav-item-dropdown
     id="dropdown-grouped"
     variant="link"
-    class="dropdown-language"
+    class="dropdown-language website-dropdown"
     right
   >
     <template #button-content>
