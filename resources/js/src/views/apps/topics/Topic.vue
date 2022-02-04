@@ -127,13 +127,13 @@
 
           <feather-icon
             icon="CheckCircleIcon"
-            size="20"
+            size="21"
             class="cursor-pointer ml-1 text-success"
           />
 
           <feather-icon
             icon="XCircleIcon"
-            size="20"
+            size="21"
             class="cursor-pointer ml-1 text-danger"
           />
 
