@@ -134,7 +134,7 @@ class PrimaryTopicController extends BaseController
             $loginUser = Auth::user();
             $website = is_array($request->website) ? $request->website : explode(',',$request->website);
             //if($loginUser->role == 'client') {
-                $topicList = Topics::where('is_primary_topic', 1)->whereIn('website_id', $website)->with(['groups.group'])->get()
+                $topicList = Topics::where('is_primary_topic', 1)->whereIn('website_id', $website)->with(['groups.group'])->latest()->get()
 				->map(function($topic) use($loginUser){
 					if($topic->usersFavorite()->where(['user_id' => $loginUser->id])->exists()) {
 						$topic->is_favorite = true;
@@ -285,7 +285,7 @@ class PrimaryTopicController extends BaseController
                         return $groups->where('group_id', $sort);
                     });
                 }
-            })->get()->map(function($topic) use($loginUser){
+            })->latest()->get()->map(function($topic) use($loginUser){
                 if($topic->usersFavorite()->where(['user_id' => $loginUser->id])->exists()) {
                     $topic->is_favorite = true;
                 }

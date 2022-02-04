@@ -59,7 +59,7 @@
         >
 
           <!-- Update Mail Folder Dropdown -->
-          <b-dropdown
+          <!-- <b-dropdown
             variant="link"
             no-caret
             toggle-class="p-0"
@@ -90,10 +90,10 @@
               <feather-icon icon="TrashIcon" />
               <span class="align-middle ml-50">Trash</span>
             </b-dropdown-item>
-          </b-dropdown>
+          </b-dropdown> -->
 
           <!-- Update Mail Folder Dropdown -->
-          <b-dropdown
+          <!-- <b-dropdown
             variant="link"
             no-caret
             toggle-class="p-0"
@@ -123,21 +123,18 @@
               <span class="mr-50 bullet bullet-danger bullet-sm" />
               <span>Private</span>
             </b-dropdown-item>
-          </b-dropdown>
+          </b-dropdown> -->
 
           <feather-icon
-            icon="MailIcon"
+            icon="CheckCircleIcon"
             size="17"
-            class="cursor-pointer ml-1"
-            @click="markSelectedEmailsAsUnread"
+            class="cursor-pointer ml-1 success"
           />
 
           <feather-icon
-            v-show="$route.params.folder !== 'trash'"
-            icon="TrashIcon"
+            icon="XCircleIcon"
             size="17"
-            class="cursor-pointer ml-1"
-            @click="moveSelectedEmailsToFolder('trash')"
+            class="cursor-pointer ml-1 danger"
           />
 
         </div>
@@ -157,13 +154,13 @@
             @click="updateEmailViewData(topic)"
           >
 
-            <b-media-aside class="media-left mr-50">  
-              <b-form-checkbox
+            <b-media-aside class="media-left mr-50">                          
+              <div class="user-action">
+                 <b-form-checkbox
                   :checked="selectedEmails.includes(topic.id)"
                   @change="toggleSelectedMail(topic.id)"
                   @click.native.stop
-                />            
-              <div class="user-action">
+                /> 
                 <div class="email-favorite">
                   <feather-icon
                     icon="StarIcon"
@@ -213,10 +210,10 @@
                   <b-dropdown-item >
                     View Content
                   </b-dropdown-item>
-                  <b-dropdown-item class="text-success">
+                  <b-dropdown-item class="success">
                     Accept
                   </b-dropdown-item>
-                  <b-dropdown-item class="text-danger">
+                  <b-dropdown-item class="danger">
                     Reject
                   </b-dropdown-item>
                 </b-dropdown>

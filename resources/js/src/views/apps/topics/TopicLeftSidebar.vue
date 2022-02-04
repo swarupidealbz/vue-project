@@ -16,11 +16,19 @@
             <!-- Filters -->
             <b-list-group class="list-group-messages">
               <b-list-group-item
+                key="all-topic"
+                :active="activeAll"
+                @click="showAll"
+                class="cursor-pointer"
+              >
+                <span class="align-text-bottom line-height-1">All</span>                
+              </b-list-group-item>
+              <b-list-group-item
                 v-for="group in groups"
                 :key="group.name"
                 :active="isActive(group)"
                 @click="sortGroup(group)"
-                class="hand"
+                class="cursor-pointer"
               >
                 <span class="align-text-bottom line-height-1">{{ group.name }}</span>                
               </b-list-group-item>
@@ -68,6 +76,9 @@ export default {
   computed: {
     groups() {
       return this.$store.state.app.groups;
+    },
+    activeAll() {
+      return !this.$store.state.app.selectedOrder.id;
     }
   },
   methods: {
@@ -78,6 +89,10 @@ export default {
       this.$emit('close-left-sidebar');
       this.$store.commit('app/setSelectedOrder', group);
       this.$store.dispatch('app/sortRecord', { website: this.$store.state.app.selectedWebsite.id, order: group.id});
+    },
+    showAll() {
+      this.$store.commit('app/setSelectedOrder', {});
+      this.$store.dispatch('app/sortRecord', { website: this.$store.state.app.selectedWebsite.id });
     }
   },
   setup() {
@@ -122,7 +137,5 @@ export default {
 </script>
 
 <style>
-.hand {
-  cursor: pointer;
-}
+
 </style>
