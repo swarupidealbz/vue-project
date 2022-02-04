@@ -130,6 +130,8 @@ export default {
       })
     },
     loadTopics({commit, state, dispatch}, payload) {
+      console.log('payload');
+      console.log(payload);
       axios.post(state.apiBaseUrl+'primary-topic/list-by-website', payload).then((res) => {
         console.log('topics list');
         commit('setTopics', res.data.topics);
