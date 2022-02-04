@@ -191,7 +191,7 @@
 
               <div class="mail-message">
                 <p class="text-truncate mb-0">
-                  {{ filterTags(topic.description) }}
+                  {{ topic.description ? filterTags(topic.description) : '' }}
                 </p>
               </div>
             </b-media-body>
