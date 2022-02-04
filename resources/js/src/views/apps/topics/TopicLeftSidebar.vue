@@ -129,7 +129,7 @@ export default {
     sortGroup(group) {
       this.$emit('close-left-sidebar');
       this.$store.commit('app/setSelectedOrder', group);
-      this.$store.dispatch('app/sortRecord', { order: group.id});
+      this.$store.dispatch('app/sortRecord', { website: this.$store.state.app.selectedWebsite.id, order: group.id});
     }
   },
   setup() {

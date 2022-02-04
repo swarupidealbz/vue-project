@@ -77,7 +77,7 @@ export default {
       dispatch('loadTop');
       dispatch('loadData');
       dispatch('loadMenu');
-      dispatch('loadTopics');
+      dispatch('loadTopics', {website:state.selectedWebsite.id});
     },
     loadTop({commit, state, dispatch}) {
       axios.post(state.apiBaseUrl+'dashboard/data', {parts: 'top_bar'}).then(response => {
