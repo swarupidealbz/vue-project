@@ -154,12 +154,16 @@ export default {
       })
     },
     topicStatusUpdate({commit, state, dispatch}, payload) {
-      axios.post(state.apiBaseUrl + 'topic/update-status', payload).then((res) => {
-        if(res.data.data.length == 1) {
-          commit('setSelectedTopic', res.data.data)
-        }
-      }).catch((error) => {
-        console.log('error update topic status');
+      return new Promise((resolve, reject) => {
+          axios.post(state.apiBaseUrl + 'topic/update-status', payload).then((res) => {
+            if(res.data.data.length == 1) {
+              commit('setSelectedTopic', res.data.data)
+            }
+            resolve(true)
+          }).catch((error) => {
+            reject(true);
+          console.log('error update topic status');
+        })
       })
     }
 
