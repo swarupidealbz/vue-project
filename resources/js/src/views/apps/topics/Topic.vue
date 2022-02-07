@@ -257,7 +257,8 @@ export default {
                 text: res.data.data.message,
               },
             })
-      }).catch((err) => {
+      }).catch(error => {
+        console.log(error.response);
         this.$toast({
               component: ToastificationContent,
               position: 'top-right',
@@ -265,7 +266,7 @@ export default {
                 title: `Failed`,
                 icon: 'UserCheckIcon',
                 variant: 'danger',
-                text: err.response.data.message,
+                text: error.response.data.message,
               },
             })
       });
