@@ -247,6 +247,9 @@ export default {
         topic: this.$store.state.app.selectedTopic.id,
         status: 'approved'
       }).then((res) => {
+        console.log(res)
+        console.log(res.data)
+        console.log(res.data.data)
         this.$toast({
               component: ToastificationContent,
               position: 'top-right',
@@ -259,6 +262,8 @@ export default {
             })
       }).catch(error => {
         console.log(error.response);
+        console.log(error);
+        console.log(error.data);
         this.$toast({
               component: ToastificationContent,
               position: 'top-right',
