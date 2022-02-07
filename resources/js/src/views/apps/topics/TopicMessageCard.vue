@@ -54,7 +54,7 @@
       />
       <!-- eslint-enable -->
       <b-img
-        :src="attachment.topic_image_path"
+        :src="message.topic_image_path"
         width="16px"
         class="mr-50"
       />
