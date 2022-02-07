@@ -60,7 +60,7 @@
       />
     </b-card-body>
 
-    <b-card-footer v-if="message.attachments && message.attachments.length">
+    <!-- <b-card-footer v-if="message.attachments && message.attachments.length">
       <div class="mail-attachments">
         <div class="d-flex align-items-center mb-1">
           <feather-icon
@@ -90,7 +90,7 @@
           </b-link>
         </div>
       </div>
-    </b-card-footer>
+    </b-card-footer> -->
   </b-card>
 </template>
 

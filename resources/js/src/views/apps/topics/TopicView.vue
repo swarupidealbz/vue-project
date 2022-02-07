@@ -107,9 +107,9 @@ export default {
 
     const showWholeThread = ref(false)
 
-    watch(() => props.emailViewData.id, () => {
-      showWholeThread.value = false
-    })
+    // watch(() => props.emailViewData.id, () => {
+    //   showWholeThread.value = false
+    // })
 
     return {
 
