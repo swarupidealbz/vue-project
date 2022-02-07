@@ -155,7 +155,9 @@ export default {
     },
     topicStatusUpdate({commit, state, dispatch}, payload) {
       axios.post(state.apiBaseUrl + 'topic/update-status', payload).then((res) => {
-        commit('setSelectedTopic', res.data.data)
+        if(res.data.data.length == 1) {
+          commit('setSelectedTopic', res.data.data)
+        }
       }).catch((error) => {
         console.log('error update topic status');
       })
