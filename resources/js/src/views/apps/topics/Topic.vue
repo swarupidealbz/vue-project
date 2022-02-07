@@ -254,7 +254,7 @@ export default {
                 title: `Approved`,
                 icon: 'UserCheckIcon',
                 variant: 'success',
-                text: res.data.message,
+                text: res.message,
               },
             })
       }).catch(error => {
@@ -265,7 +265,7 @@ export default {
                 title: `Failed`,
                 icon: 'UserCheckIcon',
                 variant: 'danger',
-                text: error.data.message,
+                text: error.message,
               },
             })
       });
@@ -283,7 +283,7 @@ export default {
                 title: `Rejected`,
                 icon: 'UserCheckIcon',
                 variant: 'success',
-                text: res.data.message,
+                text: res.message,
               },
             })
       }).catch((err) => {
@@ -294,7 +294,7 @@ export default {
                 title: `Failed`,
                 icon: 'UserCheckIcon',
                 variant: 'danger',
-                text: err.data.message,
+                text: err.message,
               },
             })
       });
