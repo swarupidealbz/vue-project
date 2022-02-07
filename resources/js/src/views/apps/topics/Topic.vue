@@ -458,6 +458,7 @@ export default {
       moveSelectedEmailsToFolder,
       updateSelectedEmailsLabel,
       markSelectedEmailsAsUnread,
+      openTopicDetails,
 
       // Email Details
       showEmailDetails,
