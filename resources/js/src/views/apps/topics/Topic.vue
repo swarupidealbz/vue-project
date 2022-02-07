@@ -254,7 +254,7 @@ export default {
                 title: `Approved`,
                 icon: 'UserCheckIcon',
                 variant: 'success',
-                text: res.data.message,
+                text: res.data.data.message,
               },
             })
       }).catch((err) => {
@@ -283,7 +283,7 @@ export default {
                 title: `Rejected`,
                 icon: 'UserCheckIcon',
                 variant: 'success',
-                text: res.data.message,
+                text: res.data.data.message,
               },
             })
       }).catch((err) => {
