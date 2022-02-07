@@ -301,11 +301,27 @@ export default {
     },
     approved(topic) {
       this.$store.commit('app/setSelectedTopic', topic);
-      this.acceptStatus();
+      this.acceptStatus().then(() => {
+        let payload = {
+          website: this.$store.state.app.selectedWebsite.id
+        }
+        if(this.$store.state.app.selectedOrder.id) {
+          payload.order = this.$store.state.app.selectedOrder.id
+        }
+        this.$store.dispatch('app/sortRecord', payload);
+      });
     },
     reject(topic) {
       this.$store.commit('app/setSelectedTopic', topic);
-      this.rejectStatus();
+      this.rejectStatus().then(() => {
+        let payload = {
+          website: this.$store.state.app.selectedWebsite.id
+        }
+        if(this.$store.state.app.selectedOrder.id) {
+          payload.order = this.$store.state.app.selectedOrder.id
+        }
+        this.$store.dispatch('app/sortRecord', payload);
+      });
     }
   },
   setup() {
