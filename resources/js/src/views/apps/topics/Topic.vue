@@ -434,7 +434,7 @@ export default {
     const openTopicDetails = topic => {
       axios.get(store.state.app.apiBaseUrl + 'primary-topic/show/' + topic.id).then((res) => {
         topicDetails.value = topic
-        store.dispatch('app/setSelectedTopic', topic);
+        store.commit('app/setSelectedTopic', topic);
         showTopicDetails.value = true
       })
     }
