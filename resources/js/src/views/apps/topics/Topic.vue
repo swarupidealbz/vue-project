@@ -204,6 +204,7 @@ import TopicView from './TopicView.vue'
 import emailStoreModule from './emailStoreModule'
 import useEmail from './useEmail'
 import EmailCompose from './EmailCompose.vue'
+import axios from '@axios'
 
 export default {
   components: {
@@ -363,7 +364,7 @@ export default {
       }
     })
     const openTopicDetails = topic => {
-      this.$http.get(this.$store.state.app.apiBaseUrl + 'primary-topic/view/' + topic.id).then((res) => {
+      axios.get(store.state.app.apiBaseUrl + 'primary-topic/view/' + topic.id).then((res) => {
         topicDetails.value = topic
         showTopicDetails.value = true
       })
