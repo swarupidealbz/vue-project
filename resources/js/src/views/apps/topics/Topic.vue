@@ -286,7 +286,7 @@ export default {
                 text: res.data.message,
               },
             })
-      }).catch(() => {
+      }).catch((err) => {
         this.$toast({
               component: ToastificationContent,
               position: 'top-right',
