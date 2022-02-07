@@ -40,7 +40,9 @@
       <!-- Email Thread -->
       <b-row>
         <b-col cols="12 mt-2">
-          <topic-message-card :message="topicViewData" />
+          <topic-message-card :message="topicViewData" 
+          @accept-status="$emit('accept-status')"
+          @reject-status="$emit('reject-status')"/>
         </b-col>
       </b-row>
 
@@ -51,16 +53,11 @@
             <div class="d-flex justify-content-between">
               <h5 class="mb-0">
                 Click here to
-                <b-link>Accept</b-link>
+                <b-link @click="$emit('accept-status')">Accept</b-link>
                 or
-                <b-link>Reject</b-link>
+                <b-link @click="$emit('reject-status')">Reject</b-link>
               </h5>
             </div>
-            <feather-icon
-              icon="FileIcon"
-              size="25"
-              class="cursor-pointer ml-1 pull-right"
-            />
           </b-card>
         </b-col>
       </b-row>

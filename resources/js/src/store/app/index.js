@@ -26,6 +26,7 @@ export default {
     comments:[],
     selectedOrder: {},
     selectedWebsite: {},
+    selectedTopic: {},
   },
   getters: {
     currentBreakPoint: state => {
@@ -70,6 +71,9 @@ export default {
     },
     setSelectedWebsite(state, val) {
       state.selectedWebsite = val;
+    },
+    setTopic(state, val) {
+      state.selectedTopic = val;
     },
   },
   actions: {
@@ -147,6 +151,13 @@ export default {
         commit('setTopics', res.data.data);
       }).catch(() => {
         console.log('error load sort record data');
+      })
+    },
+    topicStatusUpdate({commit, state, dispatch}, payload) {
+      axios.post(state.apiBaseUrl + 'topic/update-status', payload).then((res) => {
+        commit('setTopic', res.data)
+      }).catch((error) => {
+        console.log('error update topic status');
       })
     }
 

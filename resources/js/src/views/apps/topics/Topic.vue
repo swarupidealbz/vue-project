@@ -145,12 +145,12 @@
                     <span class="align-middle ml-50">Show Content</span>
                   </b-dropdown-item>
 
-                  <b-dropdown-item variant="success">
+                  <b-dropdown-item variant="success" @click="acceptStatus">
                     <feather-icon icon="CheckCircleIcon" />
                     <span class="align-middle ml-50">Accept</span>
                   </b-dropdown-item>
 
-                  <b-dropdown-item variant="danger">
+                  <b-dropdown-item variant="danger" @click="rejectStatus">
                     <feather-icon icon="XCircleIcon" />
                     <span class="align-middle ml-50 text-danger">Reject</span>
                   </b-dropdown-item>
@@ -173,6 +173,8 @@
       :topic-view-data="topicDetails"
       @close-topic-view="showTopicDetails = false"
       @toggle-topic-starred="toggleStarred(topicDetails)"
+      @accept-status="acceptStatus"
+      @reject-status="rejectStatus"
     />
 
     <!-- Sidebar -->
@@ -210,6 +212,7 @@ import emailStoreModule from './emailStoreModule'
 import useEmail from './useEmail'
 import EmailCompose from './EmailCompose.vue'
 import axios from '@axios'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
   components: {
@@ -235,6 +238,66 @@ export default {
   computed: {
     topics() {
       return this.$store.state.app.topics;
+    }
+  },
+  methods: {
+    acceptStatus() {
+      this.$store.dispatch('app/topicStatusUpdate', {
+        website: this.$store.state.app.selectedWebsite.id,
+        topic: this.$store.state.app.selectedTopic.id,
+        status: 'approved'
+      }).then((res) => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Approved`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: res.data.message,
+              },
+            })
+      }).catch((err) => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: err.res.data.message,
+              },
+            })
+      });
+    },
+    rejectStatus() {
+      this.$store.dispatch('app/topicStatusUpdate', {
+        website: this.$store.state.app.selectedWebsite.id,
+        topic: this.$store.state.app.selectedTopic.id,
+        status: 'rejected'
+      }).then((res) => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Rejected`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: res.data.message,
+              },
+            })
+      }).catch(() => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: err.res.data.message,
+              },
+            })
+      });
     }
   },
   setup() {
@@ -371,6 +434,7 @@ export default {
     const openTopicDetails = topic => {
       axios.get(store.state.app.apiBaseUrl + 'primary-topic/view/' + topic.id).then((res) => {
         topicDetails.value = topic
+        this.$store.dispatch('app/setTopic', topic);
         showTopicDetails.value = true
       })
     }

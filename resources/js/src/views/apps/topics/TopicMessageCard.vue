@@ -38,12 +38,12 @@
             <span class="align-middle ml-50">Show Content</span>
           </b-dropdown-item>
 
-          <b-dropdown-item variant="success">
+          <b-dropdown-item variant="success" @click="$emit('accept-status')">
             <feather-icon icon="CheckCircleIcon" />
             <span class="align-middle ml-50">Accept</span>
           </b-dropdown-item>
 
-          <b-dropdown-item variant="danger">
+          <b-dropdown-item variant="danger" @click="$emit('reject-status')">
             <feather-icon icon="XCircleIcon" />
             <span class="align-middle ml-50 text-danger">Reject</span>
           </b-dropdown-item>
