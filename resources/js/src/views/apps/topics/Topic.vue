@@ -352,6 +352,8 @@ export default {
     // Email Details
     // ------------------------------------------------
     const showTopicDetails = ref(false)
+    const showEmailDetails = ref(false)
+    const emailDetails = ref({})
     const topicDetails = ref({})
     const opendedEmailMeta = computed(() => {
       const openedEmailIndex = emails.value.findIndex(e => e.id === emailViewData.value.id)
