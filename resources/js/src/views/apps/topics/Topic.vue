@@ -461,7 +461,9 @@ export default {
 
       // Email Details
       showEmailDetails,
+      showTopicDetails,
       emailViewData,
+      topicDetails,
       opendedEmailMeta,
       updateEmailViewData,
       moveOpenEmailToFolder,
