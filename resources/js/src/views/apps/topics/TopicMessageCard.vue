@@ -5,55 +5,19 @@
       class="email-detail-head"
     >
       <div class="user-details d-flex justify-content-between align-items-center flex-wrap">
-        <b-avatar
+        <!-- <b-avatar
           size="48"
           :src="message.from.avatar"
           class="mr-75"
-        />
+        /> -->
         <div class="mail-items">
           <h5 class="mb-0">
-            {{ message.from.name }}
+            {{ message.topic }}
           </h5>
-          <b-dropdown
-            variant="link"
-            no-caret
-            toggle-class="p-0"
-            class="email-info-dropup"
-          >
-            <template #button-content>
-              <span class="font-small-3 text-muted mr-25">{{ message.from.email }}</span>
-              <feather-icon
-                icon="ChevronDownIcon"
-                size="10"
-              />
-            </template>
-            <table class="table table-sm table-borderless font-small-3">
-              <tbody>
-                <tr>
-                  <td class="text-right text-muted align-top">
-                    From:
-                  </td>
-                  <td>{{ message.from.email }}</td>
-                </tr>
-                <tr>
-                  <td class="text-right text-muted align-top">
-                    To:
-                  </td>
-                  <td>{{ message.to.map(receiver => receiver.email).join(', ') }}</td>
-                </tr>
-                <tr>
-                  <td class="text-right text-muted align-top">
-                    Date:
-                  </td>
-                  <td>4:25 AM 13 Jan 2018</td>
-                </tr>
-              </tbody>
-            </table>
-          </b-dropdown>
         </div>
       </div>
       <div class="mail-meta-item d-flex align-items-center">
-        <small class="mail-date-time text-muted">{{ formatDate(message.time) }}</small>
+        <small class="mail-date-time text-muted">{{ formatDate(message.created_at) }}</small>
         <!-- Mail Action DD -->
         <b-dropdown
           variant="link"
@@ -70,18 +34,13 @@
           </template>
 
           <b-dropdown-item>
-            <feather-icon icon="CornerUpLeftIcon" />
-            <span class="align-middle ml-50">Reply</span>
+            <feather-icon icon="CheckCircleIcon" />
+            <span class="align-middle ml-50">Accept</span>
           </b-dropdown-item>
 
           <b-dropdown-item>
-            <feather-icon icon="CornerUpRightIcon" />
-            <span class="align-middle ml-50">Forward</span>
-          </b-dropdown-item>
-
-          <b-dropdown-item>
-            <feather-icon icon="TrashIcon" />
-            <span class="align-middle ml-50">Delete</span>
+            <feather-icon icon="XCircleIcon" />
+            <span class="align-middle ml-50">Reject</span>
           </b-dropdown-item>
         </b-dropdown>
       </div>
@@ -91,9 +50,14 @@
       <!-- eslint-disable vue/no-v-html -->
       <div
         class="mail-message"
-        v-html="message.message"
+        v-html="message.description"
       />
       <!-- eslint-enable -->
+      <b-img
+        :src="attachment.topic_image_path"
+        width="16px"
+        class="mr-50"
+      />
     </b-card-body>
 
     <b-card-footer v-if="message.attachments && message.attachments.length">

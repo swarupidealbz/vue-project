@@ -58,73 +58,6 @@
           :class="{'d-flex': selectedEmails.length}"
         >
 
-          <!-- Update Mail Folder Dropdown -->
-          <!-- <b-dropdown
-            variant="link"
-            no-caret
-            toggle-class="p-0"
-            right
-          >
-            <template #button-content>
-              <feather-icon
-                icon="FolderIcon"
-                size="17"
-                class="align-middle text-body"
-              />
-            </template>
-
-            <b-dropdown-item @click="moveSelectedEmailsToFolder('draft')">
-              <feather-icon icon="Edit2Icon" />
-              <span class="align-middle ml-50">Draft</span>
-            </b-dropdown-item>
-
-            <b-dropdown-item @click="moveSelectedEmailsToFolder('spam')">
-              <feather-icon icon="InfoIcon" />
-              <span class="align-middle ml-50">Spam</span>
-            </b-dropdown-item>
-
-            <b-dropdown-item
-              v-show="$route.params.folder !== 'trash'"
-              @click="moveSelectedEmailsToFolder('trash')"
-            >
-              <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">Trash</span>
-            </b-dropdown-item>
-          </b-dropdown> -->
-
-          <!-- Update Mail Folder Dropdown -->
-          <!-- <b-dropdown
-            variant="link"
-            no-caret
-            toggle-class="p-0"
-            class="ml-1"
-            right
-          >
-            <template #button-content>
-              <feather-icon
-                icon="TagIcon"
-                size="17"
-                class="align-middle text-body"
-              />
-            </template>
-            <b-dropdown-item @click="updateSelectedEmailsLabel('personal')">
-              <span class="mr-50 bullet bullet-success bullet-sm" />
-              <span>Personal</span>
-            </b-dropdown-item>
-            <b-dropdown-item @click="updateSelectedEmailsLabel('company')">
-              <span class="mr-50 bullet bullet-primary bullet-sm" />
-              <span>Company</span>
-            </b-dropdown-item>
-            <b-dropdown-item @click="updateSelectedEmailsLabel('important')">
-              <span class="mr-50 bullet bullet-warning bullet-sm" />
-              <span>Important</span>
-            </b-dropdown-item>
-            <b-dropdown-item @click="updateSelectedEmailsLabel('private')">
-              <span class="mr-50 bullet bullet-danger bullet-sm" />
-              <span>Private</span>
-            </b-dropdown-item>
-          </b-dropdown> -->
-
           <feather-icon
             icon="CheckCircleIcon"
             size="21"
@@ -151,7 +84,7 @@
             :key="topic.id"
             tag="li"
             no-body
-            @click="updateEmailViewData(topic)"
+            @click="openTopicDetails(topic)"
           >
 
             <b-media-aside class="media-left mr-50">                          
@@ -230,16 +163,11 @@
     </div>
 
     <!-- Email View/Detail -->
-    <email-view
-      :class="{'show': showEmailDetails}"
-      :email-view-data="emailViewData"
-      :opended-email-meta="opendedEmailMeta"
-      @close-email-view="showEmailDetails = false"
-      @move-email-to-folder="moveOpenEmailToFolder"
-      @toggle-email-starred="toggleStarred(emailViewData)"
-      @update-email-label="updateOpenEmailLabel"
-      @mark-email-unread="markOpenEmailAsUnread"
-      @change-opened-email="changeOpenedEmail"
+    <topic-view
+      :class="{'show': showTopicDetails}"
+      :topic-view-data="topicDetails"
+      @close-topic-view="showTopicDetails = false"
+      @toggle-topic-starred="toggleStarred(topicDetails)"
     />
 
     <!-- Sidebar -->
@@ -272,7 +200,7 @@ import { filterTags, formatDateToMonthShort } from '@core/utils/filter'
 import { useRouter } from '@core/utils/utils'
 import { useResponsiveAppLeftSidebarVisibility } from '@core/comp-functions/ui/app'
 import TopicLeftSidebar from './TopicLeftSidebar.vue'
-import EmailView from './EmailView.vue'
+import TopicView from './TopicView.vue'
 import emailStoreModule from './emailStoreModule'
 import useEmail from './useEmail'
 import EmailCompose from './EmailCompose.vue'
@@ -295,7 +223,7 @@ export default {
 
     // App SFC
     TopicLeftSidebar,
-    EmailView,
+    TopicView,
     EmailCompose,
   },
   computed: {
@@ -423,8 +351,8 @@ export default {
     // ------------------------------------------------
     // Email Details
     // ------------------------------------------------
-    const showEmailDetails = ref(false)
-    const emailViewData = ref({})
+    const showTopicDetails = ref(false)
+    const topicDetails = ref({})
     const opendedEmailMeta = computed(() => {
       const openedEmailIndex = emails.value.findIndex(e => e.id === emailViewData.value.id)
       return {
@@ -432,6 +360,12 @@ export default {
         hasPreviousEmail: Boolean(emails.value[openedEmailIndex - 1]),
       }
     })
+    const openTopicDetails = topic => {
+      this.$http.get(this.$store.state.app.apiBaseUrl + 'primary-topic/view/' + topic.id).then((res) => {
+        topicDetails.value = topic
+        showTopicDetails.value = true
+      })
+    }
     const updateEmailViewData = email => {
       // Mark email is read
       store.dispatch('app-email/updateEmail', {
