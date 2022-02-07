@@ -145,12 +145,12 @@
                     <span class="align-middle ml-50">Show Content</span>
                   </b-dropdown-item>
 
-                  <b-dropdown-item variant="success" @click="acceptStatus">
+                  <b-dropdown-item variant="success" @click="approved(topic)">
                     <feather-icon icon="CheckCircleIcon" />
                     <span class="align-middle ml-50">Accept</span>
                   </b-dropdown-item>
 
-                  <b-dropdown-item variant="danger" @click="rejectStatus">
+                  <b-dropdown-item variant="danger" @click="reject(topic)">
                     <feather-icon icon="XCircleIcon" />
                     <span class="align-middle ml-50 text-danger">Reject</span>
                   </b-dropdown-item>
@@ -298,6 +298,14 @@ export default {
               },
             })
       });
+    },
+    approved(topic) {
+      this.$store.commit('app/setSelectedTopic', topic);
+      this.acceptStatus();
+    },
+    reject(topic) {
+      this.$store.commit('app/setSelectedTopic', topic);
+      this.rejectStatus();
     }
   },
   setup() {
