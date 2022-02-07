@@ -247,9 +247,6 @@ export default {
         topic: this.$store.state.app.selectedTopic.id,
         status: 'approved'
       }).then((res) => {
-        console.log(res)
-        console.log(res.data)
-        console.log(res.data.data)
         this.$toast({
               component: ToastificationContent,
               position: 'top-right',
@@ -257,13 +254,10 @@ export default {
                 title: `Approved`,
                 icon: 'UserCheckIcon',
                 variant: 'success',
-                text: res.data.data.message,
+                text: res.data.message,
               },
             })
       }).catch(error => {
-        console.log(error.response);
-        console.log(error);
-        console.log(error.data);
         this.$toast({
               component: ToastificationContent,
               position: 'top-right',
@@ -271,7 +265,7 @@ export default {
                 title: `Failed`,
                 icon: 'UserCheckIcon',
                 variant: 'danger',
-                text: error.response.data.message,
+                text: error.data.message,
               },
             })
       });
@@ -289,7 +283,7 @@ export default {
                 title: `Rejected`,
                 icon: 'UserCheckIcon',
                 variant: 'success',
-                text: res.data.data.message,
+                text: res.data.message,
               },
             })
       }).catch((err) => {
@@ -300,7 +294,7 @@ export default {
                 title: `Failed`,
                 icon: 'UserCheckIcon',
                 variant: 'danger',
-                text: err.response.data.message,
+                text: err.data.message,
               },
             })
       });

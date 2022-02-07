@@ -159,9 +159,9 @@ export default {
             if(res.data.data.length == 1) {
               commit('setSelectedTopic', res.data.data)
             }
-            resolve(true)
+            resolve(res.data)
           }).catch((error) => {
-            reject(true);
+            reject(error.response);
           console.log('error update topic status');
         })
       })
