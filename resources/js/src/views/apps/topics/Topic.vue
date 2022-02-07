@@ -84,7 +84,6 @@
             :key="topic.id"
             tag="li"
             no-body
-            @click="openTopicDetails(topic)"
           >
 
             <b-media-aside class="media-left mr-50">                          
@@ -105,7 +104,8 @@
               </div>
             </b-media-aside>
 
-            <b-media-body>
+            <b-media-body 
+            @click="openTopicDetails(topic)">
               <div class="mail-details">
                 <div class="mail-items">
                   <span class="text-truncate">{{ topic.topic }}</span>
