@@ -34,14 +34,20 @@
           </template>
 
           <b-dropdown-item>
+            <feather-icon icon="FileIcon" />
+            <span class="align-middle ml-50">Show Content</span>
+          </b-dropdown-item>
+
+          <b-dropdown-item variant="success">
             <feather-icon icon="CheckCircleIcon" />
             <span class="align-middle ml-50">Accept</span>
           </b-dropdown-item>
 
-          <b-dropdown-item>
+          <b-dropdown-item variant="danger">
             <feather-icon icon="XCircleIcon" />
-            <span class="align-middle ml-50">Reject</span>
+            <span class="align-middle ml-50 text-danger">Reject</span>
           </b-dropdown-item>
+                    
         </b-dropdown>
       </div>
     </b-card-header>

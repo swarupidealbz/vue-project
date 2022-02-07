@@ -24,7 +24,7 @@
         </div>
 
         <!-- Searchbar -->
-        <div class="d-flex align-content-center justify-content-between w-100">
+        <!-- <div class="d-flex align-content-center justify-content-between w-100">
           <b-input-group class="input-group-merge">
             <b-input-group-prepend is-text>
               <feather-icon
@@ -38,7 +38,7 @@
               @input="updateRouteQuery"
             />
           </b-input-group>
-        </div>
+        </div> -->
       </div>
 
       <!-- App Action Bar -->
@@ -140,14 +140,19 @@
                       class="align-middle text-body"
                     />
                   </template>
-                  <b-dropdown-item >
-                    View Content
+                  <b-dropdown-item>
+                    <feather-icon icon="FileIcon" />
+                    <span class="align-middle ml-50">View Content</span>
                   </b-dropdown-item>
+
                   <b-dropdown-item variant="success">
-                    Accept
+                    <feather-icon icon="CheckCircleIcon" />
+                    <span class="align-middle ml-50">Accept</span>
                   </b-dropdown-item>
+
                   <b-dropdown-item variant="danger">
-                    Reject
+                    <feather-icon icon="XCircleIcon" />
+                    <span class="align-middle ml-50 text-danger">Reject</span>
                   </b-dropdown-item>
                 </b-dropdown>
               </div>
