@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     ->name('primary-topic.')
     ->group(function(){
         Route::get('/list', [PrimaryTopicController::class, 'index'])->name('list');
-        Route::get('/show/{primaryTopic}', [PrimaryTopicController::class, 'show'])->name('show');
+        Route::post('/show/{primaryTopic}', [PrimaryTopicController::class, 'show'])->name('show');
         Route::get('/list-by-role', [PrimaryTopicController::class, 'primaryTopicByRole'])->name('list-by-role');
         Route::post('/list-by-website', [PrimaryTopicController::class, 'primaryTopicByWebsite'])->name('list-by-website');
 

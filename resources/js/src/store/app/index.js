@@ -72,7 +72,7 @@ export default {
     setSelectedWebsite(state, val) {
       state.selectedWebsite = val;
     },
-    setTopic(state, val) {
+    setSelectedTopic(state, val) {
       state.selectedTopic = val;
     },
   },
@@ -155,7 +155,7 @@ export default {
     },
     topicStatusUpdate({commit, state, dispatch}, payload) {
       axios.post(state.apiBaseUrl + 'topic/update-status', payload).then((res) => {
-        commit('setTopic', res.data)
+        commit('setSelectedTopic', res.data.data)
       }).catch((error) => {
         console.log('error update topic status');
       })
