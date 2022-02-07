@@ -1,7 +1,7 @@
 <template>
   <b-card no-body>
     <b-card-header
-      v-if="message.from"
+      v-if="message.topic"
       class="email-detail-head"
     >
       <div class="user-details d-flex justify-content-between align-items-center flex-wrap">

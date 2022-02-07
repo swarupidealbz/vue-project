@@ -8,7 +8,7 @@
       <div class="email-header-left d-flex align-items-center">
         <span class="go-back mr-1">
           <feather-icon
-            icon="XIcon'"
+            icon="XCircleIcon'"
             size="20"
             class="align-bottom"
             @click="$emit('close-topic-view')"
