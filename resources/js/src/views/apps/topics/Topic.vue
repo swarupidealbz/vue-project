@@ -265,7 +265,7 @@ export default {
                 title: `Failed`,
                 icon: 'UserCheckIcon',
                 variant: 'danger',
-                text: err.res.data.message,
+                text: err.response.data.message,
               },
             })
       });
@@ -294,7 +294,7 @@ export default {
                 title: `Failed`,
                 icon: 'UserCheckIcon',
                 variant: 'danger',
-                text: err.res.data.message,
+                text: err.response.data.message,
               },
             })
       });
