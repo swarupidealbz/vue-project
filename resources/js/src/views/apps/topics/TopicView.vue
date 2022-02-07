@@ -8,7 +8,7 @@
       <div class="email-header-left d-flex align-items-center">
         <span class="go-back mr-1">
           <feather-icon
-            icon="XCircleIcon"
+            icon="XIcon"
             size="23"
             class="align-bottom"
             @click="$emit('close-topic-view')"
@@ -41,7 +41,7 @@
      
       <!-- Email Thread -->
       <b-row>
-        <b-col cols="12 mt-5">
+        <b-col cols="12 mt-2">
           <topic-message-card :message="topicViewData" />
         </b-col>
       </b-row>
