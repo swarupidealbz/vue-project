@@ -432,7 +432,7 @@ export default {
       }
     })
     const openTopicDetails = topic => {
-      axios.post(store.state.app.apiBaseUrl + 'primary-topic/view/' + topic.id).then((res) => {
+      axios.post(store.state.app.apiBaseUrl + 'primary-topic/show/' + topic.id).then((res) => {
         topicDetails.value = topic
         store.dispatch('app/setSelectedTopic', topic);
         showTopicDetails.value = true
