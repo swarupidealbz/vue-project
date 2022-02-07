@@ -142,7 +142,7 @@
                   </template>
                   <b-dropdown-item>
                     <feather-icon icon="FileIcon" />
-                    <span class="align-middle ml-50">View Content</span>
+                    <span class="align-middle ml-50">Show Content</span>
                   </b-dropdown-item>
 
                   <b-dropdown-item variant="success">

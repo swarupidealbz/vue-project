@@ -36,9 +36,7 @@
     <vue-perfect-scrollbar
       :settings="perfectScrollbarSettings"
       class="email-scroll-area scroll-area"
-    >
-
-     
+    >     
       <!-- Email Thread -->
       <b-row>
         <b-col cols="12 mt-2">
@@ -58,6 +56,11 @@
                 <b-link>Reject</b-link>
               </h5>
             </div>
+            <feather-icon
+              icon="FileIcon"
+              size="25"
+              class="cursor-pointer ml-1 pull-right"
+            />
           </b-card>
         </b-col>
       </b-row>
