@@ -409,7 +409,46 @@ export default {
     }
     // ? Watcher to reset selectedEmails is somewhere below due to watch dependecy fullfilment
 
-    
+    // ------------------------------------------------
+    // Mail Actions
+    // ------------------------------------------------
+    const toggleStarred = email => {
+      store.dispatch('app-email/updateEmail', {
+        emailIds: [email.id],
+        dataToUpdate: { isStarred: !email.isStarred },
+      }).then(() => {
+        // eslint-disable-next-line no-param-reassign
+        email.isStarred = !email.isStarred
+      })
+    }
+
+    const moveSelectedEmailsToFolder = folder => {
+      store.dispatch('app-email/updateEmail', {
+        emailIds: selectedEmails.value,
+        dataToUpdate: { folder },
+      })
+        .then(() => { fetchEmails() })
+        .finally(() => { selectedEmails.value = [] })
+    }
+
+    const updateSelectedEmailsLabel = label => {
+      store.dispatch('app-email/updateEmailLabels', {
+        emailIds: selectedEmails.value,
+        label,
+      })
+        .then(() => { fetchEmails() })
+        .finally(() => { selectedEmails.value = [] })
+    }
+
+    const markSelectedEmailsAsUnread = () => {
+      store.dispatch('app-email/updateEmail', {
+        emailIds: selectedEmails.value,
+        dataToUpdate: { isRead: false },
+      })
+        .then(() => { fetchEmails() })
+        .finally(() => { selectedEmails.value = [] })
+    }
+
     // ------------------------------------------------
     // Email Details
     // ------------------------------------------------
@@ -417,7 +456,13 @@ export default {
     const showEmailDetails = ref(false)
     const emailViewData = ref({})
     const topicDetails = ref({})
-    
+    const opendedEmailMeta = computed(() => {
+      const openedEmailIndex = emails.value.findIndex(e => e.id === emailViewData.value.id)
+      return {
+        hasNextEmail: Boolean(emails.value[openedEmailIndex + 1]),
+        hasPreviousEmail: Boolean(emails.value[openedEmailIndex - 1]),
+      }
+    })
     const openTopicDetails = topic => {
       axios.get(store.state.app.apiBaseUrl + 'primary-topic/show/' + topic.id).then((res) => {
         topicDetails.value = topic
@@ -425,7 +470,70 @@ export default {
         showTopicDetails.value = true
       })
     }
-    
+    const updateEmailViewData = email => {
+      // Mark email is read
+      store.dispatch('app-email/updateEmail', {
+        emailIds: [email.id],
+        dataToUpdate: { isRead: true },
+      })
+        .then(() => {
+          // If opened email is unread then decrease badge count for email meta based on email folder
+          if (!email.isRead && (email.folder === 'inbox' || email.folder === 'spam')) {
+            emailsMeta.value[email.folder] -= 1
+          }
+
+          // eslint-disable-next-line no-param-reassign
+          email.isRead = true
+        })
+        .finally(() => {
+          emailViewData.value = email
+          showEmailDetails.value = true
+        })
+    }
+    const moveOpenEmailToFolder = folder => {
+      selectedEmails.value = [emailViewData.value.id]
+      moveSelectedEmailsToFolder(folder)
+      selectedEmails.value = []
+      showEmailDetails.value = false
+    }
+    const updateOpenEmailLabel = label => {
+      selectedEmails.value = [emailViewData.value.id]
+      updateSelectedEmailsLabel(label)
+
+      // Update label in opened email
+      const labelIndex = emailViewData.value.labels.indexOf(label)
+      if (labelIndex === -1) emailViewData.value.labels.push(label)
+      else emailViewData.value.labels.splice(labelIndex, 1)
+
+      selectedEmails.value = []
+    }
+
+    const markOpenEmailAsUnread = () => {
+      selectedEmails.value = [emailViewData.value.id]
+      markSelectedEmailsAsUnread()
+
+      selectedEmails.value = []
+      showEmailDetails.value = false
+    }
+
+    const changeOpenedEmail = dir => {
+      const openedEmailIndex = emails.value.findIndex(e => e.id === emailViewData.value.id)
+      const newEmailIndex = dir === 'previous' ? openedEmailIndex - 1 : openedEmailIndex + 1
+      emailViewData.value = emails.value[newEmailIndex]
+    }
+
+    // * If someone clicks on filter while viewing detail => Close the email detail view
+    watch(routeParams, () => {
+      showEmailDetails.value = false
+    })
+
+    // * Watcher to reset selectedEmails
+    // ? You can also use showEmailDetails (instead of `emailViewData`) but it will trigger execution twice in this case
+    // eslint-disable-next-line no-use-before-define
+    watch([emailViewData, routeParams], () => {
+      selectedEmails.value = []
+    })
+
     // Compose
     const shallShowEmailComposeModal = ref(false)
 
@@ -437,23 +545,45 @@ export default {
       perfectScrollbarSettings,
 
       // Emails & EmailsMeta
-      topics,
+      emails,
       emailsMeta,
 
       // Mail Selection
       selectAllEmailCheckbox,
       isSelectAllEmailCheckboxIndeterminate,
       selectedEmails,
-      selectedTopics,
       toggleSelectedMail,
       selectAllCheckboxUpdate,
 
       // Mail Actions
+      toggleStarred,
+      moveSelectedEmailsToFolder,
+      updateSelectedEmailsLabel,
+      markSelectedEmailsAsUnread,
       openTopicDetails,
 
       // Email Details
+      showEmailDetails,
       showTopicDetails,
+      emailViewData,
       topicDetails,
+      opendedEmailMeta,
+      updateEmailViewData,
+      moveOpenEmailToFolder,
+      updateOpenEmailLabel,
+      markOpenEmailAsUnread,
+      changeOpenedEmail,
+
+      // Search Query
+      searchQuery,
+      updateRouteQuery,
+
+      // UI Filters
+      filterTags,
+      formatDateToMonthShort,
+
+      // useEmail
+      resolveLabelColor,
 
       // Compose
       shallShowEmailComposeModal,
