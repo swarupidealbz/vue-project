@@ -715,6 +715,8 @@ export default {
       // Compose
       shallShowEmailComposeModal,
 
+      isTaskHandlerSidebarActive,
+
       // Left Sidebar Responsiveness
       mqShallShowLeftSidebar,
     }
