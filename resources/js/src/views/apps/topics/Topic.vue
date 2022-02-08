@@ -62,12 +62,14 @@
             icon="CheckCircleIcon"
             size="21"
             class="cursor-pointer ml-1 text-success"
+            @click="bulkApproved"
           />
 
           <feather-icon
             icon="XCircleIcon"
             size="21"
             class="cursor-pointer ml-1 text-danger"
+            @click="bulkReject"
           />
 
         </div>
