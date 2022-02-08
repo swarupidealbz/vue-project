@@ -378,7 +378,7 @@ export default {
     bulkApproved() {
       this.$store.dispatch('app/topicStatusUpdate', {
         website: this.$store.state.app.selectedWebsite.id,
-        topic: selectedEmails,
+        topic: this.selectedEmails,
         status: 'approved'
       }).then((res) => {
         let payload = {
@@ -414,7 +414,7 @@ export default {
     bulkReject() {
       this.$store.dispatch('app/topicStatusUpdate', {
         website: this.$store.state.app.selectedWebsite.id,
-        topic: selectedEmails,
+        topic: this.selectedEmails,
         status: 'rejected'
       }).then((res) => {
         let payload = {
