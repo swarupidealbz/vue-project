@@ -27,7 +27,7 @@
             v-else
             class="mb-0"
           >
-            Add Task
+            Add Topic
           </h5>
           <div>
             <feather-icon
@@ -68,20 +68,20 @@
             <!-- Title -->
             <validation-provider
               #default="validationContext"
-              name="Title"
+              name="Topic"
               rules="required"
             >
               <b-form-group
-                label="Title"
-                label-for="task-title"
+                label="Topic"
+                label-for="topic"
               >
                 <b-form-input
-                  id="task-title"
-                  v-model="taskLocal.title"
+                  id="topic"
+                  v-model="taskLocal.topic"
                   autofocus
                   :state="getValidationState(validationContext)"
                   trim
-                  placeholder="Task Title"
+                  placeholder="Topic"
                 />
 
                 <b-form-invalid-feedback>
@@ -90,40 +90,7 @@
               </b-form-group>
             </validation-provider>
 
-            <!-- Assignee -->
-            <b-form-group
-              label="Assignee"
-              label-for="assignee"
-            >
-              <v-select
-                v-model="taskLocal.assignee"
-                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                :options="assigneeOptions"
-                label="fullName"
-                class="assignee-selector"
-                input-id="assignee"
-              >
-
-                <template #option="{ avatar, fullName }">
-                  <b-avatar
-                    size="26"
-                    :src="avatar"
-                  />
-                  <span class="ml-50 d-inline-block align-middle"> {{ fullName }}</span>
-                </template>
-
-                <template #selected-option="{ avatar, fullName }">
-                  <b-avatar
-                    size="26"
-                    :src="avatar"
-                    :variant="`light-${resolveAvatarVariant(taskLocal.tags)}`"
-                    :text="avatarText(fullName)"
-                  />
-
-                  <span class="ml-50 d-inline-block align-middle"> {{ fullName }}</span>
-                </template>
-              </v-select>
-            </b-form-group>
+            
 
             <!-- due Date -->
             <validation-provider
