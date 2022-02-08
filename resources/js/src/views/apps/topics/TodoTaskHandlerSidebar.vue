@@ -258,11 +258,11 @@ export default {
     },
     task: {
       type: Object,
-      required: false,
+      required: true,
     },
     clearTaskData: {
       type: Function,
-      required: false,
+      required: true,
     },
   },
   data() {

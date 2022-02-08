@@ -195,7 +195,8 @@
     <!-- Task Handler -->
     <todo-task-handler-sidebar
       v-model="isTaskHandlerSidebarActive"
-      
+      :task="task"
+      :clear-task-data="clearTaskData" 
     />
   </div>
 </template>
@@ -583,6 +584,21 @@ export default {
     const emailViewData = ref({})
     const topicDetails = ref({})
     const isTaskHandlerSidebarActive = ref(false)
+    const blankTask = {
+      id: null,
+      title: '',
+      dueDate: new Date(),
+      description: '',
+      assignee: null,
+      tags: [],
+      isCompleted: false,
+      isDeleted: false,
+      isImportant: false,
+    }
+    const task = ref(JSON.parse(JSON.stringify(blankTask)))
+    const clearTaskData = () => {
+      task.value = JSON.parse(JSON.stringify(blankTask))
+    }
     const opendedEmailMeta = computed(() => {
       const openedEmailIndex = emails.value.findIndex(e => e.id === emailViewData.value.id)
       return {
@@ -716,6 +732,8 @@ export default {
       shallShowEmailComposeModal,
 
       isTaskHandlerSidebarActive,
+      task,
+      clearTaskData,
 
       // Left Sidebar Responsiveness
       mqShallShowLeftSidebar,
