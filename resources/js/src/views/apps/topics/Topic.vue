@@ -89,7 +89,7 @@
             <b-media-aside class="media-left mr-50">                          
               <div class="user-action">
                  <b-form-checkbox
-                  :checked="selectedTopics.includes(topic.id)"
+                  :checked="selectedEmails.includes(topic.id)"
                   @change="toggleSelectedMail(topic.id)"
                   @click.native.stop
                 /> 
@@ -385,27 +385,69 @@ export default {
       if (store.hasModule(EMAIL_APP_STORE_MODULE_NAME)) store.unregisterModule(EMAIL_APP_STORE_MODULE_NAME)
     })
 
-    
+    const { route, router } = useRouter()
+    const { resolveLabelColor } = useEmail()
+
+    // Route Params
+    const routeParams = computed(() => route.value.params)
+    watch(routeParams, () => {
+      // eslint-disable-next-line no-use-before-define
+      fetchEmails()
+    })
+
+    // Emails & EmailsMeta
+    const emails = ref([])
+    const emailsMeta = ref({})
+
     const perfectScrollbarSettings = {
       maxScrollbarLength: 150,
     }
 
-    
+    // Search Query
+    const routeQuery = computed(() => route.value.query.q)
+    const searchQuery = ref(routeQuery.value)
+    watch(routeQuery, val => {
+      searchQuery.value = val
+    })
+    // eslint-disable-next-line no-use-before-define
+    watch(searchQuery, () => fetchEmails())
+    const updateRouteQuery = val => {
+      const currentRouteQuery = JSON.parse(JSON.stringify(route.value.query))
+
+      if (val) currentRouteQuery.q = val
+      else delete currentRouteQuery.q
+
+      router.replace({ name: route.name, query: currentRouteQuery })
+    }
+
+    const fetchEmails = () => {
+      store.dispatch('app-email/fetchEmails', {
+        q: searchQuery.value,
+        folder: router.currentRoute.params.folder || 'inbox',
+        label: router.currentRoute.params.label,
+      })
+        .then(response => {
+          emails.value = response.data.emails
+          emailsMeta.value = response.data.emailsMeta
+        })
+    }
+
+    fetchEmails()
 
     // ------------------------------------------------
     // Mail Selection
     // ------------------------------------------------
-    const selectedTopics = ref([])
+    const selectedEmails = ref([])
     const toggleSelectedMail = mailId => {
-      const mailIndex = selectedTopics.value.indexOf(mailId)
+      const mailIndex = selectedEmails.value.indexOf(mailId)
 
-      if (mailIndex === -1) selectedTopics.value.push(mailId)
-      else selectedTopics.value.splice(mailIndex, 1)
+      if (mailIndex === -1) selectedEmails.value.push(mailId)
+      else selectedEmails.value.splice(mailIndex, 1)
     }
-    const selectAllEmailCheckbox = computed(() => topics.value.length && (topics.value.length === selectedTopics.value.length))
-    const isSelectAllEmailCheckboxIndeterminate = computed(() => Boolean(selectedTopics.value.length) && emails.value.length !== selectedTopics.value.length)
+    const selectAllEmailCheckbox = computed(() => topics.value.length && (topics.value.length === selectedEmails.value.length))
+    const isSelectAllEmailCheckboxIndeterminate = computed(() => Boolean(selectedEmails.value.length) && topics.value.length !== selectedEmails.value.length)
     const selectAllCheckboxUpdate = val => {
-      selectedTopics.value = val ? emails.value.map(mail => mail.id) : []
+      selectedEmails.value = val ? topics.value.map(mail => mail.id) : []
     }
     // ? Watcher to reset selectedEmails is somewhere below due to watch dependecy fullfilment
 
