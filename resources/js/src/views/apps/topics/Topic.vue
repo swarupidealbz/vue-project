@@ -301,7 +301,11 @@ export default {
     },
     approved(topic) {
       this.$store.commit('app/setSelectedTopic', topic);
-      acceptStatus().then(() => {
+      this.$store.dispatch('app/topicStatusUpdate', {
+        website: this.$store.state.app.selectedWebsite.id,
+        topic: this.$store.state.app.selectedTopic.id,
+        status: 'approved'
+      }).then((res) => {
         let payload = {
           website: this.$store.state.app.selectedWebsite.id
         }
@@ -309,11 +313,36 @@ export default {
           payload.order = this.$store.state.app.selectedOrder.id
         }
         this.$store.dispatch('app/sortRecord', payload);
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Approved`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: res.message,
+              },
+            })
+      }).catch(error => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: error.message,
+              },
+            })
       });
     },
     reject(topic) {
       this.$store.commit('app/setSelectedTopic', topic);
-      this.rejectStatus().then(() => {
+      this.$store.dispatch('app/topicStatusUpdate', {
+        website: this.$store.state.app.selectedWebsite.id,
+        topic: this.$store.state.app.selectedTopic.id,
+        status: 'rejected'
+      }).then((res) => {
         let payload = {
           website: this.$store.state.app.selectedWebsite.id
         }
@@ -321,6 +350,27 @@ export default {
           payload.order = this.$store.state.app.selectedOrder.id
         }
         this.$store.dispatch('app/sortRecord', payload);
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Rejected`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: res.message,
+              },
+            })
+      }).catch((err) => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: err.message,
+              },
+            })
       });
     }
   },
