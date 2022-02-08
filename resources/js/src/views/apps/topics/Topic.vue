@@ -372,7 +372,79 @@ export default {
               },
             })
       });
-    }
+    },
+    bulkApproved() {
+      this.$store.dispatch('app/topicStatusUpdate', {
+        website: this.$store.state.app.selectedWebsite.id,
+        topic: selectedEmails,
+        status: 'approved'
+      }).then((res) => {
+        let payload = {
+          website: this.$store.state.app.selectedWebsite.id
+        }
+        if(this.$store.state.app.selectedOrder.id) {
+          payload.order = this.$store.state.app.selectedOrder.id
+        }
+        this.$store.dispatch('app/sortRecord', payload);
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Approved`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: res.message,
+              },
+            })
+      }).catch(error => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: error.message,
+              },
+            })
+      });
+    },
+    bulkReject() {
+      this.$store.dispatch('app/topicStatusUpdate', {
+        website: this.$store.state.app.selectedWebsite.id,
+        topic: selectedEmails,
+        status: 'rejected'
+      }).then((res) => {
+        let payload = {
+          website: this.$store.state.app.selectedWebsite.id
+        }
+        if(this.$store.state.app.selectedOrder.id) {
+          payload.order = this.$store.state.app.selectedOrder.id
+        }
+        this.$store.dispatch('app/sortRecord', payload);
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Rejected`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: res.message,
+              },
+            })
+      }).catch((err) => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: err.message,
+              },
+            })
+      });
+    },
   },
   setup() {
     const EMAIL_APP_STORE_MODULE_NAME = 'app-email'
