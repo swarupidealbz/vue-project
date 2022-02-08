@@ -242,6 +242,8 @@ export default {
   },
   methods: {
     acceptStatus() {
+      console.log('acc')
+      console.log(this.$store.state.app.selectedTopic.id)
       this.$store.dispatch('app/topicStatusUpdate', {
         website: this.$store.state.app.selectedWebsite.id,
         topic: this.$store.state.app.selectedTopic.id,
