@@ -191,6 +191,12 @@
 
     <!-- Compose Email Modal -->
     <email-compose v-model="shallShowEmailComposeModal" />
+
+    <!-- Task Handler -->
+    <todo-task-handler-sidebar
+      v-model="isTaskHandlerSidebarActive"
+      
+    />
   </div>
 </template>
 
@@ -215,6 +221,7 @@ import useEmail from './useEmail'
 import EmailCompose from './EmailCompose.vue'
 import axios from '@axios'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import TodoTaskHandlerSidebar from './TodoTaskHandlerSidebar.vue'
 
 export default {
   components: {
@@ -236,6 +243,7 @@ export default {
     TopicLeftSidebar,
     TopicView,
     EmailCompose,
+    TodoTaskHandlerSidebar,
   },
   computed: {
     topics() {
@@ -574,6 +582,7 @@ export default {
     const showEmailDetails = ref(false)
     const emailViewData = ref({})
     const topicDetails = ref({})
+    const isTaskHandlerSidebarActive = ref(false)
     const opendedEmailMeta = computed(() => {
       const openedEmailIndex = emails.value.findIndex(e => e.id === emailViewData.value.id)
       return {
