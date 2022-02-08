@@ -222,7 +222,7 @@ import { avatarText } from '@core/utils/filter'
 import formValidation from '@core/comp-functions/forms/form-validation'
 import { toRefs } from '@vue/composition-api'
 import { quillEditor } from 'vue-quill-editor'
-import useTaskHandler from './useTaskHandler'
+import useTaskHandler from '../todo/useTaskHandler'
 
 export default {
   components: {
