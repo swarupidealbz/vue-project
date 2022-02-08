@@ -388,6 +388,7 @@ export default {
           payload.order = this.$store.state.app.selectedOrder.id
         }
         this.$store.dispatch('app/sortRecord', payload);
+        this.selectedEmails = [];
         this.$toast({
               component: ToastificationContent,
               position: 'top-right',
@@ -424,6 +425,7 @@ export default {
           payload.order = this.$store.state.app.selectedOrder.id
         }
         this.$store.dispatch('app/sortRecord', payload);
+        this.selectedEmails = [];
         this.$toast({
               component: ToastificationContent,
               position: 'top-right',
