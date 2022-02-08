@@ -8,11 +8,12 @@
               v-ripple.400="'rgba(255, 255, 255, 0.15)'"
               variant="primary"
               block
-              @click="$emit('update:shall-show-email-compose-modal', true); $emit('close-left-sidebar')"
+              @click="$emit('update:is-task-handler-sidebar-active', true); $emit('close-left-sidebar')"
             >
-              Compose
+              Create Topic
             </b-button>
           </div>
+          <!-- $emit('update:shall-show-email-compose-modal', true); -->
             <!-- Filters -->
             <b-list-group class="list-group-messages">
               <b-list-group-item
