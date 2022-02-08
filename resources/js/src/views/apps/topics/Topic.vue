@@ -183,6 +183,7 @@
     <portal to="content-renderer-sidebar-left">
       <topic-left-sidebar
         :shall-show-email-compose-modal.sync="shallShowEmailComposeModal"
+        :is-task-handler-sidebar-active.sync="isTaskHandlerSidebarActive"
         :emails-meta="emailsMeta"
         :class="{'show': mqShallShowLeftSidebar}"
         @close-left-sidebar="mqShallShowLeftSidebar = false"
