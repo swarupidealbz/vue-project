@@ -300,9 +300,8 @@ export default {
       });
     },
     approved(topic) {
-      var self = this
       this.$store.commit('app/setSelectedTopic', topic);
-      self.acceptStatus().then(() => {
+      acceptStatus().then(() => {
         let payload = {
           website: this.$store.state.app.selectedWebsite.id
         }
