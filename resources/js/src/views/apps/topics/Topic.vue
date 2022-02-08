@@ -444,10 +444,10 @@ export default {
       if (mailIndex === -1) selectedEmails.value.push(mailId)
       else selectedEmails.value.splice(mailIndex, 1)
     }
-    const selectAllEmailCheckbox = computed(() => this.topics.value.length && (this.topics.value.length === selectedEmails.value.length))
-    const isSelectAllEmailCheckboxIndeterminate = computed(() => Boolean(selectedEmails.value.length) && this.topics.value.length !== selectedEmails.value.length)
+    const selectAllEmailCheckbox = computed(() => store.state.app.topics.length && (store.state.app.topics.length === selectedEmails.value.length))
+    const isSelectAllEmailCheckboxIndeterminate = computed(() => Boolean(selectedEmails.value.length) && store.state.app.topics.length !== selectedEmails.value.length)
     const selectAllCheckboxUpdate = val => {
-      selectedEmails.value = val ? this.topics.value.map(mail => mail.id) : []
+      selectedEmails.value = val ? store.state.app.topics.map(mail => mail.id) : []
     }
     // ? Watcher to reset selectedEmails is somewhere below due to watch dependecy fullfilment
 
