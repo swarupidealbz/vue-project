@@ -18,6 +18,10 @@
 
       <!-- Header: Right -->
       <div class="email-header-right ml-2 pl-1">
+        <span
+          class="mx-50 bullet bullet-sm"
+          :class="`bullet-${topicViewData.status == 'approved' ? 'success' : (topicViewData.status == 'rejected' ? 'danger' : 'warning')}`"
+        />
 
         <!-- Mark Starred -->
         <feather-icon
