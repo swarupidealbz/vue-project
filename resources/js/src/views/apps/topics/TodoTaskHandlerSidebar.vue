@@ -251,7 +251,7 @@ export default {
       //   toolbar: '#quill-toolbar',
       // },
       theme: 'snow',
-      placeholder: 'Write your description text',
+      placeholder: 'Write your description',
     }
 
     return {
@@ -294,9 +294,9 @@ export default {
 }
 
 #quil-content ::v-deep {
-  > .ql-container {
-    border-bottom: 0;
-  }
+  // > .ql-container {
+  //   border-bottom: 0;
+  // }
 
   + #quill-toolbar {
     border-top-left-radius: 0;
