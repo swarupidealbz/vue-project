@@ -65,7 +65,7 @@
             @reset.prevent="resetForm"
           >
 
-          <div class="demo-inline-spacing">
+          <div class="demo-inline-spacing mb-1">
             <b-form-radio
               v-model="taskLocal.type"
               plain

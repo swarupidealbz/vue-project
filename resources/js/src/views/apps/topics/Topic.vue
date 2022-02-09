@@ -595,6 +595,7 @@ export default {
       isCompleted: false,
       isDeleted: false,
       isImportant: false,
+      type: 1,
     }
     const task = ref(JSON.parse(JSON.stringify(blankTask)))
     const clearTaskData = () => {
