@@ -474,6 +474,7 @@ export default {
           payload.order = store.state.app.selectedOrder.id
         }
         topic.is_favorite = false
+        topicDetails.value = topic
         store.dispatch('app/sortRecord', payload);
         this.$toast({
               component: ToastificationContent,
