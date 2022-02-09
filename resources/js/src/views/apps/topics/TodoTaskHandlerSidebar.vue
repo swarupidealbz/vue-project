@@ -216,9 +216,9 @@ export default {
     addTopic() {
       let payload = {
         website: this.$store.state.app.selectedWebsite.id,
-        is_primary: taskLocal.type,
-        topic_name: taskLocal.topic,
-        description: taskLocal.description
+        is_primary: this.taskLocal.type,
+        topic_name: this.taskLocal.topic,
+        description: this.taskLocal.description
       }
       this.$store.dispatch('app/addOrUpdateTopic', payload).then((res) => {
         let payload = {
