@@ -474,7 +474,7 @@ export default {
           payload.order = store.state.app.selectedOrder.id
         }
         if(this.topicDetails.id) {
-          this.topicDetails.is_favorite = res.data.is_favorite
+          this.topicDetails.is_favorite = res.data.is_favorite;
         }
         else {
           store.dispatch('app/sortRecord', payload);
