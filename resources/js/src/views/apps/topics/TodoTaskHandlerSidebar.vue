@@ -65,6 +65,25 @@
             @reset.prevent="resetForm"
           >
 
+          <div class="demo-inline-spacing">
+            <b-form-radio
+              v-model="taskLocal.type"
+              plain
+              name="primary"
+              value="1"
+            >
+              Primary Topic
+            </b-form-radio>
+            <b-form-radio
+              v-model="taskLocal.type"
+              plain
+              name="child topic"
+              value="0"
+            >
+              Child Topic
+            </b-form-radio>
+          </div>
+
             <!-- Title -->
             <validation-provider
               #default="validationContext"
@@ -113,22 +132,6 @@
               </b-form-group>
             </validation-provider> -->
 
-            <!--Tag -->
-            <b-form-group
-              label="Tag"
-              label-for="tag"
-            >
-              <v-select
-                v-model="taskLocal.tags"
-                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                multiple
-                :close-on-select="false"
-                :options="tagOptions"
-                :reduce="option => option.value"
-                input-id="tags"
-              />
-            </b-form-group>
-
             <!-- Description -->
             <b-form-group
               label="Description"
@@ -169,7 +172,7 @@
 </template>
 
 <script>
-import { BSidebar, BForm, BFormGroup, BFormInput, BAvatar, BButton, BFormInvalidFeedback } from 'bootstrap-vue'
+import { BSidebar, BForm, BFormGroup, BFormInput, BAvatar, BButton, BFormInvalidFeedback,BFormRadio } from 'bootstrap-vue'
 import vSelect from 'vue-select'
 import flatPickr from 'vue-flatpickr-component'
 import Ripple from 'vue-ripple-directive'
@@ -190,6 +193,7 @@ export default {
     BFormGroup,
     BFormInput,
     BAvatar,
+    BFormRadio,
     BFormInvalidFeedback,
 
     // 3rd party packages
