@@ -93,7 +93,7 @@
             
 
             <!-- due Date -->
-            <validation-provider
+            <!-- <validation-provider
               #default="validationContext"
               name="Due Date"
               rules="required"
@@ -111,7 +111,7 @@
                   {{ validationContext.errors[0] }}
                 </b-form-invalid-feedback>
               </b-form-group>
-            </validation-provider>
+            </validation-provider> -->
 
             <!--Tag -->
             <b-form-group
@@ -260,6 +260,7 @@ export default {
       modules: {
         toolbar: '#quill-toolbar',
       },
+      theme: 'snow',
       placeholder: 'Write your description',
     }
 
@@ -313,5 +314,8 @@ export default {
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
   }
+}
+#sidebar-task-handler {
+  width: 50rem !important;
 }
 </style>
