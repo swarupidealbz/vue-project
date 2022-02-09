@@ -473,7 +473,7 @@ export default {
         if(store.state.app.selectedOrder.id) {
           payload.order = store.state.app.selectedOrder.id
         }
-        if(this.topicDetails) {
+        if(this.topicDetails.id) {
           this.topicDetails.is_favorite = res.is_favorite
         }
         else {
