@@ -3,6 +3,10 @@
   &.sidebar-lg {
     width: 30rem;
 
+  &.sidebar-xl {
+    width: 50rem;
+  }
+
     @include media-breakpoint-down(xs) {
       width: 20rem;
     }

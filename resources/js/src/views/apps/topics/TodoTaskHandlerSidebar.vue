@@ -2,7 +2,7 @@
   <div>
     <b-sidebar
       id="sidebar-task-handler"
-      sidebar-class="sidebar-task-handler-width"
+      sidebar-class="sidebar-xl"
       :visible="isTaskHandlerSidebarActive"
       bg-variant="white"
       shadow
@@ -304,8 +304,5 @@ export default {
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
   }
-}
-.sidebar-task-handler-width {
-  width: 50rem !important;
 }
 </style>
