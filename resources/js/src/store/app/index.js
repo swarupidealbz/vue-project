@@ -94,8 +94,18 @@ export default {
         };
         var userData = JSON.parse(localStorage.getItem('userData'));
         commit('setTopBar', top);
+        let web = localStorage.getItem('website')
         commit('setSelectedWebsite', response.data.data.websites[0]);
-        dispatch('loadTopics', {website:response.data.data.websites[0].id})
+        localStorage.setItem('website', JSON.stringify(response.data.data.websites[0]))
+        if(web) {
+          web  = JSON.parse(web);
+          let sweb = response.data.data.websites.some(w => w.id === web.id)[0]
+          if(sweb) {
+            commit('setSelectedWebsite', web);
+            localStorage.setItem('website', JSON.stringify(web))
+          }
+        }
+        dispatch('loadTopics', {website:state.selectedWebsite.id})
         userData.top_bar = top;
         localStorage.setItem('userData', JSON.stringify(userData))
       }).catch(error => {
