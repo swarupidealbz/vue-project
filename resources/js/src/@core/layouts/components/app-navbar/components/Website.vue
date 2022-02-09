@@ -40,7 +40,9 @@ export default {
     setLocal(website) {
       this.$store.commit('app/setSelectedWebsite', website);
       localStorage.setItem('website', JSON.stringify(website))
-      this.$router.push('/')
+      this.$store.dispatch('app/loadTopics', {website:this.$store.state.app.selectedWebsite.id}).then(res => {
+        this.$router.push('/')
+      })
     }
   }
 }
