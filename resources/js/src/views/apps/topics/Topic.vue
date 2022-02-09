@@ -466,7 +466,7 @@ export default {
       }
       store.dispatch(url, {
         topic: topic.id,
-      }).then(() => {
+      }).then((res) => {
         let payload = {
           website: store.state.app.selectedWebsite.id
         }
