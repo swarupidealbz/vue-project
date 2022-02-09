@@ -459,6 +459,44 @@ export default {
             })
       });
     },
+    toggleStarred(topic) {
+      let url = 'app/setFavorite'
+      if(topic.is_favorite) {
+        url = 'app/setUnfavorite'
+      }
+      store.dispatch(url, {
+        topic: topic.id,
+      }).then(() => {
+        let payload = {
+          website: store.state.app.selectedWebsite.id
+        }
+        if(store.state.app.selectedOrder.id) {
+          payload.order = store.state.app.selectedOrder.id
+        }
+        store.dispatch('app/sortRecord', payload);
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Success`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: res.message,
+              },
+            })
+      }).catch(error => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: error.message,
+              },
+            })
+      });
+    } 
   },
   setup() {
     const EMAIL_APP_STORE_MODULE_NAME = 'app-email'
@@ -540,44 +578,7 @@ export default {
     // ------------------------------------------------
     // Mail Actions
     // ------------------------------------------------
-    const toggleStarred = topic => {
-      let url = 'app/setFavorite'
-      if(topic.is_favorite) {
-        url = 'app/setUnfavorite'
-      }
-      store.dispatch(url, {
-        topic: topic.id,
-      }).then(() => {
-        let payload = {
-          website: store.state.app.selectedWebsite.id
-        }
-        if(store.state.app.selectedOrder.id) {
-          payload.order = store.state.app.selectedOrder.id
-        }
-        store.dispatch('app/sortRecord', payload);
-        this.$toast({
-              component: ToastificationContent,
-              position: 'top-right',
-              props: {
-                title: `Success`,
-                icon: 'UserCheckIcon',
-                variant: 'success',
-                text: res.message,
-              },
-            })
-      }).catch(error => {
-        this.$toast({
-              component: ToastificationContent,
-              position: 'top-right',
-              props: {
-                title: `Failed`,
-                icon: 'UserCheckIcon',
-                variant: 'danger',
-                text: error.message,
-              },
-            })
-      });
-    }
+    
 
     const moveSelectedEmailsToFolder = folder => {
       store.dispatch('app-email/updateEmail', {
@@ -730,7 +731,6 @@ export default {
       selectAllCheckboxUpdate,
 
       // Mail Actions
-      toggleStarred,
       moveSelectedEmailsToFolder,
       updateSelectedEmailsLabel,
       markSelectedEmailsAsUnread,
