@@ -2,7 +2,7 @@
   <div>
     <b-sidebar
       id="sidebar-task-handler"
-      sidebar-class="sidebar-lg"
+      sidebar-class="sidebar-task-handler-width"
       :visible="isTaskHandlerSidebarActive"
       bg-variant="white"
       shadow
@@ -140,17 +140,7 @@
                 :options="editorOption"
                 class="border-bottom-0"
               />
-              <div
-                id="quill-toolbar"
-                class="d-flex justify-content-end border-top-0"
-              >
-                <!-- Add a bold button -->
-                <button class="ql-bold" />
-                <button class="ql-italic" />
-                <button class="ql-underline" />
-                <button class="ql-align" />
-                <button class="ql-link" />
-              </div>
+              
             </b-form-group>
 
             <!-- Form Actions -->
@@ -257,9 +247,9 @@ export default {
     )
 
     const editorOption = {
-      modules: {
-        toolbar: '#quill-toolbar',
-      },
+      // modules: {
+      //   toolbar: '#quill-toolbar',
+      // },
       theme: 'snow',
       placeholder: 'Write your description text',
     }
@@ -315,7 +305,7 @@ export default {
     border-bottom-right-radius: $border-radius;
   }
 }
-#sidebar-task-handler {
+.sidebar-task-handler-width {
   width: 50rem !important;
 }
 </style>
