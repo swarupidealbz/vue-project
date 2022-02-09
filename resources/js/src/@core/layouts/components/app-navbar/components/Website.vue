@@ -40,6 +40,7 @@ export default {
     setLocal(website) {
       this.$store.commit('app/setSelectedWebsite', website);
       localStorage.setItem('website', JSON.stringify(website))
+      this.$router.push('/')
     }
   }
 }
