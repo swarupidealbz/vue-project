@@ -165,7 +165,19 @@ export default {
           console.log('error update topic status');
         })
       })
+    },
+    addOrUpdateTopic({commit, state, dispatch}, payload) {
+      return new Promise((resolve, reject) => {
+          axios.post(state.apiBaseUrl + 'topic/create', payload).then((res) => {
+            if(res.data.data.length == 1 && (res.data.status == true)) {
+              
+            }
+            resolve(res.data)
+          }).catch((error) => {
+            reject(error.response);
+          console.log('error update topic status');
+        })
+      })
     }
-
   },
 }

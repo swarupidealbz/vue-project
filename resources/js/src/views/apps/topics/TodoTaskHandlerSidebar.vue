@@ -109,29 +109,6 @@
               </b-form-group>
             </validation-provider>
 
-            
-
-            <!-- due Date -->
-            <!-- <validation-provider
-              #default="validationContext"
-              name="Due Date"
-              rules="required"
-            >
-
-              <b-form-group
-                label="Due Date"
-                label-for="due-date"
-              >
-                <flat-pickr
-                  v-model="taskLocal.dueDate"
-                  class="form-control"
-                />
-                <b-form-invalid-feedback :state="getValidationState(validationContext)">
-                  {{ validationContext.errors[0] }}
-                </b-form-invalid-feedback>
-              </b-form-group>
-            </validation-provider> -->
-
             <!-- Description -->
             <b-form-group
               label="Description"
@@ -153,6 +130,7 @@
                 variant="primary"
                 class="mr-2"
                 type="submit"
+                @click="addTopic"
               >
                 {{ taskLocal.id ? 'Update' : 'Add ' }}
               </b-button>
@@ -183,6 +161,7 @@ import formValidation from '@core/comp-functions/forms/form-validation'
 import { toRefs } from '@vue/composition-api'
 import { quillEditor } from 'vue-quill-editor'
 import useTaskHandler from '../todo/useTaskHandler'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
   components: {
@@ -231,6 +210,46 @@ export default {
       required,
       email,
       url,
+    }
+  },
+  methods: {
+    addTopic() {
+      let payload = {
+        website: this.$store.state.app.selectedWebsite.id,
+        is_primary: taskLocal.type,
+        topic_name: taskLocal.topic,
+        description: taskLocal.description
+      }
+      this.$store.dispatch('app/addOrUpdateTopic', payload).then((res) => {
+        let payload = {
+          website: this.$store.state.app.selectedWebsite.id
+        }
+        if(this.$store.state.app.selectedOrder.id) {
+          payload.order = this.$store.state.app.selectedOrder.id
+        }
+        this.$store.dispatch('app/sortRecord', payload);
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Success`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: res.message,
+              },
+            })
+      }).catch(error => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: error.message,
+              },
+            })
+      })
     }
   },
   setup(props, { emit }) {

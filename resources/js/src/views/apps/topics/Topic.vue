@@ -587,7 +587,7 @@ export default {
     const isTaskHandlerSidebarActive = ref(false)
     const blankTask = {
       id: null,
-      title: '',
+      topic: '',
       dueDate: new Date(),
       description: '',
       assignee: null,
