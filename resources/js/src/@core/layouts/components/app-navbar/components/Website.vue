@@ -39,6 +39,7 @@ export default {
   methods: {
     setLocal(website) {
       this.$store.commit('app/setSelectedWebsite', website);
+      localStorage.setItem('website', JSON.stringify(website))
     }
   }
 }
