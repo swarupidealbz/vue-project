@@ -175,9 +175,35 @@ export default {
             resolve(res.data)
           }).catch((error) => {
             reject(error.response);
-          console.log('error update topic status');
+          console.log('error add topic');
         })
       })
-    }
+    },
+    setFavorite({commit, state, dispatch}, payload) {
+      return new Promise((resolve, reject) => {
+          axios.post(state.apiBaseUrl + 'topic/favorite', payload).then((res) => {
+            if(res.data.data.length == 1 && (res.data.status == true)) {
+              commit('setSelectedTopic', res.data.data)
+            }
+            resolve(res.data)
+          }).catch((error) => {
+            reject(error.response);
+          console.log('error set favorite topic status');
+        })
+      })
+    },
+    setUnfavorite({commit, state, dispatch}, payload) {
+      return new Promise((resolve, reject) => {
+          axios.post(state.apiBaseUrl + 'topic/unfavorite', payload).then((res) => {
+            if(res.data.data.length == 1 && (res.data.status == true)) {
+              commit('setSelectedTopic', res.data.data)
+            }
+            resolve(res.data)
+          }).catch((error) => {
+            reject(error.response);
+          console.log('error set unfavorite topic status');
+        })
+      })
+    },
   },
 }

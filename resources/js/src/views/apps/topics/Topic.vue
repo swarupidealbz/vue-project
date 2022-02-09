@@ -540,14 +540,43 @@ export default {
     // ------------------------------------------------
     // Mail Actions
     // ------------------------------------------------
-    const toggleStarred = email => {
-      store.dispatch('app-email/updateEmail', {
-        emailIds: [email.id],
-        dataToUpdate: { isStarred: !email.isStarred },
+    const toggleStarred = topic => {
+      let url = 'app/favorite'
+      if(topic.is_favorite) {
+        url = 'app/unfavorite'
+      }
+      store.dispatch(url, {
+        topic: topic.id,
       }).then(() => {
-        // eslint-disable-next-line no-param-reassign
-        email.isStarred = !email.isStarred
-      })
+        let payload = {
+          website: store.state.app.selectedWebsite.id
+        }
+        if(store.state.app.selectedOrder.id) {
+          payload.order = store.state.app.selectedOrder.id
+        }
+        store.dispatch('app/sortRecord', payload);
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Success`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: res.message,
+              },
+            })
+      }).catch(error => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: error.message,
+              },
+            })
+      });
     }
 
     const moveSelectedEmailsToFolder = folder => {
