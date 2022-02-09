@@ -476,9 +476,7 @@ export default {
         if(this.topicDetails.id) {
           this.topicDetails.is_favorite = res.data.is_favorite;
         }
-        else {
-          store.dispatch('app/sortRecord', payload);
-        }
+        store.dispatch('app/sortRecord', payload);
         this.$toast({
               component: ToastificationContent,
               position: 'top-right',
