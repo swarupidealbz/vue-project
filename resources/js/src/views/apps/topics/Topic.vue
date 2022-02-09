@@ -541,9 +541,9 @@ export default {
     // Mail Actions
     // ------------------------------------------------
     const toggleStarred = topic => {
-      let url = 'app/favorite'
+      let url = 'app/setFavorite'
       if(topic.is_favorite) {
-        url = 'app/unfavorite'
+        url = 'app/setUnfavorite'
       }
       store.dispatch(url, {
         topic: topic.id,
