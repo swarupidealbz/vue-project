@@ -473,8 +473,12 @@ export default {
         if(store.state.app.selectedOrder.id) {
           payload.order = store.state.app.selectedOrder.id
         }
-        this.openTopicDetails(topic)
-        store.dispatch('app/sortRecord', payload);
+        if(this.topicDetails) {
+          this.topicDetails.is_favorite = res.is_favorite
+        }
+        else {
+          store.dispatch('app/sortRecord', payload);
+        }
         this.$toast({
               component: ToastificationContent,
               position: 'top-right',
