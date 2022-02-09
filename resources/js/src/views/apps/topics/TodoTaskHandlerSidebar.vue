@@ -294,9 +294,10 @@ export default {
 }
 
 #quil-content ::v-deep {
-  // > .ql-container {
-  //   border-bottom: 0;
-  // }
+  > .ql-container {
+    // border-bottom: 0;
+    min-height: 15rem;
+  }
 
   + #quill-toolbar {
     border-top-left-radius: 0;
