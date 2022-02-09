@@ -261,7 +261,7 @@ export default {
         toolbar: '#quill-toolbar',
       },
       theme: 'snow',
-      placeholder: 'Write your description',
+      placeholder: 'Write your description text',
     }
 
     return {
