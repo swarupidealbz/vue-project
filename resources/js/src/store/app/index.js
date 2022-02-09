@@ -169,9 +169,6 @@ export default {
     addOrUpdateTopic({commit, state, dispatch}, payload) {
       return new Promise((resolve, reject) => {
           axios.post(state.apiBaseUrl + 'topic/create', payload).then((res) => {
-            if(res.data.data.length == 1 && (res.data.status == true)) {
-              
-            }
             resolve(res.data)
           }).catch((error) => {
             reject(error.response);
@@ -182,9 +179,7 @@ export default {
     setFavorite({commit, state, dispatch}, payload) {
       return new Promise((resolve, reject) => {
           axios.post(state.apiBaseUrl + 'topic/favorite', payload).then((res) => {
-            if(res.data.data.length == 1 && (res.data.status == true)) {
-              commit('setSelectedTopic', res.data.data)
-            }
+            commit('setSelectedTopic', res.data.data)
             resolve(res.data)
           }).catch((error) => {
             reject(error.response);
@@ -195,9 +190,7 @@ export default {
     setUnfavorite({commit, state, dispatch}, payload) {
       return new Promise((resolve, reject) => {
           axios.post(state.apiBaseUrl + 'topic/unfavorite', payload).then((res) => {
-            if(res.data.data.length == 1 && (res.data.status == true)) {
-              commit('setSelectedTopic', res.data.data)
-            }
+            commit('setSelectedTopic', res.data.data)
             resolve(res.data)
           }).catch((error) => {
             reject(error.response);
