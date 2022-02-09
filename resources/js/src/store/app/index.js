@@ -98,9 +98,13 @@ export default {
         commit('setSelectedWebsite', response.data.data.websites[0]);
         localStorage.setItem('website', JSON.stringify(response.data.data.websites[0]))
         if(web) {
+          console.log('web get')
+          console.log(web)
           web  = JSON.parse(web);
           let sweb = response.data.data.websites.some(w => w.id === web.id)[0]
           if(sweb) {
+            console.log('sweb')
+            console.log(sweb)
             commit('setSelectedWebsite', web);
             localStorage.setItem('website', JSON.stringify(web))
           }
