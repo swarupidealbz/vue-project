@@ -101,7 +101,7 @@ export default {
           console.log('web get')
           console.log(web)
           web  = JSON.parse(web);
-          let sweb = response.data.data.websites.some(w => w.id === web.id)[0]
+          let sweb = response.data.data.websites.some(w => w.id === web.id)
           if(sweb) {
             console.log('sweb')
             console.log(sweb)
