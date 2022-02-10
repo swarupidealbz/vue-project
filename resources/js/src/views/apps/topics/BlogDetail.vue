@@ -1,6 +1,6 @@
 <template>
   <content-with-sidebar
-    v-if="Object.keys(blogDetail).length"
+    
     class="cws-container cws-sidebar-right blog-wrapper"
   >
     <span class="go-back mb-1">
@@ -13,7 +13,7 @@
         </span>
 
     <!-- content -->
-    <div class="blog-detail-wrapper">
+    <div class="blog-detail-wrapper" v-if="Object.keys(blogDetail).length">
       <b-row v-for="(item, index) in blogDetail" :key="(item.content_type ? 'content-' : 'comment-')+index">
         <!-- blogs -->
         <b-col cols="12" 
