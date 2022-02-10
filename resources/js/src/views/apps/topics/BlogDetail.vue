@@ -424,6 +424,10 @@ export default {
     }
   },
   created() {
+    console.log({
+      website: this.$store.state.app.selectedWebsite.id,
+      primary_topic: this.$route.query.id
+    })
     this.$http.post(this.$store.state.app.apiBaseUrl + 'content/list-for-timeline', {
       website: this.$store.state.app.selectedWebsite.id,
       primary_topic: this.$route.query.id
