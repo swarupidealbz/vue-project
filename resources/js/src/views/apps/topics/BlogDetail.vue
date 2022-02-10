@@ -30,7 +30,7 @@
               <b-media-body>
                 <small class="text-muted mr-50">by</small>
                 <small>
-                  <b-link class="text-body">{{ item.createdBy.name }}</b-link>
+                  <b-link class="text-body">{{ item.createdUser.name }}</b-link>
                 </small>
                 <span class="text-muted ml-75 mr-50">|</span>
                 <small class="text-muted">{{ item.created_at }}</small>
@@ -167,7 +167,7 @@
               </b-media-aside>
               <b-media-body>
                 <h6 class="font-weight-bolder mb-25">
-                  {{ item.createdBy.name }}
+                  {{ item.createdUser.name }}
                 </h6>
                 <b-card-text>{{ item.created_at }}</b-card-text>
                 <b-card-text>
