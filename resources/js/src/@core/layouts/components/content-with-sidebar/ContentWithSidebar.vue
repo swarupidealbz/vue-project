@@ -2,14 +2,11 @@
   <div class="cws-container cws-sidebar-right">
 
     <!-- content -->
-    <div class="cws-content">
+    <div cols="12">
       <slot />
     </div>
 
-    <!-- Sidebar -->
-    <div class="cws-sidebar">
-      <slot name="sidebar" />
-    </div>
+    
   </div>
 </template>
 
