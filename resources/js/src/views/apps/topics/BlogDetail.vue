@@ -3,12 +3,12 @@
     v-if="Object.keys(blogDetail).length"
     class="cws-container cws-sidebar-right blog-wrapper"
   >
-    <span class="go-back mr-1">
+    <span class="go-back mb-1">
           <feather-icon
             icon="XIcon"
             size="23"
             class="align-bottom"
-            :to="{ path: 'topics'}"
+            @click="back"
           />
         </span>
 
@@ -460,6 +460,9 @@ export default {
       if (tag === 'Food') return 'light-success'
       return 'light-primary'
     },
+    back() {
+      this.$router.push('/topics')
+    }
   },
 }
 </script>
