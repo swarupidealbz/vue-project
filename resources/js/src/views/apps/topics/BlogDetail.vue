@@ -421,22 +421,18 @@ export default {
     return {
       search_query: '',
       commentCheckmark: '',
-      blogDetail: [],
+      // blogDetail: [],
       blogSidebar: {},
       socialShareIcons: ['GithubIcon', 'GitlabIcon', 'FacebookIcon', 'TwitterIcon', 'LinkedinIcon'],
     }
   },
-  created() {
-    let web = JSON.parse(localStorage.getItem('website'))
-    let payload = {
-      website: web.id,
-      primary_topic: this.$route.params.id
+  computed: {
+    blogDetail() {
+      return this.load()
     }
-    console.log(payload)
-    this.$http.post(this.$store.state.app.apiBaseUrl + 'content/list-for-timeline', payload).then(res => {
-      this.blogDetail = res.data
-    })
-    this.blogSidebar = []
+  },
+  created() {
+    
     // this.$http.get('/blog/list/data/sidebar').then(res => {
     //   this.blogSidebar = res.data
     // })
@@ -451,6 +447,21 @@ export default {
       if (tag === 'Food') return 'light-success'
       return 'light-primary'
     },
+    load() {
+      return new Promise((resolve, reject) => {
+        let web = JSON.parse(localStorage.getItem('website'))
+        let payload = {
+          website: web.id,
+          primary_topic: this.$route.params.id
+        }
+        console.log(payload)
+        this.$http.post(this.$store.state.app.apiBaseUrl + 'content/list-for-timeline', payload).then(res => {
+          resolve(res.data)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    }
   },
 }
 </script>
