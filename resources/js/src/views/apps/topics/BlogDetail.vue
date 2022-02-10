@@ -262,12 +262,12 @@
     <!--/ content -->
 
     <!-- sidebar -->
-    <div
+    <!-- <div
       slot="sidebar"
       class="blog-sidebar py-2 py-lg-0"
-    >
+    > -->
       <!-- input search -->
-      <b-form-group class="blog-search">
+      <!-- <b-form-group class="blog-search">
         <b-input-group class="input-group-merge">
           <b-form-input
             id="search-input"
@@ -283,11 +283,11 @@
             />
           </b-input-group-append>
         </b-input-group>
-      </b-form-group>
+      </b-form-group> -->
       <!--/ input search -->
 
       <!-- recent posts -->
-      <div class="blog-recent-posts mt-3">
+      <!-- <div class="blog-recent-posts mt-3">
         <h6 class="section-label mb-75">
           Recent Posts
         </h6>
@@ -319,11 +319,11 @@
             </span>
           </b-media-body>
         </b-media>
-      </div>
+      </div> -->
       <!--/ recent posts -->
 
       <!-- categories -->
-      <div class="blog-categories mt-3">
+      <!-- <div class="blog-categories mt-3">
         <h6 class="section-label mb-1">
           Categories
         </h6>
@@ -352,9 +352,9 @@
             </div>
           </b-link>
         </div>
-      </div>
+      </div> -->
       <!--/ categories -->
-    </div>
+    <!-- </div> -->
   </content-with-sidebar>
 </template>
 
@@ -425,17 +425,18 @@ export default {
   },
   created() {
     let web = JSON.parse(localStorage.getItem('website'))
-      let payload = {
-        website: web.id,
-        primary_topic: this.$route.params.id
-      }
-      console.log(payload)
-      this.$http.post(this.$store.state.app.apiBaseUrl + 'content/list-for-timeline', payload).then(res => {
-        this.blogDetail = res.data
-      })
-    this.$http.get('/blog/list/data/sidebar').then(res => {
-      this.blogSidebar = res.data
+    let payload = {
+      website: web.id,
+      primary_topic: this.$route.params.id
+    }
+    console.log(payload)
+    this.$http.post(this.$store.state.app.apiBaseUrl + 'content/list-for-timeline', payload).then(res => {
+      this.blogDetail = res.data
     })
+    this.blogSidebar = []
+    // this.$http.get('/blog/list/data/sidebar').then(res => {
+    //   this.blogSidebar = res.data
+    // })
   },
   methods: {
     kFormatter,
