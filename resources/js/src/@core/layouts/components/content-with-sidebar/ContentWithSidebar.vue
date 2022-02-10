@@ -7,9 +7,9 @@
     </div>
 
     <!-- Sidebar -->
-    <div class="cws-sidebar">
+    <!-- <div class="cws-sidebar">
       <slot name="sidebar" />
-    </div>
+    </div> -->
   </div>
 </template>
 
