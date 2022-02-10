@@ -179,7 +179,7 @@
                 </h6>
                 <b-card-text>{{ fullDate(item.created_at) }}</b-card-text>
                 <b-card-text>
-                  {{ item.comment }}
+                  <div v-html="item.comment"></div>
                 </b-card-text>
                 <!-- <b-link>
                   <div class="d-inline-flex align-items-center">
