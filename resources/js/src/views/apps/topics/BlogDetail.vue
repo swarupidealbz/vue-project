@@ -429,6 +429,7 @@ export default {
         website: web.id,
         primary_topic: this.$route.params.id
       }
+      console.log(payload)
       this.$http.post(this.$store.state.app.apiBaseUrl + 'content/list-for-timeline', payload).then(res => {
         this.blogDetail = res.data
       })
