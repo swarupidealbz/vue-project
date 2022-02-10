@@ -3,6 +3,14 @@
     v-if="Object.keys(blogDetail).length"
     class="cws-container cws-sidebar-right blog-wrapper"
   >
+    <span class="go-back mr-1">
+          <feather-icon
+            icon="XIcon"
+            size="23"
+            class="align-bottom"
+            :to="{ path: 'topics'}"
+          />
+        </span>
 
     <!-- content -->
     <div class="blog-detail-wrapper">
