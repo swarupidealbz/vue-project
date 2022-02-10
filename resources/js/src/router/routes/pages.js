@@ -319,4 +319,24 @@ export default [
       ],
     },
   },
+  {
+    path: '/topic/timeline/:id',
+    name: 'topic-timeline',
+    component: () => import('@/views/apps/topics/BlogDetail.vue'),
+    // meta: {
+    //   pageTitle: 'Blog Detail',
+    //   breadcrumb: [
+    //     {
+    //       text: 'Pages',
+    //     },
+    //     {
+    //       text: 'Blog',
+    //     },
+    //     {
+    //       text: 'Detail',
+    //       active: true,
+    //     },
+    //   ],
+    // },
+  },
 ]
