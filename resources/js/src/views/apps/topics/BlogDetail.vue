@@ -7,7 +7,7 @@
           <feather-icon
             icon="XIcon"
             size="23"
-            class="align-bottom"
+            class="align-bottom mb-1 hand cursor-pointer"
             @click="back"
           />
         </span>
@@ -461,7 +461,8 @@ export default {
       return 'light-primary'
     },
     back() {
-      this.$router.push('/topics')
+      // this.$router.push('/topics')
+      history.back()
     }
   },
 }
