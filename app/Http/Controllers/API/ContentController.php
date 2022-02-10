@@ -121,12 +121,11 @@ class ContentController extends BaseController
     {
         try {
 
-            $input = $request->only('website', 'primary_topic', 'child_topic');
+            $input = $request->only('website', 'primary_topic');
                 
             $validator = Validator::make($input,[
                 'website' => 'required|integer', 
                 'primary_topic' => 'required|integer',
-                'child_topic' => 'required|integer'
             ]);
 
             if ($validator->fails()) {
@@ -134,14 +133,20 @@ class ContentController extends BaseController
             }
 
             $contentLists = Content::where('primary_topic_id', trim($request->primary_topic))
-            ->where('website_id',trim($request->website))
-            ->where('child_topic_id', trim($request->child_topic))
-            ->get();
+            ->where('website_id',trim($request->website));
+            if($request->child_topic) {
+                $contentLists = $contentLists
+                ->where('child_topic_id', trim($request->child_topic));
+            }
+            $contentLists = $contentLists->get();
             
             $commentLists = Comments::where('primary_topic_id', trim($request->primary_topic))
-            ->where('website_id',trim($request->website))
-            ->where('child_topic_id', trim($request->child_topic))
-            ->get();
+            ->where('website_id',trim($request->website));
+            if($request->child_topic) {
+                $commentLists = $commentLists
+                ->where('child_topic_id', trim($request->child_topic));
+            }
+            $commentLists = $commentLists->get();
 
             $timeline = [
                 'contents' => $contentLists,

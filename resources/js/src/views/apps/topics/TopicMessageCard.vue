@@ -59,9 +59,9 @@
         v-html="message.description"
       />
       <!-- eslint-enable -->
-      <b-img
+      <b-img v-if="message.topic_image_path"
         :src="message.topic_image_path"
-        width="16px"
+        width="250px"
         class="mr-50"
       />
     </b-card-body>

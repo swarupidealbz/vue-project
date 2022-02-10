@@ -77,12 +77,11 @@ class CommentController extends BaseController
     {
         try {
             $loginUser = Auth::user();
-            $input = $request->only('website', 'primary_topic', 'child_topic', 'content_type', 'comment', 'action');
+            $input = $request->only('website', 'primary_topic', 'content_type', 'comment', 'action');
                 
             $validator = Validator::make($input,[
                 'website' => 'required|integer',
                 'primary_topic' => 'required|integer',
-                'child_topic' => 'required|integer',
                 'content_type' => 'required',
                 'comment' => 'required',
                 'action' => 'required'
@@ -92,12 +91,19 @@ class CommentController extends BaseController
                 return $this->handleError('Required field missing.', $validator->errors()->all(), 422);
             }
 
-            $childTopic = Topics::where('is_primary_topic', 0)->where('website_id', $request->website)
-            ->where('primary_topic_id', $request->primary_topic)
-            ->where('id', $request->child_topic)
+            // $childTopic = Topics::where('is_primary_topic', 0)->where('website_id', $request->website)
+            // ->where('primary_topic_id', $request->primary_topic)
+            // ->where('id', $request->child_topic)
+            // ->first();
+
+            // if(($childTopic->status != Topics::STATUS_APPROVED) && !in_array($loginUser->role, [User::ROLE_CLIENT, User::ROLE_WRITER])) {
+            //     return $this->handleError('You are not permitted to comment.', [], 403);
+            // }
+            $primaryTopic = Topics::where('website_id', $request->website)
+            ->where('id', $request->primary_topic)
             ->first();
 
-            if(($childTopic->status != Topics::STATUS_APPROVED) && !in_array($loginUser->role, [User::ROLE_CLIENT, User::ROLE_WRITER])) {
+            if(($primaryTopic->status != Topics::STATUS_APPROVED) && !in_array($loginUser->role, [User::ROLE_CLIENT, User::ROLE_WRITER])) {
                 return $this->handleError('You are not permitted to comment.', [], 403);
             }
 
