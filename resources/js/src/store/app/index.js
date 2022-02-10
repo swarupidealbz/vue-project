@@ -27,6 +27,7 @@ export default {
     selectedOrder: {},
     selectedWebsite: {},
     selectedTopic: {},
+    contentData: [],
   },
   getters: {
     currentBreakPoint: state => {
@@ -75,6 +76,9 @@ export default {
     setSelectedTopic(state, val) {
       state.selectedTopic = val;
     },
+    setContentData(state, val) {
+      state.contentData = val;
+    }
   },
   actions: {
     loadAppData({commit, state, dispatch}, payload){
@@ -208,5 +212,15 @@ export default {
         })
       })
     },
+    loadContent({commit, state, dispatch}, payload) {
+      return new Promise((resolve, reject) => {
+        axios.post(state.apiBaseUrl + 'content/list-for-timeline', payload).then(res => {
+          commit('setContentData', res.data.data.content_comment)
+          resolve(res.data)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    }
   },
 }
