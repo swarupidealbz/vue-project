@@ -41,7 +41,7 @@
                   <b-link class="text-body">{{ item.created_user.name }}</b-link>
                 </small>
                 <span class="text-muted ml-75 mr-50">|</span>
-                <small class="text-muted">{{ item.created_at }}</small>
+                <small class="text-muted">{{ fullDate(item.created_at) }}</small>
               </b-media-body>
             </b-media>
             <!-- <div class="my-1 py-25">
@@ -177,7 +177,7 @@
                 <h6 class="font-weight-bolder mb-25">
                   {{ item.created_user.name }}
                 </h6>
-                <b-card-text>{{ item.created_at }}</b-card-text>
+                <b-card-text>{{ fullDate(item.created_at) }}</b-card-text>
                 <b-card-text>
                   {{ item.comment }}
                 </b-card-text>
@@ -394,7 +394,7 @@ import {
   BButton,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
-import { kFormatter } from '@core/utils/filter'
+import { kFormatter, fullDate } from '@core/utils/filter'
 import ContentWithSidebar from '@core/layouts/components/content-with-sidebar/ContentWithSidebar.vue'
 
 export default {
@@ -452,6 +452,7 @@ export default {
   },
   methods: {
     kFormatter,
+    fullDate,
     tagsColor(tag) {
       if (tag === 'Quote') return 'light-info'
       if (tag === 'Gaming') return 'light-danger'
