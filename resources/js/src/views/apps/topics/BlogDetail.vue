@@ -426,7 +426,7 @@ export default {
   created() {
     this.$http.post(this.$store.state.app.apiBaseUrl + 'content/list-for-timeline', {
       website: this.$store.state.app.selectedWebsite.id,
-      primary_topic: id
+      primary_topic: this.$route.query.id
     }).then(res => {
       this.blogDetail = res.data
     })
