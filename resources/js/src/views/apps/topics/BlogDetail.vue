@@ -150,7 +150,7 @@
           :id="'blogComment-'+item.id"
           cols="12"
           class="mt-2"
-          v-else
+          v-if="!item.content_type && item.comment"
         >
           <h6 class="section-label">
             Comment
