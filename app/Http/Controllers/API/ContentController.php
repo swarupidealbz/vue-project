@@ -148,9 +148,12 @@ class ContentController extends BaseController
             }
             $commentLists = $commentLists->get();
 
+            $allData = $contentLists->merge($commentLists)->sortBy('created_at');
+
             $timeline = [
                 'contents' => $contentLists,
-                'comments' => $commentLists
+                'comments' => $commentLists,
+                'content_comment' => $allData
             ];
             
             return $this->handleResponse($timeline, 'Fetched matched record.');            

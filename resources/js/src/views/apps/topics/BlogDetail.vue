@@ -6,14 +6,15 @@
 
     <!-- content -->
     <div class="blog-detail-wrapper">
-      <b-row>
+      <b-row v-for="item in blogDetail" :key="(item.content_type ? 'content-' : 'comment-')+item.id">
         <!-- blogs -->
-        <b-col cols="12">
+        <b-col cols="12" 
+            v-if="item.content_type">
           <b-card
-            :img-src="blogDetail.blog.img"
+            :img-src="item.img"
             img-top
             img-alt="Blog Detail Pic"
-            :title="blogDetail.blog.title"
+            :title="item.title"
           >
             <b-media no-body>
               <b-media-aside
@@ -23,19 +24,19 @@
                 <b-avatar
                   href="javascript:void(0)"
                   size="24"
-                  :src="blogDetail.blog.avatar"
+                  :src="item.avatar"
                 />
               </b-media-aside>
               <b-media-body>
                 <small class="text-muted mr-50">by</small>
                 <small>
-                  <b-link class="text-body">{{ blogDetail.blog.userFullName }}</b-link>
+                  <b-link class="text-body">{{ item.createdBy.name }}</b-link>
                 </small>
                 <span class="text-muted ml-75 mr-50">|</span>
-                <small class="text-muted">{{ blogDetail.blog.createdTime }}</small>
+                <small class="text-muted">{{ item.created_at }}</small>
               </b-media-body>
             </b-media>
-            <div class="my-1 py-25">
+            <!-- <div class="my-1 py-25">
               <b-link
                 v-for="tag in blogDetail.blog.tags"
                 :key="tag"
@@ -48,15 +49,15 @@
                   {{ tag }}
                 </b-badge>
               </b-link>
-            </div>
+            </div> -->
             <!-- eslint-disable vue/no-v-html -->
             <div
               class="blog-content"
-              v-html="blogDetail.blog.content"
+              v-html="item.description"
             />
 
             <!-- user commnets -->
-            <b-media
+            <!-- <b-media
               v-for="user in blogDetail.blog.UserComment"
               :key="user.avatar"
               no-body
@@ -75,7 +76,7 @@
                   {{ user.comment }}
                 </b-card-text>
               </b-media-body>
-            </b-media>
+            </b-media> -->
             <!-- eslint-enable -->
             <hr class="my-2">
 
@@ -91,7 +92,7 @@
                   </b-link>
                   <b-link>
                     <div class="text-body">
-                      {{ kFormatter(blogDetail.blog.comments) }}
+                      {{ kFormatter(19989) }}
                     </div>
                   </b-link>
                 </div>
@@ -105,7 +106,7 @@
                   </b-link>
                   <b-link>
                     <div class="text-body">
-                      {{ kFormatter(blogDetail.blog.bookmarked) }}
+                      {{ kFormatter(1134) }}
                     </div>
                   </b-link>
                 </div>
@@ -146,33 +147,33 @@
 
         <!-- blog comment -->
         <b-col
-          id="blogComment"
+          :id="'blogComment-'+item.id"
           cols="12"
           class="mt-2"
+          v-else
         >
           <h6 class="section-label">
             Comment
           </h6>
           <b-card
-            v-for="(comment,index) in blogDetail.comments"
-            :key="index"
+            
           >
             <b-media no-body>
               <b-media-aside class="mr-75">
                 <b-avatar
-                  :src="comment.avatar"
+                  :src="item.avatar"
                   size="38"
                 />
               </b-media-aside>
               <b-media-body>
                 <h6 class="font-weight-bolder mb-25">
-                  {{ comment.userFullName }}
+                  {{ item.createdBy.name }}
                 </h6>
-                <b-card-text>{{ comment.commentedAt }}</b-card-text>
+                <b-card-text>{{ item.created_at }}</b-card-text>
                 <b-card-text>
-                  {{ comment.commentText }}
+                  {{ item.comment }}
                 </b-card-text>
-                <b-link>
+                <!-- <b-link>
                   <div class="d-inline-flex align-items-center">
                     <feather-icon
                       icon="CornerUpLeftIcon"
@@ -181,13 +182,15 @@
                     />
                     <span>Reply</span>
                   </div>
-                </b-link>
+                </b-link> -->
               </b-media-body>
             </b-media>
           </b-card>
         </b-col>
         <!--/ blog comment -->
+      </b-row>
 
+      <b-row>
         <!-- Leave a Blog Comment -->
         <b-col
           cols="12"
