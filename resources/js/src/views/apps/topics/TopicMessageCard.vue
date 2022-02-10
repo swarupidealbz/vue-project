@@ -34,7 +34,7 @@
           </template>
 
           <b-dropdown-item
-          :to="{ name: 'topic-timeline', params: { id: topic.id } }">
+          :to="{ name: 'topic-timeline', params: { id: message.id } }">
             <feather-icon icon="FileIcon" />
             <span class="align-middle ml-50">Show Content</span>
           </b-dropdown-item>
