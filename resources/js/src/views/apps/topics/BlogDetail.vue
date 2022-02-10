@@ -424,16 +424,14 @@ export default {
     }
   },
   created() {
-    if(this.$store.state.app.selectedWebsite.id)
-      {      
+    let web = localStorage.getItem('website')
       let payload = {
-        website: this.$store.state.app.selectedWebsite.id,
+        website: web.id,
         primary_topic: this.$route.params.id
       }
       this.$http.post(this.$store.state.app.apiBaseUrl + 'content/list-for-timeline', payload).then(res => {
         this.blogDetail = res.data
       })
-    }
     this.$http.get('/blog/list/data/sidebar').then(res => {
       this.blogSidebar = res.data
     })
