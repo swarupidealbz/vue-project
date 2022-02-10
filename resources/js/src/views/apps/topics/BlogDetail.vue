@@ -424,16 +424,16 @@ export default {
     }
   },
   created() {
-    console.log({
-      website: this.$store.state.app.selectedWebsite.id,
-      primary_topic: this.$route.query.id
-    })
-    this.$http.post(this.$store.state.app.apiBaseUrl + 'content/list-for-timeline', {
-      website: this.$store.state.app.selectedWebsite.id,
-      primary_topic: this.$route.query.id
-    }).then(res => {
-      this.blogDetail = res.data
-    })
+    if(this.$store.state.app.selectedWebsite.id)
+      {      
+      let payload = {
+        website: this.$store.state.app.selectedWebsite.id,
+        primary_topic: this.$route.params.id
+      }
+      this.$http.post(this.$store.state.app.apiBaseUrl + 'content/list-for-timeline', payload).then(res => {
+        this.blogDetail = res.data
+      })
+    }
     this.$http.get('/blog/list/data/sidebar').then(res => {
       this.blogSidebar = res.data
     })
