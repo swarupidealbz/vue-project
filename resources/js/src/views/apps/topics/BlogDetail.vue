@@ -197,7 +197,8 @@
         </b-col>
         <!--/ blog comment -->
       </b-row>
-
+    </div>
+    <div class="blog-detail-wrapper">
       <b-row>
         <!-- Leave a Blog Comment -->
         <b-col
