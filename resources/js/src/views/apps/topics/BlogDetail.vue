@@ -424,7 +424,7 @@ export default {
     }
   },
   created() {
-    let web = localStorage.getItem('website')
+    let web = JSON.parse(localStorage.getItem('website'))
       let payload = {
         website: web.id,
         primary_topic: this.$route.params.id
