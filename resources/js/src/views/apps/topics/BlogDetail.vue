@@ -6,7 +6,7 @@
 
     <!-- content -->
     <div class="blog-detail-wrapper">
-      <b-row v-for="item in blogDetail" :key="(item.content_type ? 'content-' : 'comment-')+item.id">
+      <b-row v-for="(item, index) in blogDetail" :key="(item.content_type ? 'content-' : 'comment-')+index">
         <!-- blogs -->
         <b-col cols="12" 
             v-if="item.content_type">
