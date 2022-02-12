@@ -6,6 +6,7 @@ use Exception;
 use App\Models\Comments;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Content;
 use App\Models\Topics;
 use App\Models\User;
 use Carbon\Carbon;
@@ -146,7 +147,31 @@ class CommentController extends BaseController
                 return $this->handleError('Comment can not save, Wrong action', [], 500);
             }
 
-            return $this->handleResponse($commentDetails->fresh(), $message);            
+            $contentLists = Content::where('primary_topic_id', trim($request->primary_topic))
+            ->where('website_id',trim($request->website));
+            if($request->child_topic) {
+                $contentLists = $contentLists
+                ->where('child_topic_id', trim($request->child_topic));
+            }
+            $contentLists = $contentLists->get();
+            
+            $commentLists = Comments::where('primary_topic_id', trim($request->primary_topic))
+            ->where('website_id',trim($request->website));
+            if($request->child_topic) {
+                $commentLists = $commentLists
+                ->where('child_topic_id', trim($request->child_topic));
+            }
+            $commentLists = $commentLists->get();
+
+            $allData = $contentLists->merge($commentLists)->sortBy('created_at');
+
+            $timeline = [
+                'contents' => $contentLists,
+                'comments' => $commentLists,
+                'content_comment' => $allData
+            ];
+
+            return $this->handleResponse($timeline, $message);            
             
         }
         catch(Exception $e) 

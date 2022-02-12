@@ -276,6 +276,7 @@ import Ripple from 'vue-ripple-directive'
 import { kFormatter, fullDate } from '@core/utils/filter'
 import { quillEditor } from 'vue-quill-editor'
 import ContentWithSidebar from '@core/layouts/components/content-with-sidebar/ContentWithSidebar.vue'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
   components: {
