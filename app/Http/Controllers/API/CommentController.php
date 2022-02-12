@@ -76,7 +76,7 @@ class CommentController extends BaseController
 
     public function addEditComment(Request $request)
     {
-        try {
+        // try {
             $loginUser = Auth::user();
             $input = $request->only('website', 'primary_topic', 'content_type', 'comment', 'action');
                 
@@ -173,12 +173,12 @@ class CommentController extends BaseController
 
             return $this->handleResponse($timeline, $message);            
             
-        }
-        catch(Exception $e) 
-        {
-            logger('Comment add edit error');
-            return $this->handleError('Something went wrong', [], 500);
-        }
+        // }
+        // catch(Exception $e) 
+        // {
+        //     logger('Comment add edit error');
+        //     return $this->handleError('Something went wrong', [], 500);
+        // }
 
     }
 }
