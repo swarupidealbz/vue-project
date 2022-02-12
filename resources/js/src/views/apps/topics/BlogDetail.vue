@@ -4,7 +4,7 @@
     class="cws-container cws-sidebar-right blog-wrapper"
   >
 
-  <b-card class="text-center">
+  <div class="top-box text-center">
     <span class="go-back mb-1 float-left">
       <feather-icon
         icon="XIcon"
@@ -31,7 +31,7 @@
       />
       <span class="align-middle">Add Content</span>
     </b-button>
-  </b-card>
+  </div>
 
     <div class="text-center">
       <b-link @click="more" v-if="show">Show more</b-link>
@@ -461,5 +461,12 @@ export default {
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
   }
+}
+.top-box {
+  background-color: #fff;
+  background-clip: border-box;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
 }
 </style>
