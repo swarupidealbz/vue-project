@@ -15,7 +15,7 @@
       </span>
 
       <span
-        class="font-weight-bolder"
+        class="font-weight-bolder cursor-pointer"
         v-text="topicName"
          @click="back"
       />
