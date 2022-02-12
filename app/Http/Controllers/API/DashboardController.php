@@ -83,7 +83,7 @@ class DashboardController extends BaseController
                 'sort_name' => 'EN'
             ],
             [
-                'name' => 'France',
+                'name' => 'French',
                 'sort_name' => 'FR'
             ]
         ];
