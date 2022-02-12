@@ -27,6 +27,7 @@
       </div>
     </div>
 
+  <div class="text-center">
     <span class="go-back mb-1">
       <feather-icon
         icon="XIcon"
@@ -35,6 +36,24 @@
         @click="back"
       />
     </span>
+
+    <span
+      class="text-left"
+      v-text="topic.topic"
+    >
+
+    <b-button
+      class="pull-right"
+      variant="primary"
+      @click="addContent"
+    >
+      <feather-icon
+        icon="PlusIcon"
+        size="17"
+      />
+      Add Content
+    </b-button>
+  </div>
 
     <div class="text-center">
       <b-link @click="more" v-if="show">Show more</b-link>
