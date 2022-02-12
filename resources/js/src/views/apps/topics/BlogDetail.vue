@@ -5,7 +5,7 @@
   >
 
   <b-row class="mb-1">
-    <b-cols>
+    <b-col cols="12">
       <span class="go-back mr-1 float-left">
         <feather-icon
           icon="ChevronLeftIcon"
@@ -33,7 +33,7 @@
         />
         <span class="align-middle">Add Content</span>
       </b-button>
-    </b-cols>
+    </b-col>
   </b-row>
 
   
