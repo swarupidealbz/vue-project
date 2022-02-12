@@ -466,7 +466,7 @@ export default {
     border-bottom-right-radius: $border-radius;
   }
 }
-.card-text > img {
+.card-text p > img {
   width: 100%;
 }
 </style>
