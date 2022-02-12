@@ -4,31 +4,8 @@
     class="cws-container cws-sidebar-right blog-wrapper"
   >
 
-    <div class="email-detail-header">
-
-      <div class="email-header-right ml-2 pl-1">
-          <span
-            class="text-left"
-            v-text="topic.topic"
-          >
-          </span>
-          <b-button
-            class="text-right"
-            variant="primary"
-            @click="addContent"
-          >
-            <feather-icon
-              icon="PlusIcon"
-              size="17"
-            />
-            Add Content
-          </b-button>
-          
-      </div>
-    </div>
-
   <div class="text-center">
-    <span class="go-back mb-1">
+    <span class="go-back mb-1 float-left">
       <feather-icon
         icon="XIcon"
         size="23"
@@ -39,19 +16,19 @@
 
     <span
       class="text-left"
-      v-text="topic.topic"
+      v-text="topicName"
     />
 
     <b-button
-      class="pull-right"
-      variant="primary"
+      v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+      variant="outline-primary"
       @click="addContent"
     >
       <feather-icon
         icon="PlusIcon"
-        size="17"
+        class="mr-50"
       />
-      Add Content
+      <span class="align-middle">Add Content</span>
     </b-button>
   </div>
 
@@ -367,15 +344,16 @@ export default {
       },
       comment: '',
       show: false,
-      limit: 0
+      limit: 0,
+      topic: {}
     }
   },
   computed: {
     blogDetail() {
       return this.$store.state.app.contentData
     },
-    topic() {
-      return this.$store.state.app.selectedTopic
+    topicName() {
+      return this.topic.topic
     }
   },
   created() {
@@ -386,6 +364,7 @@ export default {
     }
     this.$store.dispatch('app/loadContent', payload).then(res => {
       this.show = res.data.show_more
+      this.topic = res.data.contents[0].primary_topic
     })
     this.limit += 1
     // this.$http.get('/blog/list/data/sidebar').then(res => {
