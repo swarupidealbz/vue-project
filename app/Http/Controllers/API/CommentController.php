@@ -76,7 +76,7 @@ class CommentController extends BaseController
 
     public function addEditComment(Request $request)
     {
-        // try {
+        try {
             $loginUser = Auth::user();
             $input = $request->only('website', 'primary_topic', 'content_type', 'comment', 'action');
                 
@@ -162,7 +162,7 @@ class CommentController extends BaseController
                 ->where('child_topic_id', trim($request->child_topic));
             }
 
-            $allData = $contentLists->merge($commentLists)->sortBy('created_at', 'desc')->take(2);
+            $allData = $contentLists->merge($commentLists)->sortByDesc('created_at')->take(2);
 
             $timeline = [
                 'contents' => $contentLists,
@@ -173,12 +173,12 @@ class CommentController extends BaseController
 
             return $this->handleResponse($timeline, $message);            
             
-        // }
-        // catch(Exception $e) 
-        // {
-        //     logger('Comment add edit error');
-        //     return $this->handleError('Something went wrong', [], 500);
-        // }
+        }
+        catch(Exception $e) 
+        {
+            logger('Comment add edit error');
+            return $this->handleError('Something went wrong', [], 500);
+        }
 
     }
 }
