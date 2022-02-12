@@ -132,6 +132,11 @@ class ContentController extends BaseController
                 return $this->handleError('Required field missing.', $validator->errors()->all(), 422);
             }
 
+            $limit = 1*2;
+            if ($request->limit) {
+                $limit = $request->limit * 2;
+            }
+
             $contentLists = Content::where('primary_topic_id', trim($request->primary_topic))
             ->where('website_id',trim($request->website));
             if($request->child_topic) {
@@ -147,13 +152,15 @@ class ContentController extends BaseController
                 ->where('child_topic_id', trim($request->child_topic));
             }
             $commentLists = $commentLists->get();
+           
 
-            $allData = $contentLists->merge($commentLists)->sortBy('created_at');
+            $allData = $contentLists->merge($commentLists)->sortBy('created_at')->take($limit);
 
             $timeline = [
                 'contents' => $contentLists,
                 'comments' => $commentLists,
-                'content_comment' => $allData
+                'content_comment' => $allData,
+                'show_more' => ($contentLists->count() + $commentLists->count()) > $allData->count(),
             ];
             
             return $this->handleResponse($timeline, 'Fetched matched record.');            

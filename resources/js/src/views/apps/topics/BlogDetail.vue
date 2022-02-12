@@ -4,13 +4,17 @@
     class="cws-container cws-sidebar-right blog-wrapper"
   >
     <span class="go-back mb-1">
-          <feather-icon
-            icon="XIcon"
-            size="23"
-            class="align-bottom mb-1 hand cursor-pointer"
-            @click="back"
-          />
-        </span>
+      <feather-icon
+        icon="XIcon"
+        size="23"
+        class="align-bottom mb-1 hand cursor-pointer"
+        @click="back"
+      />
+    </span>
+
+    <span class="mb-1">
+      <b-link @click="more" v-if="show">Show more</b-link>
+    </span>
 
     <!-- content -->
     <div class="blog-detail-wrapper" v-if="Object.keys(blogDetail).length">
@@ -319,6 +323,8 @@ export default {
         placeholder: 'Write your comment here',
       },
       comment: '',
+      show: false,
+      limit: 0
     }
   },
   computed: {
@@ -332,7 +338,10 @@ export default {
       website: web.id,
       primary_topic: this.$route.params.id
     }
-    this.$store.dispatch('app/loadContent', payload)
+    this.$store.dispatch('app/loadContent', payload).then(res => {
+      this.show = res.data.show_more
+    })
+    this.limit += 1
     // this.$http.get('/blog/list/data/sidebar').then(res => {
     //   this.blogSidebar = res.data
     // })
@@ -362,6 +371,7 @@ export default {
         action: 'add'
       }
       this.$store.dispatch('app/addEditComment', payload).then(res => {
+        this.show = res.data.show_more
         this.$toast({
               component: ToastificationContent,
               position: 'top-right',
@@ -385,6 +395,19 @@ export default {
             })
       });
       this.comment = '';
+    },
+    more() {
+      this.limit += 1
+      this.show = false
+      let web = JSON.parse(localStorage.getItem('website'))
+      let payload = {
+        website: web.id,
+        primary_topic: this.$route.params.id,
+        limit: this.limit
+      }
+      this.$store.dispatch('app/loadContent', payload).then(res => {
+        this.show = res.data.show_more
+      })
     }
   },
 }
