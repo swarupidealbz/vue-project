@@ -4,24 +4,27 @@
     class="cws-container cws-sidebar-right blog-wrapper"
   >
 
-    <div class="email-header-right ml-2 pl-1">
-        <span
-          class="text-left"
-          v-text="topic.topic"
-        >
-        </span>
-        <b-button
-          class="text-right"
-          variant="primary"
-          @click="addContent"
-        >
-          <feather-icon
-            icon="PlusIcon"
-            size="17"
-          />
-          Add Content
-        </b-button>
-        
+    <div class="email-detail-header">
+
+      <div class="email-header-right ml-2 pl-1">
+          <span
+            class="text-left"
+            v-text="topic.topic"
+          >
+          </span>
+          <b-button
+            class="text-right"
+            variant="primary"
+            @click="addContent"
+          >
+            <feather-icon
+              icon="PlusIcon"
+              size="17"
+            />
+            Add Content
+          </b-button>
+          
+      </div>
     </div>
 
     <span class="go-back mb-1">
