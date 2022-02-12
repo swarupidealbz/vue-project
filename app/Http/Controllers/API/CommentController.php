@@ -162,12 +162,13 @@ class CommentController extends BaseController
                 ->where('child_topic_id', trim($request->child_topic));
             }
 
-            $allData = $contentLists->merge($commentLists)->sortBy('created_at')->take(2);
+            $allData = $contentLists->merge($commentLists)->sortBy('created_at', 'desc')->take(2);
 
             $timeline = [
                 'contents' => $contentLists,
                 'comments' => $commentLists,
-                'content_comment' => $allData
+                'content_comment' => $allData->reverse(),
+                'show_more' => ($contentLists->count() + $commentLists->count()) > $allData->count(),
             ];
 
             return $this->handleResponse($timeline, $message);            

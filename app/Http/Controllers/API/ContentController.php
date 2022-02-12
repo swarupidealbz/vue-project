@@ -154,12 +154,12 @@ class ContentController extends BaseController
             $commentLists = $commentLists->get();
            
 
-            $allData = $contentLists->merge($commentLists)->sortBy('created_at')->take($limit);
+            $allData = $contentLists->merge($commentLists)->sortBy('created_at', 'desc')->take($limit);
 
             $timeline = [
                 'contents' => $contentLists,
                 'comments' => $commentLists,
-                'content_comment' => $allData,
+                'content_comment' => $allData->reverse(),
                 'show_more' => ($contentLists->count() + $commentLists->count()) > $allData->count(),
             ];
             

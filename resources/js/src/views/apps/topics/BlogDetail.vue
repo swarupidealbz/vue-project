@@ -12,9 +12,9 @@
       />
     </span>
 
-    <span class="mb-1">
+    <div class="mb-1">
       <b-link @click="more" v-if="show">Show more</b-link>
-    </span>
+    </div>
 
     <!-- content -->
     <div class="blog-detail-wrapper" v-if="Object.keys(blogDetail).length">
