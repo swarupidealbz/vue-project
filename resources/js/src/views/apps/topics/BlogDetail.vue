@@ -393,3 +393,20 @@ export default {
 @import '~@core/scss/vue/pages/page-blog.scss';
 @import '~@core/scss/vue/libs/quill.scss';
 </style>
+<style lang="scss" scoped>
+@import '~@core/scss/base/bootstrap-extended/include';
+
+#quil-content ::v-deep {
+  > .ql-container {
+    // border-bottom: 0;
+    min-height: 15rem;
+  }
+
+  + #quill-toolbar {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+  }
+}
+</style>
