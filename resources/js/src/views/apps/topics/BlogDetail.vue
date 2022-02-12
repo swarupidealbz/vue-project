@@ -4,8 +4,8 @@
     class="cws-container cws-sidebar-right blog-wrapper"
   >
 
-  <div class="text-center">
-  <span class="go-back mr-3 float-left">
+  <div>
+      <span class="go-back mr-3">
             <feather-icon
               icon="ChevronLeftIcon"
               size="23"
