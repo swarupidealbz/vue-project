@@ -1,4 +1,3 @@
-import store from '@/store'
 export default [
   {
     path: '/error-404',
@@ -324,20 +323,6 @@ export default [
     path: '/topic/timeline/:id',
     name: 'topic-timeline',
     component: () => import('@/views/apps/topics/BlogDetail.vue'),
-    meta: {
-      pageTitle: store.state.app.selectedTopic.topic,
-      breadcrumb: [
-        {
-          text: 'Pages',
-        },
-        {
-          text: 'Blog',
-        },
-        {
-          text: 'Detail',
-          active: true,
-        },
-      ],
-    },
+    
   },
 ]

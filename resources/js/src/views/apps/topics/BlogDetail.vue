@@ -3,6 +3,27 @@
     
     class="cws-container cws-sidebar-right blog-wrapper"
   >
+
+    <div class="email-header-right ml-2 pl-1">
+        <span
+          class="text-left"
+          v-text="topic.topic"
+        >
+        </span>
+        <b-button
+          class="text-right"
+          variant="primary"
+          @click="addContent"
+        >
+          <feather-icon
+            icon="PlusIcon"
+            size="17"
+          />
+          Add Content
+        </b-button>
+        
+    </div>
+
     <span class="go-back mb-1">
       <feather-icon
         icon="XIcon"
@@ -330,6 +351,9 @@ export default {
   computed: {
     blogDetail() {
       return this.$store.state.app.contentData
+    },
+    topic() {
+      return this.$store.state.app.selectedTopic
     }
   },
   created() {
@@ -408,6 +432,9 @@ export default {
       this.$store.dispatch('app/loadContent', payload).then(res => {
         this.show = res.data.show_more
       })
+    },
+    addContent() {
+
     }
   },
 }
