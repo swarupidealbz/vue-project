@@ -119,7 +119,7 @@ class ContentController extends BaseController
 
     public function contentForTimeline(Request $request)
     {
-        // try {
+        try {
 
             $input = $request->only('website', 'primary_topic');
                 
@@ -154,7 +154,7 @@ class ContentController extends BaseController
             $commentLists = $commentLists->get();
            
 
-            $allData = $contentLists->merge($commentLists)->sortBy('created_at', 'desc')->take($limit);
+            $allData = $contentLists->merge($commentLists)->sortByDesc('created_at')->take($limit);
 
             $timeline = [
                 'contents' => $contentLists,
@@ -164,12 +164,12 @@ class ContentController extends BaseController
             ];
             
             return $this->handleResponse($timeline, 'Fetched matched record.');            
-        // }
-        // catch(Exception $e) 
-        // {
-        //     logger('content list for timeline error');
-        //     return $this->handleError('Something went wrong', [], 500);
-        // }
+        }
+        catch(Exception $e) 
+        {
+            logger('content list for timeline error');
+            return $this->handleError('Something went wrong', [], 500);
+        }
 
     }
 
