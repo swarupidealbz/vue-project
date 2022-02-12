@@ -4,11 +4,11 @@
     class="cws-container cws-sidebar-right blog-wrapper"
   >
 
-  <div>
+  <div class="mb-1">
       <span class="go-back mr-1 float-left">
         <feather-icon
           icon="ChevronLeftIcon"
-          size="30"
+          size="22"
           class="align-bottom mb-1 hand cursor-pointer"
           @click="back"
         />
