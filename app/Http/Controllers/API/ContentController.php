@@ -161,6 +161,7 @@ class ContentController extends BaseController
                 'comments' => $commentLists,
                 'content_comment' => $allData->reverse(),
                 'show_more' => ($contentLists->count() + $commentLists->count()) > $allData->count(),
+                'primary_topic' => Topics::find($request->primary_topic),
             ];
             
             return $this->handleResponse($timeline, 'Fetched matched record.');            

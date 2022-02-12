@@ -366,7 +366,7 @@ export default {
     }
     this.$store.dispatch('app/loadContent', payload).then(res => {
       this.show = res.data.show_more
-      this.topic = res.data.contents[0].primary_topic
+      this.topic = res.data.primary_topic
     })
     this.limit += 1
     // this.$http.get('/blog/list/data/sidebar').then(res => {
