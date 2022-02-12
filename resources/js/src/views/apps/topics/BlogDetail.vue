@@ -4,6 +4,35 @@
     class="cws-container cws-sidebar-right blog-wrapper"
   >
 
+  <div class="text-center">
+  <span class="go-back mr-3 float-left">
+            <feather-icon
+              icon="ChevronLeftIcon"
+              size="23"
+              class="align-bottom mb-1 hand cursor-pointer"
+              @click="back"
+            />
+          </span>
+
+          <span
+            class="text-left"
+            v-text="topicName"
+          />
+
+          <b-button
+            v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+            variant="outline-primary"
+            @click="addContent"
+            class="btn-sm float-right"
+          >
+            <feather-icon
+              icon="PlusIcon"
+              class="mr-50"
+            />
+            <span class="align-middle">Add Content</span>
+          </b-button>
+  </div>
+
   <div class="top-box text-center">
     <b-row>
       <b-col cols="12">
