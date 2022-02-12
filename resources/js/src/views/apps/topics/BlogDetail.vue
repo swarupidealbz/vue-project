@@ -35,8 +35,8 @@
   </div>
 
   
-    <div class="text-center">
-      <b-link @click="more" v-if="show">Show more</b-link>
+    <div class="text-center" v-if="show">
+      <b-link @click="more">Show more</b-link>
     </div>
 
     <!-- content -->
