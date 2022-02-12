@@ -17,6 +17,7 @@
       <span
         class="font-weight-bolder"
         v-text="topicName"
+         @click="back"
       />
 
       <b-button
