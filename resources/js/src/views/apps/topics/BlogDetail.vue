@@ -12,7 +12,7 @@
       />
     </span>
 
-    <div class="mb-1">
+    <div class="">
       <b-link @click="more" v-if="show">Show more</b-link>
     </div>
 
