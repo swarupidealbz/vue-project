@@ -161,6 +161,7 @@ class CommentController extends BaseController
                 $commentLists = $commentLists
                 ->where('child_topic_id', trim($request->child_topic));
             }
+            $commentLists = $commentLists->get();
 
             $allData = $contentLists->merge($commentLists)->sortByDesc('created_at')->take(2);
 
