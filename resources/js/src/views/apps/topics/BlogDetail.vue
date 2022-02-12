@@ -8,7 +8,7 @@
       <span class="go-back mr-1 float-left">
         <feather-icon
           icon="ChevronLeftIcon"
-          size="23"
+          size="30"
           class="align-bottom mb-1 hand cursor-pointer"
           @click="back"
         />
