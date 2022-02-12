@@ -4,7 +4,7 @@
     class="cws-container cws-sidebar-right blog-wrapper"
   >
 
-  <!-- <div class="mb-1">
+  <div class="mb-1">
       <span class="go-back mr-1 float-left">
         <feather-icon
           icon="ChevronLeftIcon"
@@ -18,7 +18,7 @@
         class="font-weight-bolder cursor-pointer"
         v-text="topicName"
          @click="back"
-      />
+      ></span>
 
       <b-button
         v-ripple.400="'rgba(113, 102, 240, 0.15)'"
@@ -32,7 +32,7 @@
         />
         <span class="align-middle">Add Content</span>
       </b-button>
-  </div> -->
+  </div>
 
   
     <div class="text-center" v-if="show">
