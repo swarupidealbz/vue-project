@@ -211,54 +211,26 @@
           <b-card>
             <b-form>
               <b-row>
-                <b-col sm="6">
-                  <b-form-group class="mb-2">
-                    <b-form-input
-                      name="name"
-                      placeholder="Name"
-                    />
-                  </b-form-group>
-                </b-col>
-                <b-col sm="6">
-                  <b-form-group class="mb-2">
-                    <b-form-input
-                      name="email"
-                      type="email"
-                      placeholder="Email"
-                    />
-                  </b-form-group>
-                </b-col>
-                <b-col sm="6">
-                  <b-form-group class="mb-2">
-                    <b-form-input
-                      name="website"
-                      placeholder="Website"
-                    />
-                  </b-form-group>
-                </b-col>
                 <b-col cols="12">
-                  <b-form-group class="mb-2">
-                    <b-form-textarea
-                      name="textarea"
-                      rows="4"
-                      placeholder="Website"
-                    />
-                  </b-form-group>
-                </b-col>
-                <b-col cols="12">
-                  <b-form-checkbox
-                    id="checkbox-1"
-                    v-model="commentCheckmark"
-                    name="checkbox-1"
-                    class="mb-2"
+                  <!-- Description -->
+                  <b-form-group
+                    label="Description"
+                    label-for="task-description"
                   >
-                    Save my name, email, and website in this browser for the next time I comment.
-                  </b-form-checkbox>
+                    <quill-editor
+                      id="quil-content"
+                      v-model="comment"
+                      :options="options"
+                      class="border-bottom-0"
+                    />
+                    
+                  </b-form-group>
                 </b-col>
                 <b-col cols="12">
                   <b-button
                     v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                     variant="primary"
+                    @click="addcomment"
                   >
                     Post Comment
                   </b-button>
@@ -273,100 +245,6 @@
     </div>
     <!--/ content -->
 
-    <!-- sidebar -->
-    <!-- <div
-      slot="sidebar"
-      class="blog-sidebar py-2 py-lg-0"
-    > -->
-      <!-- input search -->
-      <!-- <b-form-group class="blog-search">
-        <b-input-group class="input-group-merge">
-          <b-form-input
-            id="search-input"
-            v-model="search_query"
-            placeholder="Search here"
-          />
-          <b-input-group-append
-            class="cursor-pointer"
-            is-text
-          >
-            <feather-icon
-              icon="SearchIcon"
-            />
-          </b-input-group-append>
-        </b-input-group>
-      </b-form-group> -->
-      <!--/ input search -->
-
-      <!-- recent posts -->
-      <!-- <div class="blog-recent-posts mt-3">
-        <h6 class="section-label mb-75">
-          Recent Posts
-        </h6>
-        <b-media
-          v-for="(recentpost,index) in blogSidebar.recentPosts"
-          :key="recentpost.img"
-          no-body
-          :class="index? 'mt-2':''"
-        >
-          <b-media-aside class="mr-2">
-            <b-link>
-              <b-img
-                :src="recentpost.img"
-                :alt="recentpost.img.slice(6)"
-                width="100"
-                rounded
-                height="70"
-              />
-            </b-link>
-          </b-media-aside>
-          <b-media-body>
-            <h6 class="blog-recent-post-title">
-              <b-link class="text-body-heading">
-                {{ recentpost.title }}
-              </b-link>
-            </h6>
-            <span class="text-muted mb-0">
-              {{ recentpost.createdTime }}
-            </span>
-          </b-media-body>
-        </b-media>
-      </div> -->
-      <!--/ recent posts -->
-
-      <!-- categories -->
-      <!-- <div class="blog-categories mt-3">
-        <h6 class="section-label mb-1">
-          Categories
-        </h6>
-
-        <div
-          v-for="category in blogSidebar.categories"
-          :key="category.icon"
-          class="d-flex justify-content-start align-items-center mb-75"
-        >
-          <b-link>
-            <b-avatar
-              rounded
-              size="32"
-              :variant="tagsColor(category.category)"
-              class="mr-75"
-            >
-              <feather-icon
-                :icon="category.icon"
-                size="16"
-              />
-            </b-avatar>
-          </b-link>
-          <b-link>
-            <div class="blog-category-title text-body">
-              {{ category.category }}
-            </div>
-          </b-link>
-        </div>
-      </div> -->
-      <!--/ categories -->
-    <!-- </div> -->
   </content-with-sidebar>
 </template>
 
@@ -396,6 +274,7 @@ import {
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import { kFormatter, fullDate } from '@core/utils/filter'
+import { quillEditor } from 'vue-quill-editor'
 import ContentWithSidebar from '@core/layouts/components/content-with-sidebar/ContentWithSidebar.vue'
 
 export default {
@@ -422,6 +301,7 @@ export default {
     BFormCheckbox,
     BButton,
     ContentWithSidebar,
+    quillEditor,
   },
   directives: {
     Ripple,
@@ -433,6 +313,11 @@ export default {
       // blogDetail: [],
       blogSidebar: {},
       socialShareIcons: ['GithubIcon', 'GitlabIcon', 'FacebookIcon', 'TwitterIcon', 'LinkedinIcon'],
+      options: {
+        theme: 'snow',
+        placeholder: 'Write your comment here',
+      },
+      comment: '',
     }
   },
   computed: {
@@ -465,6 +350,39 @@ export default {
     back() {
       // this.$router.push('/topics')
       history.back()
+    },
+    addComment() {
+      let web = JSON.parse(localStorage.getItem('website'))
+      let payload = {
+        website: web.id,
+        primary_topic: this.$route.params.id,
+        content_type: 'comment',
+        comment: this.comment,
+        action: 'add'
+      }
+      this.$store.dispatch('app/addEditComment', payload).then(res => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Success`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: res.data.message,
+              },
+            })
+      }).catch(err => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: err.data.message,
+              },
+            })
+      });
     }
   },
 }

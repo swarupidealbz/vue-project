@@ -218,7 +218,17 @@ export default {
           commit('setContentData', res.data.data.content_comment)
           resolve(res.data)
         }).catch(error => {
-          reject(error)
+          reject(error.response)
+        })
+      })
+    },
+    addEditComment({commit, state, dispatch}, payload) {
+      return new Promise((resolve, reject) => {
+        axios.post(state.apiBaseUrl + 'comment/add-edit', payload).then(res => {
+          commit('setContentData', res.data.data.content_comment)
+          resolve(res.data)
+        }).catch(error => {
+          reject(error.response)
         })
       })
     }
