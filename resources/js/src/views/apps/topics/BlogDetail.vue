@@ -40,7 +40,7 @@
     <span
       class="text-left"
       v-text="topic.topic"
-    >
+    />
 
     <b-button
       class="pull-right"
