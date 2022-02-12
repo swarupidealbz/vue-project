@@ -5,32 +5,36 @@
   >
 
   <div class="top-box text-center">
-    <span class="go-back mb-1 float-left">
-      <feather-icon
-        icon="XIcon"
-        size="23"
-        class="align-bottom mb-1 hand cursor-pointer"
-        @click="back"
-      />
-    </span>
+    <b-row>
+      <b-col cols="12">
+          <span class="go-back mb-1 float-left">
+            <feather-icon
+              icon="XIcon"
+              size="23"
+              class="align-bottom mb-1 hand cursor-pointer"
+              @click="back"
+            />
+          </span>
 
-    <span
-      class="text-left"
-      v-text="topicName"
-    />
+          <span
+            class="text-left"
+            v-text="topicName"
+          />
 
-    <b-button
-      v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-      variant="outline-primary"
-      @click="addContent"
-      class="btn-sm float-right"
-    >
-      <feather-icon
-        icon="PlusIcon"
-        class="mr-50"
-      />
-      <span class="align-middle">Add Content</span>
-    </b-button>
+          <b-button
+            v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+            variant="outline-primary"
+            @click="addContent"
+            class="btn-sm float-right"
+          >
+            <feather-icon
+              icon="PlusIcon"
+              class="mr-50"
+            />
+            <span class="align-middle">Add Content</span>
+          </b-button>
+      </b-col>
+    </b-row>
   </div>
 
     <div class="text-center">
