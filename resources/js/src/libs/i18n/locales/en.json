@@ -174,7 +174,9 @@
   "Without Menu": "Without Menu",
   "Layout Empty": "Layout Empty",
   "Layout Blank": "Layout Blank",
-  "greetings":"Congratulations",
-  "welcome_message":"You have won gold medal",
-  "congrats_btn": "View Sales"
+  "congratulation_card": {
+    "greetings":"Congratulations",
+    "welcome_message":"You have won gold medal",
+    "congrats_btn": "View Sales"
+  }
 }

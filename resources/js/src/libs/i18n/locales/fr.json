@@ -178,7 +178,9 @@
   "Without Menu": "Sans menu",
   "Layout Empty": "Disposition vide",
   "Layout Blank": "Mise en page vierge",
-  "greetings":"toutes nos félicitations",
-  "welcome_message":"Vous avez gagné la médaille d'o",
-  "congrats_btn": "Voir les ventes"
+  "congratulation_card": {
+    "greetings":"toutes nos félicitations",
+    "welcome_message":"Vous avez gagné la médaille d'o",
+    "congrats_btn": "Voir les ventes"
+  }
 }
