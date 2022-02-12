@@ -4,7 +4,7 @@
     class="cws-container cws-sidebar-right blog-wrapper"
   >
 
-  <div class="text-center">
+  <b-card class="text-center">
     <span class="go-back mb-1 float-left">
       <feather-icon
         icon="XIcon"
@@ -31,7 +31,7 @@
       />
       <span class="align-middle">Add Content</span>
     </b-button>
-  </div>
+  </b-card>
 
     <div class="text-center">
       <b-link @click="more" v-if="show">Show more</b-link>
