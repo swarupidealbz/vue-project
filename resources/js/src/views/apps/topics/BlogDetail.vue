@@ -390,4 +390,5 @@ export default {
 
 <style lang="scss">
 @import '~@core/scss/vue/pages/page-blog.scss';
+@import '~@core/scss/vue/libs/quill.scss';
 </style>
