@@ -4,7 +4,8 @@
     class="cws-container cws-sidebar-right blog-wrapper"
   >
 
-  <div class="mb-1">
+  <b-row class="mb-1">
+    <b-cols>
       <span class="go-back mr-1 float-left">
         <feather-icon
           icon="ChevronLeftIcon"
@@ -32,7 +33,8 @@
         />
         <span class="align-middle">Add Content</span>
       </b-button>
-  </div>
+    </b-cols>
+  </b-row>
 
   
     <div class="text-center" v-if="show">
