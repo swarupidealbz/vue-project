@@ -214,7 +214,7 @@
                 <b-col cols="12">
                   <!-- Description -->
                   <b-form-group
-                    label="Description"
+                    label="Your Comment"
                     label-for="task-description"
                   >
                     <quill-editor
@@ -369,7 +369,7 @@ export default {
                 title: `Success`,
                 icon: 'UserCheckIcon',
                 variant: 'success',
-                text: res.data.message,
+                text: res.message,
               },
             })
       }).catch(err => {
@@ -380,10 +380,11 @@ export default {
                 title: `Failed`,
                 icon: 'UserCheckIcon',
                 variant: 'danger',
-                text: err.data.message,
+                text: err.message,
               },
             })
       });
+      this.comment = '';
     }
   },
 }
