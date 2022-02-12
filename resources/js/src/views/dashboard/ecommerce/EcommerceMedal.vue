@@ -3,9 +3,9 @@
     v-if="data"
     class="card-congratulation-medal"
   >
-    <h5>Congratulations 🎉 {{ data.name }}!</h5>
+    <h5>{{ $t('greetings') }} 🎉 {{ data.name }}!</h5>
     <b-card-text class="font-small-3">
-      You have won gold medal
+      {{ $t('welcome_message') }}
     </b-card-text>
     <h3 class="mb-75 mt-2 pt-50">
       <b-link>${{ kFormatter(data.saleToday) }}</b-link>
@@ -14,7 +14,7 @@
       v-ripple.400="'rgba(255, 255, 255, 0.15)'"
       variant="primary"
     >
-      View Sales
+      {{ $t('congrats_btn') }}
     </b-button>
     <b-img
       :src="require('@/assets/images/illustration/badge.svg')"
