@@ -130,7 +130,7 @@
                 variant="primary"
                 class="mr-2"
                 type="submit"
-                @click="addTopic"
+                @click="addContent"
               >
                 {{ taskLocal.id ? 'Update' : 'Add ' }}
               </b-button>
