@@ -314,7 +314,6 @@ import { quillEditor } from 'vue-quill-editor'
 import ContentWithSidebar from '@core/layouts/components/content-with-sidebar/ContentWithSidebar.vue'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import axios from '@axios'
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import ContentTaskHandlerSidebar from './ContentTaskHandlerSidebar.vue'
 
 export default {
