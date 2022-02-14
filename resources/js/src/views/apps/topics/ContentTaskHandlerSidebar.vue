@@ -216,7 +216,7 @@ export default {
     addContent() {
       let payload = {
         website: this.$store.state.app.selectedWebsite.id,
-        primary_topic: this.$store.state.app.selectedTopic.id,
+        primary_topic: this.$route.params.id,
         child_topic: 0,
         content_type: this.taskLocal.content_type,
         title: this.taskLocal.title,
