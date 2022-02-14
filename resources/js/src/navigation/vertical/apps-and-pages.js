@@ -5,18 +5,18 @@ export default [
   {
     title: 'Topics',
     route: 'topics',
-    icon: 'MailIcon',
+    icon: 'FileIcon',
   },
   // {
   //   title: 'Chat',
   //   route: 'apps-chat',
   //   icon: 'MessageSquareIcon',
   // },
-  {
-    title: 'Content',
-    route: 'apps-todo',
-    icon: 'CheckSquareIcon',
-  },
+  // {
+  //   title: 'Content',
+  //   route: 'apps-todo',
+  //   icon: 'CheckSquareIcon',
+  // },
   // {
   //   title: 'Calendar',
   //   route: 'apps-calendar',
