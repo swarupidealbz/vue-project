@@ -274,6 +274,13 @@
     </div>
     <!--/ content -->
 
+    <!-- Task Handler -->
+    <content-task-handler-sidebar
+      v-model="isTaskHandlerSidebarActive"
+      :task="task"
+      :clear-task-data="clearTaskData" 
+    />
+
   </content-with-sidebar>
 </template>
 
@@ -306,6 +313,9 @@ import { kFormatter, fullDate } from '@core/utils/filter'
 import { quillEditor } from 'vue-quill-editor'
 import ContentWithSidebar from '@core/layouts/components/content-with-sidebar/ContentWithSidebar.vue'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import axios from '@axios'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import ContentTaskHandlerSidebar from './ContentTaskHandlerSidebar.vue'
 
 export default {
   components: {
@@ -332,6 +342,7 @@ export default {
     BButton,
     ContentWithSidebar,
     quillEditor,
+    ContentTaskHandlerSidebar,
   },
   directives: {
     Ripple,
@@ -350,7 +361,14 @@ export default {
       comment: '',
       show: false,
       limit: 0,
-      topic: {}
+      topic: {},
+      isTaskHandlerSidebarActive: false,
+      task: {
+        id: null,
+        title: '',
+        content_type: 'article',
+        description: '',
+      }
     }
   },
   computed: {
@@ -359,6 +377,10 @@ export default {
     },
     topicName() {
       return this.topic.topic
+    },
+    isWriter() {
+      let user = JSON.parse(localStorage.getItem('userData'))
+      return user.role == 'writer';
     }
   },
   created() {
@@ -386,6 +408,12 @@ export default {
       if (tag === 'Video') return 'light-warning'
       if (tag === 'Food') return 'light-success'
       return 'light-primary'
+    },
+    clearTaskData() {
+      return this.task
+    },
+    addContentBlock(){
+      this.isTaskHandlerSidebarActive = true
     },
     back() {
       // this.$router.push('/topics')

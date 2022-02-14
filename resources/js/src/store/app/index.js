@@ -231,6 +231,16 @@ export default {
           reject(error.response)
         })
       })
-    }
+    },
+    addOrUpdateContent({commit, state, dispatch}, payload) {
+      return new Promise((resolve, reject) => {
+          axios.post(state.apiBaseUrl + 'content/create', payload).then((res) => {
+            resolve(res.data)
+          }).catch((error) => {
+            reject(error.response);
+          console.log('error add content');
+        })
+      })
+    },
   },
 }
