@@ -24,7 +24,7 @@
       <b-button
         v-ripple.400="'rgba(113, 102, 240, 0.15)'"
         variant="outline-primary"
-        @click="addContent"
+        @click="addContentBlock"
         class="btn-sm float-right"
       >
         <feather-icon
