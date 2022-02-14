@@ -38,8 +38,8 @@
     >
       <!-- Account Notification -->
       <b-link
-        v-for="notification in list"
-        :key="notification.heading+index"
+        v-for="(notification, key) in list"
+        :key="notification.heading+key"
       >
         <b-media>
           <p class="media-heading">
