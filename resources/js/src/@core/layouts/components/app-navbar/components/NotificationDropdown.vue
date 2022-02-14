@@ -39,7 +39,7 @@
       <!-- Account Notification -->
       <b-link
         v-for="notification in list"
-        :key="notification.heading"
+        :key="notification.heading+index"
       >
         <b-media>
           <p class="media-heading">
@@ -138,14 +138,6 @@ export default {
     isAdmin() {
       return isAdmin();
     },
-    // notifications() {
-    //   var notify = store.state.app.topBar.notifications.data || null;
-    //   if(!notify) {
-    //     let userData = JSON.parse(localStorage.getItem('userData'))
-    //     notify = userData.top_bar.notifications.data
-    //   }
-    //   return notify;
-    // }
   },
 }
 </script>
