@@ -26,6 +26,7 @@
         variant="outline-primary"
         @click="addContentBlock"
         class="btn-sm float-right"
+        v-if="isWriter"
       >
         <feather-icon
           icon="PlusIcon"
