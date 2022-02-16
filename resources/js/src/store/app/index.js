@@ -253,7 +253,7 @@ export default {
     loadNotifications({commit, state, dispatch}, payload) {
       return new Promise((resolve, reject) => {
           axios.post(state.apiBaseUrl + 'notifications', payload).then((res) => {
-            commit('setAllNotifications', res.data.data.data)
+            commit('setAllNotifications', res.data.data)
             resolve(res.data)
           }).catch((error) => {
             reject(error.response);
