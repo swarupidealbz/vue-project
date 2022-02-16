@@ -257,7 +257,7 @@ export default {
             resolve(res.data)
           }).catch((error) => {
             reject(error.response);
-          console.log('error add content');
+          console.log('error load notification');
         })
       })
     },
@@ -268,7 +268,7 @@ export default {
             resolve(res.data)
           }).catch((error) => {
             reject(error.response);
-          console.log('error add content');
+          console.log('error update notification');
         })
       })
     },
