@@ -117,7 +117,7 @@ import {
 } from 'bootstrap-vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import draggable from 'vuedraggable'
-import { filterTags, formatDateToMonthShort } from '@core/utils/filter'
+import { filterTags, formatDateToMonthShort, formatDate } from '@core/utils/filter'
 import { useRouter } from '@core/utils/utils'
 import { useResponsiveAppLeftSidebarVisibility } from '@core/comp-functions/ui/app'
 import NotificationLeftSidebar from './NotificationLeftSidebar.vue'
@@ -506,6 +506,7 @@ export default {
       // UI Filters
       filterTags,
       formatDateToMonthShort,
+      formatDate,
 
       // useEmail
       resolveLabelColor,
