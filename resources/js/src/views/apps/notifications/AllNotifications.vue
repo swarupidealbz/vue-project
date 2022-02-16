@@ -134,7 +134,7 @@
 
     <!-- Sidebar -->
     <portal to="content-renderer-sidebar-left">
-      <todo-left-sidebar
+      <notification-left-sidebar
         :task-tags="taskTags"
         :is-task-handler-sidebar-active.sync="isTaskHandlerSidebarActive"
         :class="{'show': mqShallShowLeftSidebar}"
@@ -159,6 +159,7 @@ import { formatDate, avatarText } from '@core/utils/filter'
 import { useRouter } from '@core/utils/utils'
 import { useResponsiveAppLeftSidebarVisibility } from '@core/comp-functions/ui/app'
 import TodoLeftSidebar from './TodoLeftSidebar.vue'
+import NotificationLeftSidebar from './NotificationLeftSidebar.vue'
 import todoStoreModule from './todoStoreModule'
 import TodoTaskHandlerSidebar from './TodoTaskHandlerSidebar.vue'
 
@@ -177,6 +178,7 @@ export default {
 
     // App SFC
     TodoLeftSidebar,
+    NotificationLeftSidebar,
     TodoTaskHandlerSidebar,
   },
   computed: {    
