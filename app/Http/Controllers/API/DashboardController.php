@@ -321,4 +321,25 @@ class DashboardController extends BaseController
 
         return $response;
     }
+
+    public function updateNotification(Request $request)
+    {
+        $loginUser = Auth::user();
+        Notifications::where('id', $request->id)->update(['updated_by_id' => $loginUser->id, 'is_read' => $request->is_read]);
+
+        $rec = Notifications::where('recipient_user_id', $loginUser->id);
+        if($request->type == 'read') {
+            $rec = $rec->where('is_read', 1);
+        }
+        elseif($request->type == 'unread') {
+            $rec = $rec->where('is_read', 0);
+        }
+
+        $response = [
+            'count' => $rec->count(),
+            'data' => $rec->latest()->get()
+        ];
+
+        return $response;
+    }
 }

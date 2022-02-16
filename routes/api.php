@@ -124,7 +124,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 		Route::post('/favorite-list', [PrimaryTopicController::class, 'favoriteTopicList'])->name('favorite-list');
     });
 
-    Route::post('/notifications/{type?}', [DashboardController::class, 'allNotifications']);
+    Route::post('/notifications', [DashboardController::class, 'allNotifications']);
+    Route::post('/notification/update', [DashboardController::class, 'updateNotification']);
 
     Route::get('/pepper-login', [PeppertypeController::class, 'login']);
     Route::post('/create-pepper-idea', [PeppertypeController::class, 'createIdeas']);

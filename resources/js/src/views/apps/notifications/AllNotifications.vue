@@ -8,133 +8,53 @@
     />
 
     <!-- Email List -->
-    <div class="email-app-list">
+    <div class="todo-app-list">
 
       
-      <!-- App Action Bar -->
-      <div class="app-action">
-        <div class="action-left">
-          <b-form-checkbox
-            :checked="selectAllEmailCheckbox"
-            :indeterminate="isSelectAllEmailCheckboxIndeterminate"
-            @change="selectAllCheckboxUpdate"
-          >
-            Select All
-          </b-form-checkbox>
-        </div>
-        <div
-          v-show="selectedEmails.length"
-          class="align-items-center"
-          :class="{'d-flex': selectedEmails.length}"
-        >
-
-          <feather-icon
-            icon="CheckCircleIcon"
-            size="21"
-            class="cursor-pointer ml-1 text-success"
-            @click="bulkApproved"
-          />
-
-          <feather-icon
-            icon="XCircleIcon"
-            size="21"
-            class="cursor-pointer ml-1 text-danger"
-            @click="bulkReject"
-          />
-
-        </div>
-      </div>
-
-      <!-- Emails List -->
+      <!-- Todo List -->
       <vue-perfect-scrollbar
         :settings="perfectScrollbarSettings"
-        class="email-user-list scroll-area"
+        class="todo-task-list-wrapper list-group scroll-area"
       >
-        <ul class="email-media-list">
-          <b-media
-            v-for="topic in topics"
-            :key="topic.id"
-            tag="li"
-            no-body
+        <draggable
+          v-model="tasks"
+          handle=".draggable-task-handle"
+          tag="ul"
+          class="todo-task-list media-list"
+        >
+          <li
+            v-for="notification in notifications"
+            :key="notification.id"
+            class="todo-item"
+            :class="{ 'completed': notification.is_read }"
+            @click="handleTaskClick(task)"
           >
-
-            <b-media-aside class="media-left mr-50">                          
-              <div class="user-action">
-                 <b-form-checkbox
-                  :checked="selectedEmails.includes(topic.id)"
-                  @change="toggleSelectedMail(topic.id)"
-                  @click.native.stop
-                /> 
-                <div class="email-favorite">
-                  <feather-icon
-                    icon="StarIcon"
-                    size="17"
-                    :class="{ 'text-warning fill-current': topic.is_favorite }"
-                    @click.stop="toggleStarred(topic)"
+            <feather-icon
+              icon="MoreVerticalIcon"
+              class="draggable-task-handle d-inline"
+            />
+            <div class="todo-title-wrapper">
+              <div class="todo-title-area">
+                <div class="title-wrapper">
+                  <b-form-checkbox
+                    :checked="notification.is_read"
+                    @click.native.stop
+                    @change="updateTaskIsCompleted(notification)"
                   />
+                  <span class="todo-title">{{ notification.title }}</span>
                 </div>
               </div>
-            </b-media-aside>
-
-            <b-media-body 
-            @click="openTopicDetails(topic)">
-              <div class="mail-details">
-                <div class="mail-items">
-                  <span class="text-truncate">{{ topic.topic }}</span>
-                </div>
-                <div class="mail-meta-item">
-                  <span
-                    class="mx-50 bullet bullet-sm"
-                    :class="`bullet-${topic.status == 'approved' ? 'success' : (topic.status == 'rejected' ? 'danger' : 'warning')}`"
-                  />
-                  <span class="mail-date">{{ formatDateToMonthShort(topic.created_at, { hour: 'numeric', minute: 'numeric', }) }}</span>
-                </div>
+              <div class="todo-item-action">                
+                <small class="text-nowrap text-muted mr-1">{{ formatDate(notification.created_at, { month: 'short', day: 'numeric'}) }}</small>
+                
               </div>
+            </div>
 
-              <div class="mail-message">
-                <p class="text-truncate mb-0">
-                  {{ topic.description ? filterTags(topic.description) : '' }}
-                </p>
-              </div>
-            </b-media-body>
-              <!-- Dropdown -->
-              <div class="dropdown">
-                <b-dropdown
-                  variant="link"
-                  no-caret
-                  toggle-class="p-0 ml-1"
-                  right
-                >
-                  <template #button-content>
-                    <feather-icon
-                      icon="MoreVerticalIcon"
-                      size="16"
-                      class="align-middle text-body"
-                    />
-                  </template>
-                  <b-dropdown-item
-                  :to="{ name: 'topic-timeline', params: { id: topic.id } }"
-                  >
-                    <feather-icon icon="FileIcon" />
-                    <span class="align-middle ml-50">Show Content</span>
-                  </b-dropdown-item>
-
-                  <b-dropdown-item variant="success" @click="approved(topic)">
-                    <feather-icon icon="CheckCircleIcon" />
-                    <span class="align-middle ml-50">Accept</span>
-                  </b-dropdown-item>
-
-                  <b-dropdown-item variant="danger" @click="reject(topic)">
-                    <feather-icon icon="XCircleIcon" />
-                    <span class="align-middle ml-50 text-danger">Reject</span>
-                  </b-dropdown-item>
-                </b-dropdown>
-              </div>
-          </b-media>
-        </ul>
+          </li>
+        </draggable>
         <div
           class="no-results"
-          :class="{'show': !topics.length}"
+          :class="{'show': !notifications.length}"
         >
           <h5>No Items Found</h5>
         </div>
@@ -194,144 +114,12 @@ export default {
     // App SFC
     NotificationLeftSidebar,
   },
-  computed: {
-    topics() {
-      return this.$store.state.app.topics;
-    }
+  computed: {    
+    notifications() {
+      return this.$store.state.app.allNotifications;
+    },
   },
   methods: {
-    acceptStatus() {
-      this.$store.dispatch('app/topicStatusUpdate', {
-        website: this.$store.state.app.selectedWebsite.id,
-        topic: this.$store.state.app.selectedTopic.id,
-        status: 'approved'
-      }).then((res) => {
-        this.$toast({
-              component: ToastificationContent,
-              position: 'top-right',
-              props: {
-                title: `Approved`,
-                icon: 'UserCheckIcon',
-                variant: 'success',
-                text: res.message,
-              },
-            })
-      }).catch(error => {
-        this.$toast({
-              component: ToastificationContent,
-              position: 'top-right',
-              props: {
-                title: `Failed`,
-                icon: 'UserCheckIcon',
-                variant: 'danger',
-                text: error.message,
-              },
-            })
-      });
-    },
-    rejectStatus() {
-      this.$store.dispatch('app/topicStatusUpdate', {
-        website: this.$store.state.app.selectedWebsite.id,
-        topic: this.$store.state.app.selectedTopic.id,
-        status: 'rejected'
-      }).then((res) => {
-        this.$toast({
-              component: ToastificationContent,
-              position: 'top-right',
-              props: {
-                title: `Rejected`,
-                icon: 'UserCheckIcon',
-                variant: 'success',
-                text: res.message,
-              },
-            })
-      }).catch((err) => {
-        this.$toast({
-              component: ToastificationContent,
-              position: 'top-right',
-              props: {
-                title: `Failed`,
-                icon: 'UserCheckIcon',
-                variant: 'danger',
-                text: err.message,
-              },
-            })
-      });
-    },
-    approved(topic) {
-      this.$store.commit('app/setSelectedTopic', topic);
-      this.$store.dispatch('app/topicStatusUpdate', {
-        website: this.$store.state.app.selectedWebsite.id,
-        topic: this.$store.state.app.selectedTopic.id,
-        status: 'approved'
-      }).then((res) => {
-        let payload = {
-          website: this.$store.state.app.selectedWebsite.id
-        }
-        if(this.$store.state.app.selectedOrder.id) {
-          payload.order = this.$store.state.app.selectedOrder.id
-        }
-        this.$store.dispatch('app/sortRecord', payload);
-        this.$toast({
-              component: ToastificationContent,
-              position: 'top-right',
-              props: {
-                title: `Approved`,
-                icon: 'UserCheckIcon',
-                variant: 'success',
-                text: res.message,
-              },
-            })
-      }).catch(error => {
-        this.$toast({
-              component: ToastificationContent,
-              position: 'top-right',
-              props: {
-                title: `Failed`,
-                icon: 'UserCheckIcon',
-                variant: 'danger',
-                text: error.message,
-              },
-            })
-      });
-    },
-    reject(topic) {
-      this.$store.commit('app/setSelectedTopic', topic);
-      this.$store.dispatch('app/topicStatusUpdate', {
-        website: this.$store.state.app.selectedWebsite.id,
-        topic: this.$store.state.app.selectedTopic.id,
-        status: 'rejected'
-      }).then((res) => {
-        let payload = {
-          website: this.$store.state.app.selectedWebsite.id
-        }
-        if(this.$store.state.app.selectedOrder.id) {
-          payload.order = this.$store.state.app.selectedOrder.id
-        }
-        this.$store.dispatch('app/sortRecord', payload);
-        this.$toast({
-              component: ToastificationContent,
-              position: 'top-right',
-              props: {
-                title: `Rejected`,
-                icon: 'UserCheckIcon',
-                variant: 'success',
-                text: res.message,
-              },
-            })
-      }).catch((err) => {
-        this.$toast({
-              component: ToastificationContent,
-              position: 'top-right',
-              props: {
-                title: `Failed`,
-                icon: 'UserCheckIcon',
-                variant: 'danger',
-                text: err.message,
-              },
-            })
-      });
-    },
     bulkApproved() {
       this.$store.dispatch('app/topicStatusUpdate', {
         website: this.$store.state.app.selectedWebsite.id,
@@ -406,47 +194,6 @@ export default {
             })
       });
     },
-    toggleStarred(topic) {
-      let url = 'app/setFavorite'
-      if(topic.is_favorite) {
-        url = 'app/setUnfavorite'
-      }
-      store.dispatch(url, {
-        topic: topic.id,
-      }).then((res) => {
-        let payload = {
-          website: store.state.app.selectedWebsite.id
-        }
-        if(store.state.app.selectedOrder.id) {
-          payload.order = store.state.app.selectedOrder.id
-        }
-        if(this.topicDetails.id) {
-          this.topicDetails.is_favorite = res.data.is_favorite;
-        }
-        store.dispatch('app/sortRecord', payload);
-        this.$toast({
-              component: ToastificationContent,
-              position: 'top-right',
-              props: {
-                title: `Success`,
-                icon: 'UserCheckIcon',
-                variant: 'success',
-                text: res.message,
-              },
-            })
-      }).catch(error => {
-        this.$toast({
-              component: ToastificationContent,
-              position: 'top-right',
-              props: {
-                title: `Failed`,
-                icon: 'UserCheckIcon',
-                variant: 'danger',
-                text: error.message,
-              },
-            })
-      });
-    } 
   },
   setup() {
     const EMAIL_APP_STORE_MODULE_NAME = 'app-email'
@@ -555,6 +302,28 @@ export default {
       })
         .then(() => { fetchEmails() })
         .finally(() => { selectedEmails.value = [] })
+    }
+
+    const handleTaskClick = taskData => {
+      task.value = taskData
+      isTaskHandlerSidebarActive.value = true
+    }
+
+
+    // Single Task isCompleted update
+    const updateTaskIsCompleted = taskData => {
+      // eslint-disable-next-line no-param-reassign
+      taskData.is_read = !taskData.is_read
+      updateTask(taskData)
+    }
+
+    const updateTask = taskData => {
+      store.dispatch('app/updateNotification', taskData)
+      // store.dispatch('app-todo/updateTask', { task: taskData })
+      //   .then(() => {
+      //     // eslint-disable-next-line no-use-before-define
+      //     fetchTasks()
+      //   })
     }
 
     // ------------------------------------------------
@@ -715,6 +484,7 @@ export default {
       isTaskHandlerSidebarActive,
       task,
       clearTaskData,
+      updateTaskIsCompleted,
 
       // Left Sidebar Responsiveness
       mqShallShowLeftSidebar,

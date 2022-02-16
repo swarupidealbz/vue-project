@@ -14,13 +14,20 @@
                 <span class="align-text-bottom line-height-1">All</span>                
               </b-list-group-item>
               <b-list-group-item
-                v-for="group in groups"
-                :key="group.name"
-                :active="isActive(group)"
-                @click="sortGroup(group)"
+                key="all-read"
+                :active="isActive"
+                @click="filter('read')"
                 class="cursor-pointer"
               >
-                <span class="align-text-bottom line-height-1">{{ group.name }}</span>                
+                <span class="align-text-bottom line-height-1">Read</span>                
+              </b-list-group-item>
+              <b-list-group-item
+                key="all-unread"
+                :active="isActive"
+                @click="filter('unread')"
+                class="cursor-pointer"
+              >
+                <span class="align-text-bottom line-height-1">Unread</span>                
               </b-list-group-item>
             </b-list-group>
 
@@ -54,35 +61,28 @@ export default {
     VuePerfectScrollbar,
   },
   props: {
-    shallShowEmailComposeModal: {
-      type: Boolean,
-      required: true,
-    },
-    emailsMeta: {
-      type: Object,
-      required: true,
-    },
+    
+  },
+  beforeCreate() {
+    this.$store.dispatch('app/loadNotifications')
   },
   computed: {
-    groups() {
-      return this.$store.state.app.groups;
-    },
     activeAll() {
-      return !this.$store.state.app.selectedOrder.id;
+      return (this.$store.state.app.selectedNotificationType != 'read') || (this.$store.state.app.selectedNotificationType != 'unread');
     }
   },
   methods: {
-    isActive(group) {
-      return this.$store.state.app.selectedOrder.id == group.id;
+    isActive() {
+      return this.$store.state.app.selectedNotificationType;
     },
-    sortGroup(group) {
+    filter(type) {
       this.$emit('close-left-sidebar');
-      this.$store.commit('app/setSelectedOrder', group);
-      this.$store.dispatch('app/sortRecord', { website: this.$store.state.app.selectedWebsite.id, order: group.id});
+      this.$store.commit('app/setSelectedNotificationType', type);
+      this.$store.dispatch('app/loadNotifications', { type: type});
     },
     showAll() {
-      this.$store.commit('app/setSelectedOrder', {});
-      this.$store.dispatch('app/sortRecord', { website: this.$store.state.app.selectedWebsite.id });
+      this.$store.commit('app/setSelectedNotificationType', '');
+      this.$store.dispatch('app/loadNotifications');
     }
   },
   setup() {

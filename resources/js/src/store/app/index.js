@@ -28,6 +28,8 @@ export default {
     selectedWebsite: {},
     selectedTopic: {},
     contentData: [],
+    selectedNotificationType: '',
+    allNotifications: [],
   },
   getters: {
     currentBreakPoint: state => {
@@ -78,6 +80,12 @@ export default {
     },
     setContentData(state, val) {
       state.contentData = val;
+    },
+    setSelectedNotificationType(state, val) {
+      state.selectedNotificationType = val
+    },
+    setAllNotifications(state, val) {
+      state.allNotifications = val
     }
   },
   actions: {
@@ -235,6 +243,28 @@ export default {
     addOrUpdateContent({commit, state, dispatch}, payload) {
       return new Promise((resolve, reject) => {
           axios.post(state.apiBaseUrl + 'content/create', payload).then((res) => {
+            resolve(res.data)
+          }).catch((error) => {
+            reject(error.response);
+          console.log('error add content');
+        })
+      })
+    },
+    loadNotifications({commit, state, dispatch}, payload) {
+      return new Promise((resolve, reject) => {
+          axios.post(state.apiBaseUrl + 'notifications', payload).then((res) => {
+            commit('setAllNotifications', res.data.data.data)
+            resolve(res.data)
+          }).catch((error) => {
+            reject(error.response);
+          console.log('error add content');
+        })
+      })
+    },
+    updateNotification({commit, state, dispatch}, payload) {
+      return new Promise((resolve, reject) => {
+          axios.post(state.apiBaseUrl + 'notification/update', payload).then((res) => {
+            commit('setAllNotifications', res.data.data.data)
             resolve(res.data)
           }).catch((error) => {
             reject(error.response);
