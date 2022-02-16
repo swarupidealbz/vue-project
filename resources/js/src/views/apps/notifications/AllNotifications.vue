@@ -6,8 +6,6 @@
       :class="{'show': mqShallShowLeftSidebar}"
       @click="mqShallShowLeftSidebar = false"
     />
-
-    <!-- Email List -->
     <div class="todo-app-list">
 
       <!-- App Searchbar Header -->
@@ -38,7 +36,40 @@
               @input="updateRouteQuery"
             />
           </b-input-group>
-        </div>       
+        </div>
+
+        <!-- Dropdown -->
+        <div class="dropdown">
+          <b-dropdown
+            variant="link"
+            no-caret
+            toggle-class="p-0 mr-1"
+            right
+          >
+            <template #button-content>
+              <feather-icon
+                icon="MoreVerticalIcon"
+                size="16"
+                class="align-middle text-body"
+              />
+            </template>
+            <b-dropdown-item @click="resetSortAndNavigate">
+              Reset Sort
+            </b-dropdown-item>
+            <b-dropdown-item :to="{ name: $route.name, query: { ...$route.query, sort: 'title-asc' } }">
+              Sort A-Z
+            </b-dropdown-item>
+            <b-dropdown-item :to="{ name: $route.name, query: { ...$route.query, sort: 'title-desc' } }">
+              Sort Z-A
+            </b-dropdown-item>
+            <b-dropdown-item :to="{ name: $route.name, query: { ...$route.query, sort: 'assignee' } }">
+              Sort Assignee
+            </b-dropdown-item>
+            <b-dropdown-item :to="{ name: $route.name, query: { ...$route.query, sort: 'due-date' } }">
+              Sort Due Date
+            </b-dropdown-item>
+          </b-dropdown>
+        </div>
       </div>
 
       <!-- Todo List -->
@@ -57,7 +88,7 @@
             :key="notification.id"
             class="todo-item"
             :class="{ 'completed': notification.is_read }"
-            @click="handleTaskClick(task)"
+            @click="handleTaskClick(notification)"
           >
             <feather-icon
               icon="MoreVerticalIcon"
@@ -72,10 +103,9 @@
                     @change="updateTaskIsCompleted(notification)"
                   />
                   <span class="todo-title">{{ notification.title }}</span>
-                  <small class="text-muted">{{ notification.subtitle }}</small>
                 </div>
               </div>
-              <div class="todo-item-action">                
+              <div class="todo-item-action">
                 <small class="text-nowrap text-muted mr-1">{{ formatDate(notification.created_at, { month: 'short', day: 'numeric'}) }}</small>
                 
               </div>
@@ -92,40 +122,45 @@
       </vue-perfect-scrollbar>
     </div>
 
-    
+    <!-- Task Handler -->
+    <todo-task-handler-sidebar
+      v-model="isTaskHandlerSidebarActive"
+      :task="task"
+      :clear-task-data="clearTaskData"
+      @remove-task="removeTask"
+      @add-task="addTask"
+      @update-task="updateTask"
+    />
+
     <!-- Sidebar -->
     <portal to="content-renderer-sidebar-left">
-      <notification-left-sidebar
-        :emails-meta="emailsMeta"
+      <todo-left-sidebar
+        :task-tags="taskTags"
+        :is-task-handler-sidebar-active.sync="isTaskHandlerSidebarActive"
         :class="{'show': mqShallShowLeftSidebar}"
         @close-left-sidebar="mqShallShowLeftSidebar = false"
       />
     </portal>
-
-   
   </div>
 </template>
 
 <script>
 import store from '@/store'
 import {
-  ref, onUnmounted, computed, watch,
-  // ref, watch, computed, onUnmounted,
+  ref, watch, computed, onUnmounted,
 } from '@vue/composition-api'
 import {
   BFormInput, BInputGroup, BInputGroupPrepend, BDropdown, BDropdownItem,
-  BFormCheckbox, BMedia, BMediaAside, BMediaBody, BAvatar,
+  BFormCheckbox, BBadge, BAvatar,
 } from 'bootstrap-vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import draggable from 'vuedraggable'
-import { filterTags, formatDateToMonthShort, formatDate } from '@core/utils/filter'
+import { formatDate, avatarText } from '@core/utils/filter'
 import { useRouter } from '@core/utils/utils'
 import { useResponsiveAppLeftSidebarVisibility } from '@core/comp-functions/ui/app'
-import NotificationLeftSidebar from './NotificationLeftSidebar.vue'
-import emailStoreModule from './emailStoreModule'
-import useEmail from './useEmail'
-import axios from '@axios'
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import TodoLeftSidebar from './TodoLeftSidebar.vue'
+import todoStoreModule from './todoStoreModule'
+import TodoTaskHandlerSidebar from './TodoTaskHandlerSidebar.vue'
 
 export default {
   components: {
@@ -135,221 +170,92 @@ export default {
     BDropdown,
     BDropdownItem,
     BFormCheckbox,
-    BMedia,
-    BMediaAside,
-    BMediaBody,
+    BBadge,
     BAvatar,
     draggable,
-
-    // 3rd Party
     VuePerfectScrollbar,
 
     // App SFC
-    NotificationLeftSidebar,
+    TodoLeftSidebar,
+    TodoTaskHandlerSidebar,
   },
   computed: {    
     notifications() {
       return this.$store.state.app.allNotifications;
     },
   },
-  methods: {
-    bulkApproved() {
-      this.$store.dispatch('app/topicStatusUpdate', {
-        website: this.$store.state.app.selectedWebsite.id,
-        topic: this.selectedEmails.join(','),
-        status: 'approved'
-      }).then((res) => {
-        let payload = {
-          website: this.$store.state.app.selectedWebsite.id
-        }
-        if(this.$store.state.app.selectedOrder.id) {
-          payload.order = this.$store.state.app.selectedOrder.id
-        }
-        this.$store.dispatch('app/sortRecord', payload);
-        this.selectedEmails = [];
-        this.$toast({
-              component: ToastificationContent,
-              position: 'top-right',
-              props: {
-                title: `Approved`,
-                icon: 'UserCheckIcon',
-                variant: 'success',
-                text: res.message,
-              },
-            })
-      }).catch(error => {
-        this.$toast({
-              component: ToastificationContent,
-              position: 'top-right',
-              props: {
-                title: `Failed`,
-                icon: 'UserCheckIcon',
-                variant: 'danger',
-                text: error.message,
-              },
-            })
-      });
-    },
-    bulkReject() {
-      this.$store.dispatch('app/topicStatusUpdate', {
-        website: this.$store.state.app.selectedWebsite.id,
-        topic: this.selectedEmails.join(','),
-        status: 'rejected'
-      }).then((res) => {
-        let payload = {
-          website: this.$store.state.app.selectedWebsite.id
-        }
-        if(this.$store.state.app.selectedOrder.id) {
-          payload.order = this.$store.state.app.selectedOrder.id
-        }
-        this.$store.dispatch('app/sortRecord', payload);
-        this.selectedEmails = [];
-        this.$toast({
-              component: ToastificationContent,
-              position: 'top-right',
-              props: {
-                title: `Rejected`,
-                icon: 'UserCheckIcon',
-                variant: 'success',
-                text: res.message,
-              },
-            })
-      }).catch((err) => {
-        this.$toast({
-              component: ToastificationContent,
-              position: 'top-right',
-              props: {
-                title: `Failed`,
-                icon: 'UserCheckIcon',
-                variant: 'danger',
-                text: err.message,
-              },
-            })
-      });
-    },
-  },
   setup() {
-    const EMAIL_APP_STORE_MODULE_NAME = 'app-email'
+    const TODO_APP_STORE_MODULE_NAME = 'app-todo'
 
     // Register module
-    if (!store.hasModule(EMAIL_APP_STORE_MODULE_NAME)) store.registerModule(EMAIL_APP_STORE_MODULE_NAME, emailStoreModule)
+    if (!store.hasModule(TODO_APP_STORE_MODULE_NAME)) store.registerModule(TODO_APP_STORE_MODULE_NAME, todoStoreModule)
 
     // UnRegister on leave
     onUnmounted(() => {
-      if (store.hasModule(EMAIL_APP_STORE_MODULE_NAME)) store.unregisterModule(EMAIL_APP_STORE_MODULE_NAME)
+      if (store.hasModule(TODO_APP_STORE_MODULE_NAME)) store.unregisterModule(TODO_APP_STORE_MODULE_NAME)
     })
 
     const { route, router } = useRouter()
-    const { resolveLabelColor } = useEmail()
-
-    // Route Params
+    const routeSortBy = computed(() => route.value.query.sort)
+    const routeQuery = computed(() => route.value.query.q)
     const routeParams = computed(() => route.value.params)
     watch(routeParams, () => {
       // eslint-disable-next-line no-use-before-define
-      fetchEmails()
+      fetchTasks()
     })
 
-    // Emails & EmailsMeta
-    const emails = ref([])
-    const emailsMeta = ref({})
+    const tasks = ref([])
 
-    const perfectScrollbarSettings = {
-      maxScrollbarLength: 150,
-    }
-
-    // Search Query
-    const routeQuery = computed(() => route.value.query.q)
-    const searchQuery = ref(routeQuery.value)
-    watch(routeQuery, val => {
-      searchQuery.value = val
+    const sortOptions = [
+      'latest',
+      'title-asc',
+      'title-desc',
+      'assignee',
+      'due-date',
+    ]
+    const sortBy = ref(routeSortBy.value)
+    watch(routeSortBy, val => {
+      if (sortOptions.includes(val)) sortBy.value = val
+      else sortBy.value = val
     })
-    // eslint-disable-next-line no-use-before-define
-    watch(searchQuery, () => fetchEmails())
-    const updateRouteQuery = val => {
+    const resetSortAndNavigate = () => {
       const currentRouteQuery = JSON.parse(JSON.stringify(route.value.query))
 
-      if (val) currentRouteQuery.q = val
-      else delete currentRouteQuery.q
+      delete currentRouteQuery.sort
 
-      router.replace({ name: route.name, query: currentRouteQuery })
+      router.replace({ name: route.name, query: currentRouteQuery }).catch(() => {})
     }
 
-    const fetchEmails = () => {
-      store.dispatch('app-email/fetchEmails', {
-        q: searchQuery.value,
-        folder: router.currentRoute.params.folder || 'inbox',
-        label: router.currentRoute.params.label,
-      })
-        .then(response => {
-          emails.value = response.data.emails
-          emailsMeta.value = response.data.emailsMeta
+    const blankTask = {
+      id: null,
+      title: '',
+      dueDate: new Date(),
+      description: '',
+      assignee: null,
+      tags: [],
+      isCompleted: false,
+      isDeleted: false,
+      isImportant: false,
+    }
+    const task = ref(JSON.parse(JSON.stringify(blankTask)))
+    const clearTaskData = () => {
+      task.value = JSON.parse(JSON.stringify(blankTask))
+    }
+
+    const addTask = val => {
+      store.dispatch('app-todo/addTask', val)
+        .then(() => {
+          // eslint-disable-next-line no-use-before-define
+          fetchTasks()
         })
     }
-
-    fetchEmails()
-
-    // ------------------------------------------------
-    // Mail Selection
-    // ------------------------------------------------
-    const selectedEmails = ref([])
-    const toggleSelectedMail = mailId => {
-      const mailIndex = selectedEmails.value.indexOf(mailId)
-
-      if (mailIndex === -1) selectedEmails.value.push(mailId)
-      else selectedEmails.value.splice(mailIndex, 1)
+    const removeTask = () => {
+      store.dispatch('app-todo/removeTask', { id: task.value.id })
+        .then(() => {
+          // eslint-disable-next-line no-use-before-define
+          fetchTasks()
+        })
     }
-    const selectAllEmailCheckbox = computed(() => store.state.app.topics.length && (store.state.app.topics.length === selectedEmails.value.length))
-    const isSelectAllEmailCheckboxIndeterminate = computed(() => Boolean(selectedEmails.value.length) && store.state.app.topics.length !== selectedEmails.value.length)
-    const selectAllCheckboxUpdate = val => {
-      selectedEmails.value = val ? store.state.app.topics.map(mail => mail.id) : []
-    }
-    // ? Watcher to reset selectedEmails is somewhere below due to watch dependecy fullfilment
-
-    // ------------------------------------------------
-    // Mail Actions
-    // ------------------------------------------------
-    
-
-    const moveSelectedEmailsToFolder = folder => {
-      store.dispatch('app-email/updateEmail', {
-        emailIds: selectedEmails.value,
-        dataToUpdate: { folder },
-      })
-        .then(() => { fetchEmails() })
-        .finally(() => { selectedEmails.value = [] })
-    }
-
-    const updateSelectedEmailsLabel = label => {
-      store.dispatch('app-email/updateEmailLabels', {
-        emailIds: selectedEmails.value,
-        label,
-      })
-        .then(() => { fetchEmails() })
-        .finally(() => { selectedEmails.value = [] })
-    }
-
-    const markSelectedEmailsAsUnread = () => {
-      store.dispatch('app-email/updateEmail', {
-        emailIds: selectedEmails.value,
-        dataToUpdate: { isRead: false },
-      })
-        .then(() => { fetchEmails() })
-        .finally(() => { selectedEmails.value = [] })
-    }
-
-    const handleTaskClick = taskData => {
-      task.value = taskData
-      isTaskHandlerSidebarActive.value = true
-    }
-
-
-    // Single Task isCompleted update
-    const updateTaskIsCompleted = taskData => {
-      // eslint-disable-next-line no-param-reassign
-      taskData.is_read = !taskData.is_read
-      updateTask(taskData)
-    }
-
     const updateTask = taskData => {
       store.dispatch('app/updateNotification', taskData)
       // store.dispatch('app-todo/updateTask', { task: taskData })
@@ -359,168 +265,112 @@ export default {
       //   })
     }
 
-    // ------------------------------------------------
-    // Email Details
-    // ------------------------------------------------
-    const showTopicDetails = ref(false)
-    const showEmailDetails = ref(false)
-    const emailViewData = ref({})
-    const topicDetails = ref({})
+    const perfectScrollbarSettings = {
+      maxScrollbarLength: 150,
+    }
+
     const isTaskHandlerSidebarActive = ref(false)
-    const blankTask = {
-      id: null,
-      topic: '',
-      dueDate: new Date(),
-      description: '',
-      assignee: null,
-      tags: [],
-      isCompleted: false,
-      isDeleted: false,
-      isImportant: false,
-      type: 1,
+
+    const taskTags = [
+      { title: 'Team', color: 'primary', route: { name: 'apps-todo-tag', params: { tag: 'team' } } },
+      { title: 'Low', color: 'success', route: { name: 'apps-todo-tag', params: { tag: 'low' } } },
+      { title: 'Medium', color: 'warning', route: { name: 'apps-todo-tag', params: { tag: 'medium' } } },
+      { title: 'High', color: 'danger', route: { name: 'apps-todo-tag', params: { tag: 'high' } } },
+      { title: 'Update', color: 'info', route: { name: 'apps-todo-tag', params: { tag: 'update' } } },
+    ]
+
+    const resolveTagVariant = tag => {
+      if (tag === 'team') return 'primary'
+      if (tag === 'low') return 'success'
+      if (tag === 'medium') return 'warning'
+      if (tag === 'high') return 'danger'
+      if (tag === 'update') return 'info'
+      return 'primary'
     }
-    const task = ref(JSON.parse(JSON.stringify(blankTask)))
-    const clearTaskData = () => {
-      task.value = JSON.parse(JSON.stringify(blankTask))
+
+    const resolveAvatarVariant = tags => {
+      if (tags.includes('high')) return 'primary'
+      if (tags.includes('medium')) return 'warning'
+      if (tags.includes('low')) return 'success'
+      if (tags.includes('update')) return 'danger'
+      if (tags.includes('team')) return 'info'
+      return 'primary'
     }
-    const opendedEmailMeta = computed(() => {
-      const openedEmailIndex = emails.value.findIndex(e => e.id === emailViewData.value.id)
-      return {
-        hasNextEmail: Boolean(emails.value[openedEmailIndex + 1]),
-        hasPreviousEmail: Boolean(emails.value[openedEmailIndex - 1]),
-      }
+
+    // Search Query
+    const searchQuery = ref(routeQuery.value)
+    watch(routeQuery, val => {
+      searchQuery.value = val
     })
-    const openTopicDetails = topic => {
-      axios.get(store.state.app.apiBaseUrl + 'primary-topic/show/' + topic.id).then((res) => {
-        topicDetails.value = topic
-        store.commit('app/setSelectedTopic', topic);
-        showTopicDetails.value = true
-      })
-    }
-    const updateEmailViewData = email => {
-      // Mark email is read
-      store.dispatch('app-email/updateEmail', {
-        emailIds: [email.id],
-        dataToUpdate: { isRead: true },
-      })
-        .then(() => {
-          // If opened email is unread then decrease badge count for email meta based on email folder
-          if (!email.isRead && (email.folder === 'inbox' || email.folder === 'spam')) {
-            emailsMeta.value[email.folder] -= 1
-          }
-
-          // eslint-disable-next-line no-param-reassign
-          email.isRead = true
-        })
-        .finally(() => {
-          emailViewData.value = email
-          showEmailDetails.value = true
-        })
-    }
-    const moveOpenEmailToFolder = folder => {
-      selectedEmails.value = [emailViewData.value.id]
-      moveSelectedEmailsToFolder(folder)
-      selectedEmails.value = []
-      showEmailDetails.value = false
-    }
-    const updateOpenEmailLabel = label => {
-      selectedEmails.value = [emailViewData.value.id]
-      updateSelectedEmailsLabel(label)
-
-      // Update label in opened email
-      const labelIndex = emailViewData.value.labels.indexOf(label)
-      if (labelIndex === -1) emailViewData.value.labels.push(label)
-      else emailViewData.value.labels.splice(labelIndex, 1)
-
-      selectedEmails.value = []
-    }
-
-    const markOpenEmailAsUnread = () => {
-      selectedEmails.value = [emailViewData.value.id]
-      markSelectedEmailsAsUnread()
-
-      selectedEmails.value = []
-      showEmailDetails.value = false
-    }
-
-    const changeOpenedEmail = dir => {
-      const openedEmailIndex = emails.value.findIndex(e => e.id === emailViewData.value.id)
-      const newEmailIndex = dir === 'previous' ? openedEmailIndex - 1 : openedEmailIndex + 1
-      emailViewData.value = emails.value[newEmailIndex]
-    }
-
-    // * If someone clicks on filter while viewing detail => Close the email detail view
-    watch(routeParams, () => {
-      showEmailDetails.value = false
-    })
-
-    // * Watcher to reset selectedEmails
-    // ? You can also use showEmailDetails (instead of `emailViewData`) but it will trigger execution twice in this case
     // eslint-disable-next-line no-use-before-define
-    watch([emailViewData, routeParams], () => {
-      selectedEmails.value = []
-    })
+    watch([searchQuery, sortBy], () => fetchTasks())
+    const updateRouteQuery = val => {
+      const currentRouteQuery = JSON.parse(JSON.stringify(route.value.query))
 
-    // Compose
-    const shallShowEmailComposeModal = ref(false)
+      if (val) currentRouteQuery.q = val
+      else delete currentRouteQuery.q
 
-    // Left Sidebar Responsiveness
+      router.replace({ name: route.name, query: currentRouteQuery })
+    }
+
+    const fetchTasks = () => {
+      store.dispatch('app-todo/fetchTasks', {
+        q: searchQuery.value,
+        filter: router.currentRoute.params.filter,
+        tag: router.currentRoute.params.tag,
+        sortBy: sortBy.value,
+      })
+        .then(response => {
+          tasks.value = response.data
+        })
+    }
+
+    fetchTasks()
+
+    const handleTaskClick = taskData => {
+      task.value = taskData
+      isTaskHandlerSidebarActive.value = true
+    }
+
+    // Single Task isCompleted update
+    const updateTaskIsCompleted = taskData => {
+      // eslint-disable-next-line no-param-reassign
+      taskData.is_read = !taskData.is_read
+      updateTask(taskData)
+    }
+
     const { mqShallShowLeftSidebar } = useResponsiveAppLeftSidebarVisibility()
 
     return {
-      // UI
-      perfectScrollbarSettings,
-
-      // Emails & EmailsMeta
-      emails,
-      emailsMeta,
-
-      // Mail Selection
-      selectAllEmailCheckbox,
-      isSelectAllEmailCheckboxIndeterminate,
-      selectedEmails,
-      toggleSelectedMail,
-      selectAllCheckboxUpdate,
-
-      // Mail Actions
-      moveSelectedEmailsToFolder,
-      updateSelectedEmailsLabel,
-      markSelectedEmailsAsUnread,
-      openTopicDetails,
-
-      // Email Details
-      showEmailDetails,
-      showTopicDetails,
-      emailViewData,
-      topicDetails,
-      opendedEmailMeta,
-      updateEmailViewData,
-      moveOpenEmailToFolder,
-      updateOpenEmailLabel,
-      markOpenEmailAsUnread,
-      changeOpenedEmail,
-
-      // Search Query
-      searchQuery,
-      updateRouteQuery,
-
-      // UI Filters
-      filterTags,
-      formatDateToMonthShort,
-      formatDate,
-
-      // useEmail
-      resolveLabelColor,
-
-      // Compose
-      shallShowEmailComposeModal,
-
-      isTaskHandlerSidebarActive,
       task,
+      tasks,
+      removeTask,
+      addTask,
+      updateTask,
       clearTaskData,
+      taskTags,
+      searchQuery,
+      fetchTasks,
+      perfectScrollbarSettings,
+      updateRouteQuery,
+      resetSortAndNavigate,
+
+      // UI
+      resolveTagVariant,
+      resolveAvatarVariant,
+      isTaskHandlerSidebarActive,
+
+      // Click Handler
+      handleTaskClick,
+
+      // Filters
+      formatDate,
+      avatarText,
+
+      // Single Task isCompleted update
       updateTaskIsCompleted,
 
-      // Left Sidebar Responsiveness
+      // Left Sidebar Responsive
       mqShallShowLeftSidebar,
     }
   },
@@ -545,4 +395,3 @@ position: absolute;
 <style lang="scss">
 @import "~@core/scss/base/pages/app-todo.scss";
 </style>
-

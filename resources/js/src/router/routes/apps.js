@@ -113,7 +113,7 @@ export default [
   {
     path: '/notifications',
     name: 'notifications',
-    component: () => import('@/views/apps/todo/Todo.vue'),
+    component: () => import('@/views/apps/notifications/AllNotifications.vue'),
     meta: {
       contentRenderer: 'sidebar-left',
       contentClass: 'todo-application',
