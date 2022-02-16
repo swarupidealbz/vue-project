@@ -72,7 +72,7 @@
                     @change="updateTaskIsCompleted(notification)"
                   />
                   <span class="todo-title">{{ notification.title }}</span>
-                  <small class="notification-text">{{ notification.subtitle }}</small>
+                  <small class="text-muted">{{ notification.subtitle }}</small>
                 </div>
               </div>
               <div class="todo-item-action">                
