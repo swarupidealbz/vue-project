@@ -45,6 +45,7 @@ router.beforeEach((to, _, next) => {
     'error-404',
     'topics',
     'topic-timeline',
+    'notifications',
   ]  
   const find = rList.includes(to.name)
   var user = getUserData()

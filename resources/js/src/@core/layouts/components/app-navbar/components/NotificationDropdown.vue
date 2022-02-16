@@ -91,6 +91,7 @@
       v-ripple.400="'rgba(255, 255, 255, 0.15)'"
       variant="primary"
       block
+      :to="{ name: 'notifications' }"
     >Read all notifications</b-button>
     </li>
   </b-nav-item-dropdown>

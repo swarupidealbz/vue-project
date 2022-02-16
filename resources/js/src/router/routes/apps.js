@@ -110,4 +110,10 @@ export default [
       contentClass: 'email-application',
     },
   },
+  {
+    path: '/notifications',
+    name: 'notifications',
+    component: () => import('@/views/apps/notifications/AllNotifications.vue'),
+    
+  },
 ]
