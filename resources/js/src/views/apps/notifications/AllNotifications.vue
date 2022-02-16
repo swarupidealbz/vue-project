@@ -38,38 +38,7 @@
           </b-input-group>
         </div>
 
-        <!-- Dropdown -->
-        <div class="dropdown">
-          <b-dropdown
-            variant="link"
-            no-caret
-            toggle-class="p-0 mr-1"
-            right
-          >
-            <template #button-content>
-              <feather-icon
-                icon="MoreVerticalIcon"
-                size="16"
-                class="align-middle text-body"
-              />
-            </template>
-            <b-dropdown-item @click="resetSortAndNavigate">
-              Reset Sort
-            </b-dropdown-item>
-            <b-dropdown-item :to="{ name: $route.name, query: { ...$route.query, sort: 'title-asc' } }">
-              Sort A-Z
-            </b-dropdown-item>
-            <b-dropdown-item :to="{ name: $route.name, query: { ...$route.query, sort: 'title-desc' } }">
-              Sort Z-A
-            </b-dropdown-item>
-            <b-dropdown-item :to="{ name: $route.name, query: { ...$route.query, sort: 'assignee' } }">
-              Sort Assignee
-            </b-dropdown-item>
-            <b-dropdown-item :to="{ name: $route.name, query: { ...$route.query, sort: 'due-date' } }">
-              Sort Due Date
-            </b-dropdown-item>
-          </b-dropdown>
-        </div>
+        
       </div>
 
       <!-- Todo List -->

@@ -19,7 +19,7 @@
               </b-list-group-item>
               <b-list-group-item
                 key="all-read"
-                :active="isActive == 'read'"
+                :active="isActive('read')"
                 @click="filter('read')"
                 class="cursor-pointer"
               >
@@ -27,7 +27,7 @@
               </b-list-group-item>
               <b-list-group-item
                 key="all-unread"
-                :active="isActive == 'unread'"
+                :active="isActive('unread')"
                 @click="filter('unread')"
                 class="cursor-pointer"
               >
@@ -70,8 +70,8 @@ export default {
     }
   },
   methods: {
-    isActive() {
-      return this.$store.state.app.selectedNotificationType;
+    isActive(type) {
+      return this.$store.state.app.selectedNotificationType == type;
     },
     filter(type) {
       this.$emit('close-left-sidebar');
