@@ -40,7 +40,7 @@
           </b-input-group>
         </div>       
       </div>
-      
+
       <!-- Todo List -->
       <vue-perfect-scrollbar
         :settings="perfectScrollbarSettings"
@@ -148,7 +148,7 @@ export default {
   },
   computed: {    
     notifications() {
-      return this.$store.state.app.allNotifications || [];
+      return this.$store.state.app.allNotifications;
     },
   },
   methods: {
