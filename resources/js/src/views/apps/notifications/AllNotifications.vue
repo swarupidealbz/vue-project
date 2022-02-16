@@ -17,7 +17,7 @@
         class="todo-task-list-wrapper list-group scroll-area"
       >
         <draggable
-          v-model="tasks"
+          v-model="notifications"
           handle=".draggable-task-handle"
           tag="ul"
           class="todo-task-list media-list"
@@ -116,7 +116,7 @@ export default {
   },
   computed: {    
     notifications() {
-      return this.$store.state.app.allNotifications;
+      return this.$store.state.app.allNotifications || [];
     },
   },
   methods: {
