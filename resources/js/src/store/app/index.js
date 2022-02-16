@@ -264,7 +264,7 @@ export default {
     updateNotification({commit, state, dispatch}, payload) {
       return new Promise((resolve, reject) => {
           axios.post(state.apiBaseUrl + 'notification/update', payload).then((res) => {
-            commit('setAllNotifications', res.data.data.data)
+            commit('setAllNotifications', res.data.data)
             resolve(res.data)
           }).catch((error) => {
             reject(error.response);
