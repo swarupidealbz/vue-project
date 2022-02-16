@@ -68,7 +68,7 @@ export default {
   },
   computed: {
     activeAll() {
-      return (this.$store.state.app.selectedNotificationType != 'read') || (this.$store.state.app.selectedNotificationType != 'unread');
+      return (this.$store.state.app.selectedNotificationType != 'read') && (this.$store.state.app.selectedNotificationType != 'unread');
     }
   },
   methods: {
