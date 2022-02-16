@@ -115,7 +115,7 @@ export default [
     name: 'notifications',
     component: () => import('@/views/apps/notifications/AllNotifications.vue'),
     meta: {
-      contentRenderer: 'sidebar-left',
+      contentRenderer: '',
       contentClass: 'email-application',
     },
   },
