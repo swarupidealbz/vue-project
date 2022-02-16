@@ -12,6 +12,6 @@ Vue.use(Toast, {
   closeOnClick: false,
   closeButton: false,
   icon: false,
-  timeout: 10000,
+  timeout: 8000,
   transition: 'Vue-Toastification__fade',
 })
