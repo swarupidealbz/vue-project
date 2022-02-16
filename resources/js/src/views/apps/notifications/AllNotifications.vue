@@ -157,14 +157,10 @@ import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import { filterTags, formatDateToMonthShort } from '@core/utils/filter'
 import { useRouter } from '@core/utils/utils'
 import { useResponsiveAppLeftSidebarVisibility } from '@core/comp-functions/ui/app'
-import TopicLeftSidebar from './TopicLeftSidebar.vue'
-import TopicView from './TopicView.vue'
 import emailStoreModule from './emailStoreModule'
 import useEmail from './useEmail'
-import EmailCompose from './EmailCompose.vue'
 import axios from '@axios'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
-import TodoTaskHandlerSidebar from './TodoTaskHandlerSidebar.vue'
 
 export default {
   components: {
@@ -183,10 +179,6 @@ export default {
     VuePerfectScrollbar,
 
     // App SFC
-    TopicLeftSidebar,
-    TopicView,
-    EmailCompose,
-    TodoTaskHandlerSidebar,
   },
   computed: {
     topics() {
@@ -657,7 +649,6 @@ export default {
     const shallShowEmailComposeModal = ref(false)
 
     // Left Sidebar Responsiveness
-    const { mqShallShowLeftSidebar } = useResponsiveAppLeftSidebarVisibility()
 
     return {
       // UI
@@ -711,7 +702,6 @@ export default {
       clearTaskData,
 
       // Left Sidebar Responsiveness
-      mqShallShowLeftSidebar,
     }
   },
 }
