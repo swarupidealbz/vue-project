@@ -15,7 +15,7 @@
               </b-list-group-item>
               <b-list-group-item
                 key="all-read"
-                :active="isActive"
+                :active="isActive == 'read'"
                 @click="filter('read')"
                 class="cursor-pointer"
               >
@@ -23,7 +23,7 @@
               </b-list-group-item>
               <b-list-group-item
                 key="all-unread"
-                :active="isActive"
+                :active="isActive == 'unread'"
                 @click="filter('unread')"
                 class="cursor-pointer"
               >
