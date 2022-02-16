@@ -159,7 +159,6 @@ import draggable from 'vuedraggable'
 import { formatDate, avatarText } from '@core/utils/filter'
 import { useRouter } from '@core/utils/utils'
 import { useResponsiveAppLeftSidebarVisibility } from '@core/comp-functions/ui/app'
-import TodoLeftSidebar from './TodoLeftSidebar.vue'
 import NotificationLeftSidebar from './NotificationLeftSidebar.vue'
 import todoStoreModule from './todoStoreModule'
 import TodoTaskHandlerSidebar from './TodoTaskHandlerSidebar.vue'
@@ -178,7 +177,6 @@ export default {
     VuePerfectScrollbar,
 
     // App SFC
-    TodoLeftSidebar,
     NotificationLeftSidebar,
     TodoTaskHandlerSidebar,
   },
