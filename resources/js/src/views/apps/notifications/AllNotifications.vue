@@ -72,6 +72,7 @@
                     @change="updateTaskIsCompleted(notification)"
                   />
                   <span class="todo-title">{{ notification.title }}</span>
+                  <small class="notification-text">{{ notification.subtitle }}</small>
                 </div>
               </div>
               <div class="todo-item-action">                
@@ -527,13 +528,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media(max-width: 460px) {
- .mail-meta-item {
-   display: none !important;
- } 
+.draggable-task-handle {
+position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    visibility: hidden;
+    cursor: move;
+
+    .todo-task-list .todo-item:hover & {
+      visibility: visible;
+    }
 }
 </style>
 
 <style lang="scss">
-@import "~@core/scss/base/pages/app-email.scss";
+@import "~@core/scss/base/pages/app-todo.scss";
 </style>
+
