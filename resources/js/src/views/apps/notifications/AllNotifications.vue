@@ -3,12 +3,14 @@
   <div style="height: inherit">
     <div
       class="body-content-overlay"
+      :class="{'show': mqShallShowLeftSidebar}"
+      @click="mqShallShowLeftSidebar = false"
     />
 
     <!-- Email List -->
     <div class="email-app-list">
 
-     
+      
       <!-- App Action Bar -->
       <div class="app-action">
         <div class="action-left">
@@ -140,6 +142,18 @@
     </div>
 
     
+    <!-- Sidebar -->
+    <portal to="content-renderer-sidebar-left">
+      <notifcation-left-sidebar
+        :shall-show-email-compose-modal.sync="shallShowEmailComposeModal"
+        :is-task-handler-sidebar-active.sync="isTaskHandlerSidebarActive"
+        :emails-meta="emailsMeta"
+        :class="{'show': mqShallShowLeftSidebar}"
+        @close-left-sidebar="mqShallShowLeftSidebar = false"
+      />
+    </portal>
+
+   
   </div>
 </template>
 
@@ -157,6 +171,7 @@ import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import { filterTags, formatDateToMonthShort } from '@core/utils/filter'
 import { useRouter } from '@core/utils/utils'
 import { useResponsiveAppLeftSidebarVisibility } from '@core/comp-functions/ui/app'
+import NotificationLeftSidebar from './NotificationLeftSidebar.vue'
 import emailStoreModule from './emailStoreModule'
 import useEmail from './useEmail'
 import axios from '@axios'
@@ -179,6 +194,7 @@ export default {
     VuePerfectScrollbar,
 
     // App SFC
+    NotificationLeftSidebar,
   },
   computed: {
     topics() {
@@ -649,6 +665,7 @@ export default {
     const shallShowEmailComposeModal = ref(false)
 
     // Left Sidebar Responsiveness
+    const { mqShallShowLeftSidebar } = useResponsiveAppLeftSidebarVisibility()
 
     return {
       // UI
@@ -702,6 +719,7 @@ export default {
       clearTaskData,
 
       // Left Sidebar Responsiveness
+      mqShallShowLeftSidebar,
     }
   },
 }
