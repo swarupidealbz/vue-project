@@ -102,7 +102,8 @@
                     @click.native.stop
                     @change="updateTaskIsCompleted(notification)"
                   />
-                  <span class="todo-title">{{ notification.title }}</span>
+                  <span class="todo-title">{{ notification.heading }}</span>
+                  <small class="text-muted">{{ notification.details }}</small>
                 </div>
               </div>
               <div class="todo-item-action">
