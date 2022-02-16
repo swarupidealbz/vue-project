@@ -38,7 +38,38 @@
           </b-input-group>
         </div>
 
-        
+        <!-- Dropdown -->
+        <div class="dropdown">
+          <b-dropdown
+            variant="link"
+            no-caret
+            toggle-class="p-0 mr-1"
+            right
+          >
+            <template #button-content>
+              <feather-icon
+                icon="MoreVerticalIcon"
+                size="16"
+                class="align-middle text-body"
+              />
+            </template>
+            <b-dropdown-item @click="resetSortAndNavigate">
+              Reset Sort
+            </b-dropdown-item>
+            <b-dropdown-item :to="{ name: $route.name, query: { ...$route.query, sort: 'title-asc' } }">
+              Sort A-Z
+            </b-dropdown-item>
+            <b-dropdown-item :to="{ name: $route.name, query: { ...$route.query, sort: 'title-desc' } }">
+              Sort Z-A
+            </b-dropdown-item>
+            <b-dropdown-item :to="{ name: $route.name, query: { ...$route.query, sort: 'assignee' } }">
+              Sort Assignee
+            </b-dropdown-item>
+            <b-dropdown-item :to="{ name: $route.name, query: { ...$route.query, sort: 'due-date' } }">
+              Sort Due Date
+            </b-dropdown-item>
+          </b-dropdown>
+        </div>
       </div>
 
       <!-- Todo List -->
@@ -53,11 +84,11 @@
           class="todo-task-list media-list"
         >
           <li
-            v-for="notification in notifications"
-            :key="notification.id"
+            v-for="task in tasks"
+            :key="task.id"
             class="todo-item"
-            :class="{ 'completed': notification.is_read }"
-            @click="handleTaskClick(notification)"
+            :class="{ 'completed': task.isCompleted }"
+            @click="handleTaskClick(task)"
           >
             <feather-icon
               icon="MoreVerticalIcon"
@@ -67,16 +98,43 @@
               <div class="todo-title-area">
                 <div class="title-wrapper">
                   <b-form-checkbox
-                    :checked="notification.is_read"
+                    :checked="task.isCompleted"
                     @click.native.stop
-                    @change="updateTaskIsCompleted(notification)"
+                    @change="updateTaskIsCompleted(task)"
                   />
-                  <span class="todo-title">{{ notification.title }}</span>
+                  <span class="todo-title">{{ task.title }}</span>
                 </div>
               </div>
               <div class="todo-item-action">
-                <small class="text-nowrap text-muted mr-1">{{ formatDate(notification.created_at, { month: 'short', day: 'numeric'}) }}</small>
-                
+                <div class="badge-wrapper mr-1">
+                  <b-badge
+                    v-for="tag in task.tags"
+                    :key="tag"
+                    pill
+                    :variant="`light-${resolveTagVariant(tag)}`"
+                    class="text-capitalize"
+                  >
+                    {{ tag }}
+                  </b-badge>
+                </div>
+                <small class="text-nowrap text-muted mr-1">{{ formatDate(task.dueDate, { month: 'short', day: 'numeric'}) }}</small>
+                <b-avatar
+                  v-if="task.assignee"
+                  size="32"
+                  :src="task.assignee.avatar"
+                  :variant="`light-${resolveAvatarVariant(task.tags)}`"
+                  :text="avatarText(task.assignee.fullName)"
+                />
+                <b-avatar
+                  v-else
+                  size="32"
+                  variant="light-secondary"
+                >
+                  <feather-icon
+                    icon="UserIcon"
+                    size="16"
+                  />
+                </b-avatar>
               </div>
             </div>
 
@@ -84,7 +142,7 @@
         </draggable>
         <div
           class="no-results"
-          :class="{'show': !notifications.length}"
+          :class="{'show': !tasks.length}"
         >
           <h5>No Items Found</h5>
         </div>
@@ -103,8 +161,9 @@
 
     <!-- Sidebar -->
     <portal to="content-renderer-sidebar-left">
-      <notification-left-sidebar
+      <todo-left-sidebar
         :task-tags="taskTags"
+        :is-task-handler-sidebar-active.sync="isTaskHandlerSidebarActive"
         :class="{'show': mqShallShowLeftSidebar}"
         @close-left-sidebar="mqShallShowLeftSidebar = false"
       />
@@ -126,8 +185,9 @@ import draggable from 'vuedraggable'
 import { formatDate, avatarText } from '@core/utils/filter'
 import { useRouter } from '@core/utils/utils'
 import { useResponsiveAppLeftSidebarVisibility } from '@core/comp-functions/ui/app'
-import NotificationLeftSidebar from './NotificationLeftSidebar.vue'
+import TodoLeftSidebar from './TodoLeftSidebar.vue'
 import todoStoreModule from './todoStoreModule'
+import TodoTaskHandlerSidebar from './TodoTaskHandlerSidebar.vue'
 
 export default {
   components: {
@@ -143,12 +203,8 @@ export default {
     VuePerfectScrollbar,
 
     // App SFC
-    NotificationLeftSidebar,
-  },
-  computed: {    
-    notifications() {
-      return this.$store.state.app.allNotifications;
-    },
+    TodoLeftSidebar,
+    TodoTaskHandlerSidebar,
   },
   setup() {
     const TODO_APP_STORE_MODULE_NAME = 'app-todo'
@@ -223,12 +279,11 @@ export default {
         })
     }
     const updateTask = taskData => {
-      store.dispatch('app/updateNotification', taskData)
-      // store.dispatch('app-todo/updateTask', { task: taskData })
-      //   .then(() => {
-      //     // eslint-disable-next-line no-use-before-define
-      //     fetchTasks()
-      //   })
+      store.dispatch('app-todo/updateTask', { task: taskData })
+        .then(() => {
+          // eslint-disable-next-line no-use-before-define
+          fetchTasks()
+        })
     }
 
     const perfectScrollbarSettings = {
@@ -301,7 +356,7 @@ export default {
     // Single Task isCompleted update
     const updateTaskIsCompleted = taskData => {
       // eslint-disable-next-line no-param-reassign
-      taskData.is_read = !taskData.is_read
+      taskData.isCompleted = !taskData.isCompleted
       updateTask(taskData)
     }
 
