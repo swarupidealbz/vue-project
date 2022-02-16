@@ -86,6 +86,7 @@ import {
   BFormCheckbox, BMedia, BMediaAside, BMediaBody, BAvatar,
 } from 'bootstrap-vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+import draggable from 'vuedraggable'
 import { filterTags, formatDateToMonthShort } from '@core/utils/filter'
 import { useRouter } from '@core/utils/utils'
 import { useResponsiveAppLeftSidebarVisibility } from '@core/comp-functions/ui/app'
@@ -107,6 +108,7 @@ export default {
     BMediaAside,
     BMediaBody,
     BAvatar,
+    draggable,
 
     // 3rd Party
     VuePerfectScrollbar,
