@@ -77,7 +77,7 @@
 
     <b-dropdown-divider />
 
-    <b-dropdown-item
+    <!-- <b-dropdown-item
       :to="{ name: 'pages-account-setting' }"
       link-class="d-flex align-items-center"
     >
@@ -87,7 +87,7 @@
         class="mr-50"
       />
       <span>Settings</span>
-    </b-dropdown-item>
+    </b-dropdown-item> -->
     <b-dropdown-item
       :to="{ name: 'pages-pricing' }"
       link-class="d-flex align-items-center"
