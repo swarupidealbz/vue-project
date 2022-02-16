@@ -71,6 +71,7 @@ export default {
   },
   methods: {
     isActive(type) {
+      console.log(type)
       return this.$store.state.app.selectedNotificationType == type;
     },
     filter(type) {
