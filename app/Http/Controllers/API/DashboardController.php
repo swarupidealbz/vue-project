@@ -302,4 +302,23 @@ class DashboardController extends BaseController
 		
 		return $articles;
 	}
+
+    public function allNotifications(Request $request)
+    {
+        $loginUser = Auth::user();
+        $rec = Notifications::where('recipient_user_id', $loginUser->id);
+        if($request->type == 'read') {
+            $rec = $rec->where('is_read', 1);
+        }
+        elseif($request->type == 'unread') {
+            $rec = $rec->where('is_read', 0);
+        }
+
+        $response = [
+            'count' => $rec->count(),
+            'data' => $rec->latest()->get()
+        ];
+
+        return $response;
+    }
 }

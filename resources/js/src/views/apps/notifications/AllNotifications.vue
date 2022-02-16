@@ -144,9 +144,7 @@
     
     <!-- Sidebar -->
     <portal to="content-renderer-sidebar-left">
-      <notifcation-left-sidebar
-        :shall-show-email-compose-modal.sync="shallShowEmailComposeModal"
-        :is-task-handler-sidebar-active.sync="isTaskHandlerSidebarActive"
+      <notification-left-sidebar
         :emails-meta="emailsMeta"
         :class="{'show': mqShallShowLeftSidebar}"
         @close-left-sidebar="mqShallShowLeftSidebar = false"
