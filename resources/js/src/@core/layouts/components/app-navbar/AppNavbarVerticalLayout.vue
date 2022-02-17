@@ -6,7 +6,7 @@
       <li class="nav-item">
         <b-link
           class="nav-link"
-          
+          @click="toggleVerticalMenuActive"
         >
           <feather-icon
             icon="MenuIcon"
