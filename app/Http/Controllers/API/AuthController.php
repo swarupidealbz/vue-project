@@ -310,14 +310,14 @@ class AuthController extends BaseController
     {
         try {
 
-            $input = $request->only('email', 'password', 'new_password','password_confirmation');
+            $input = $request->only('email', 'password', 'new_password','confirm_password');
             
             $validator = Validator::make($input, 
                 [
                     'email' => 'required|email',
                     'password' => 'required|min:8',
                     'new_password' => 'required|min:8',
-                    'password_confirmation' => 'required|min:8|same:new_password',
+                    'confirm_password' => 'required|min:8|same:new_password',
                 ]);
             
             if ($validator->fails()) {
