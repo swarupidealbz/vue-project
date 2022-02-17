@@ -143,7 +143,9 @@ import Ripple from 'vue-ripple-directive'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
-  components: {
+  components: {    
+    ValidationProvider,
+    ValidationObserver,
     BButton,
     BForm,
     BFormGroup,
@@ -175,6 +177,10 @@ export default {
       passwordFieldTypeOld: 'password',
       passwordFieldTypeNew: 'password',
       passwordFieldTypeRetype: 'password',
+      required,
+      password,
+      email,
+      confirmed,
     }
   },
   computed: {
