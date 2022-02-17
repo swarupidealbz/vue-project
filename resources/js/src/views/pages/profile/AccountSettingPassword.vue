@@ -205,6 +205,19 @@ export default {
       this.passwordFieldTypeRetype = this.passwordFieldTypeRetype === 'password' ? 'text' : 'password'
     },
     updatePassword() {
+      if(!this.passwordValueOld || !this.newPasswordValue || !this.RetypePassword) {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserXIcon',
+                variant: 'danger',
+                text: 'Password, New Password and Confirmation Password is required.',
+              },
+            })
+            return;
+      }
       let payload = {
         email: this.userData.email,
         password: this.passwordValueOld,
