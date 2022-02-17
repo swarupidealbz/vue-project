@@ -56,25 +56,25 @@
       <b-row>
         <b-col sm="6">
           <b-form-group
-            label="Username"
-            label-for="account-username"
+            label="First Name"
+            label-for="account-first_name"
           >
             <b-form-input
-              v-model="optionsLocal.username"
-              placeholder="Username"
-              name="username"
+              v-model="userData.first_name"
+              placeholder="First Name"
+              name="first_name"
             />
           </b-form-group>
         </b-col>
         <b-col sm="6">
           <b-form-group
-            label="Name"
-            label-for="account-name"
+            label="Last Name"
+            label-for="account-last_name"
           >
             <b-form-input
-              v-model="optionsLocal.fullName"
-              name="name"
-              placeholder="Name"
+              v-model="userData.last_name"
+              name="first_name"
+              placeholder="Last Name"
             />
           </b-form-group>
         </b-col>
@@ -84,7 +84,7 @@
             label-for="account-e-mail"
           >
             <b-form-input
-              v-model="optionsLocal.email"
+              v-model="userData.email"
               name="email"
               placeholder="Email"
             />
