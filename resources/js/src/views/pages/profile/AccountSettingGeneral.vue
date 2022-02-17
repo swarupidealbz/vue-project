@@ -113,6 +113,7 @@
             show
             variant="warning"
             class="mb-50"
+            v-if="isAdmin"
           >
             <h4 class="alert-heading">
               Your email is not confirmed. Please check your inbox.
@@ -183,6 +184,14 @@ export default {
       type: Object,
       default: () => {},
     },
+    isAdmin: {
+      type: Boolean,
+      default: true
+    },
+    userData: {
+      type: Object,
+      default: () => {}
+    }
   },
   data() {
     return {

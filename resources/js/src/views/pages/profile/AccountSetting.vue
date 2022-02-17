@@ -23,6 +23,8 @@
       <account-setting-general
         v-if="options.general"
         :general-data="options.general"
+        :is-admin="isAdmin"
+        :user-data="userData"
       />
     </b-tab>
     <!--/ general tab -->
@@ -52,6 +54,7 @@
 import { BTabs, BTab } from 'bootstrap-vue'
 import AccountSettingGeneral from './AccountSettingGeneral.vue'
 import AccountSettingPassword from './AccountSettingPassword.vue'
+import { isUserLoggedIn, getUserData, isAdmin } from '@/auth/utils'
 
 export default {
   components: {
@@ -68,5 +71,13 @@ export default {
   beforeCreate() {
     this.$http.get('/account-setting/data').then(res => { this.options = res.data })
   },
+  computed: {
+    isAdmin() {
+      return isAdmin();
+    },
+    userData() {
+      return getUserData();
+    }
+  }
 }
 </script>
