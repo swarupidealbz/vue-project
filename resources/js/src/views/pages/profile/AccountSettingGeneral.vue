@@ -97,7 +97,7 @@
             label-for="account-company"
           >
             <b-form-input
-              v-model="optionsLocal.company"
+              v-model="userData.company"
               name="company"
               placeholder="Company name"
             />
