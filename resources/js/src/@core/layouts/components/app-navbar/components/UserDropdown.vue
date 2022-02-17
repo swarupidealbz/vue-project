@@ -42,7 +42,6 @@
     <b-dropdown-item
       :to="{ name: 'profile'}"
       link-class="d-flex align-items-center"
-      v-if="isAdmin"
     >
       <feather-icon
         size="16"
