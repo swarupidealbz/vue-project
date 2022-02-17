@@ -143,6 +143,7 @@ export default {
   methods: {
     go(){
       this.$router.push('notifications');
+      this.$root.$on('bv::dropdown::hide')
     }
   }
 }
