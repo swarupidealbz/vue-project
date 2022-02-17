@@ -325,7 +325,7 @@ class AuthController extends BaseController
             }
             $user = Auth::user();
 
-            if (!Auth::attempt($request->only('email', 'password'))) {
+            if ($user->password == Hash::make($request->password)) {
                 $user->forceFill(['password' => Hash::make($request->new_password)])->save();
             }
             return $this->handleResponse([], "Your password has been updated successfully.");
