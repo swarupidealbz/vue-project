@@ -92,7 +92,7 @@
       variant="primary"
       block
       :to="{ name: 'notifications' }"
-      @click="hide"
+      class="dropdown-item"
     >Read all notifications</b-button>
     </li>
   </b-nav-item-dropdown>
@@ -141,11 +141,6 @@ export default {
       return isAdmin();
     },
   },
-  methods: {
-    hide() {
-      this.hide()
-    }
-  }
 }
 </script>
 
