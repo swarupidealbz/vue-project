@@ -92,7 +92,7 @@
       variant="primary"
       block
       :to="{ name: 'notifications' }"
-      @click="$root('hide')"
+      @click="$parent.hide()"
     >Read all notifications</b-button>
     </li>
   </b-nav-item-dropdown>
