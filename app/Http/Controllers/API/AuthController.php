@@ -332,7 +332,7 @@ class AuthController extends BaseController
         }
         catch(Exception $e) {
             logger('change password error:'.$e->getMessage());
-            return $this->handleError('Something went wrong', [], 400);
+            return $this->handleError('Something went wrong'.$e->getMessage(), [], 400);
         }
     }
 }
