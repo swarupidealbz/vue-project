@@ -67,7 +67,7 @@
               <div class="todo-title-area">
                 <div class="title-wrapper">
                   <b-form-checkbox
-                    :checked="!notification.is_read"
+                    :checked="isChecked(notification)"
                     @click.native.stop
                     @change="updateTaskIsCompleted(notification)"
                   />
@@ -153,6 +153,11 @@ export default {
     notifications() {
       return this.$store.state.app.allNotifications;
     },
+  },
+  methods: {
+    isChecked(notify) {
+      return notify.is_read ? true : false;
+    }
   },
   setup() {
     const TODO_APP_STORE_MODULE_NAME = 'app-todo'
