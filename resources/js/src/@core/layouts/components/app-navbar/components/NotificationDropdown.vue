@@ -92,7 +92,6 @@
       variant="primary"
       block
       :to="{ name: 'notifications' }"
-      class="dropdown-item"
     >Read all notifications</b-button>
     </li>
   </b-nav-item-dropdown>
