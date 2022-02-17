@@ -30,6 +30,19 @@
     <b-dropdown-item
       :to="{ name: 'pages-profile'}"
       link-class="d-flex align-items-center"
+       v-if="isAdmin"
+    >
+      <feather-icon
+        size="16"
+        icon="UserIcon"
+        class="mr-50"
+      />
+      <span>Profile</span>
+    </b-dropdown-item>
+    <b-dropdown-item
+      :to="{ name: 'profile'}"
+      link-class="d-flex align-items-center"
+      v-if="isAdmin"
     >
       <feather-icon
         size="16"
@@ -77,9 +90,10 @@
 
     <b-dropdown-divider />
 
-    <!-- <b-dropdown-item
+    <b-dropdown-item
       :to="{ name: 'pages-account-setting' }"
       link-class="d-flex align-items-center"
+       v-if="isAdmin"
     >
       <feather-icon
         size="16"
@@ -87,7 +101,7 @@
         class="mr-50"
       />
       <span>Settings</span>
-    </b-dropdown-item> -->
+    </b-dropdown-item>
     <b-dropdown-item
       :to="{ name: 'pages-pricing' }"
       link-class="d-flex align-items-center"

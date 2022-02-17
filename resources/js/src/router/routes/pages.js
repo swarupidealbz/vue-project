@@ -171,6 +171,20 @@ export default [
       ],
     },
   },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: () => import('@/views/pages/profile/AccountSetting.vue'),
+    meta: {
+      pageTitle: 'Profile',
+      breadcrumb: [
+        {
+          text: 'Profile',
+          active: true,
+        },
+      ],
+    },
+  },
 
   {
     path: '/pages/faq',
