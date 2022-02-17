@@ -48,7 +48,7 @@
               #default="{ errors }"
               name="New Password"
               vid="account-new-password"
-              rules="required|password"
+              rules="required|min:8"
             >
               <b-input-group class="input-group-merge">
                 <b-form-input
