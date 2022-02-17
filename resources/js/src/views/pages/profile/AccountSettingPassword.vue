@@ -10,12 +10,12 @@
             label="Old Password"
             label-for="account-old-password"
           >
-            <b-input-group class="input-group-merge">
-              <validation-provider
-                #default="{ errors }"
-                name="Old Password"
-                rules="required"
-              >
+            <validation-provider
+              #default="{ errors }"
+              name="Old Password"
+              rules="required"
+            >
+              <b-input-group class="input-group-merge">
                 <b-form-input
                   id="account-old-password"
                   v-model="passwordValueOld"
@@ -30,9 +30,9 @@
                     @click="togglePasswordOld"
                   />
                 </b-input-group-append>
-                <small class="text-danger">{{ errors[0] }}</small>
-              </validation-provider>
-            </b-input-group>
+              </b-input-group>
+              <small class="text-danger">{{ errors[0] }}</small>
+            </validation-provider>
           </b-form-group>
         </b-col>
         <!--/ old password -->
@@ -44,13 +44,13 @@
             label-for="account-new-password"
             label="New Password"
           >
-            <b-input-group class="input-group-merge">
-              <validation-provider
-                #default="{ errors }"
-                name="New Password"
-                vid="account-new-password"
-                rules="required|password"
-              >
+            <validation-provider
+              #default="{ errors }"
+              name="New Password"
+              vid="account-new-password"
+              rules="required|password"
+            >
+              <b-input-group class="input-group-merge">
                 <b-form-input
                   id="account-new-password"
                   v-model="newPasswordValue"
@@ -65,9 +65,9 @@
                     @click="togglePasswordNew"
                   />
                 </b-input-group-append>
-                <small class="text-danger">{{ errors[0] }}</small>
-              </validation-provider>
-            </b-input-group>
+              </b-input-group>
+              <small class="text-danger">{{ errors[0] }}</small>
+            </validation-provider>
           </b-form-group>
         </b-col>
         <!--/ new password -->
@@ -78,12 +78,12 @@
             label-for="account-retype-new-password"
             label="Retype New Password"
           >
-            <b-input-group class="input-group-merge">
-              <validation-provider
-                #default="{ errors }"
-                name="Retype Password"
-                rules="required|confirmed:account-new-password"
-              >
+            <validation-provider
+              #default="{ errors }"
+              name="Retype Password"
+              rules="required|confirmed:account-new-password"
+            >
+              <b-input-group class="input-group-merge">
                 <b-form-input
                   id="account-retype-new-password"
                   v-model="RetypePassword"
@@ -98,9 +98,9 @@
                     @click="togglePasswordRetype"
                   />
                 </b-input-group-append>
-                <small class="text-danger">{{ errors[0] }}</small>
-              </validation-provider>
-            </b-input-group>
+              </b-input-group>
+              <small class="text-danger">{{ errors[0] }}</small>
+            </validation-provider>
           </b-form-group>
         </b-col>
         <!--/ retype password -->
