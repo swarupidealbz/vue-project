@@ -67,7 +67,7 @@
               <div class="todo-title-area">
                 <div class="title-wrapper">
                   <b-form-checkbox
-                    :checked="notification.is_read"
+                    :checked="!notification.is_read"
                     @click.native.stop
                     @change="updateTaskIsCompleted(notification)"
                   />
