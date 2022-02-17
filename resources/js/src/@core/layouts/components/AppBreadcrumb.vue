@@ -43,6 +43,7 @@
       class="content-header-right text-md-right d-md-block d-none mb-1"
       md="3"
       cols="12"
+      v-if="isAdmin"
     >
       <b-dropdown
         variant="link"
@@ -101,6 +102,7 @@
 import { BBreadcrumb, BBreadcrumbItem, BRow, BCol, BDropdown, BDropdownItem, BButton } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import { useUtils as useI18nUtils } from '@core/libs/i18n'
+import { isAdmin } from '@/auth/utils'
 
 export default {
   directives: {
@@ -114,6 +116,11 @@ export default {
     BDropdown,
     BDropdownItem,
     BButton,
+  },
+  computed: {
+    isAdmin() {
+      return isAdmin()
+    }
   },
   setup() {
     const { t } = useI18nUtils()
