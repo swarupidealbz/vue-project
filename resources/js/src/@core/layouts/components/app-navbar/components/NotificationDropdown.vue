@@ -91,7 +91,8 @@
       v-ripple.400="'rgba(255, 255, 255, 0.15)'"
       variant="primary"
       block
-      @click="go"
+      :to="{ name: 'notifications' }"
+      @click="$root('hide')"
     >Read all notifications</b-button>
     </li>
   </b-nav-item-dropdown>
@@ -140,12 +141,6 @@ export default {
       return isAdmin();
     },
   },
-  methods: {
-    go(){
-      this.$router.push('notifications');
-      this.$root.$on('bv::dropdown::hide')
-    }
-  }
 }
 </script>
 
