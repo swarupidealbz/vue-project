@@ -1,6 +1,7 @@
 <template>
   <b-card>
     <!-- form -->
+    <validation-observer ref="simpleRules">
     <b-form>
       <b-row>
         <!-- old password -->
@@ -126,13 +127,18 @@
         <!--/ buttons -->
       </b-row>
     </b-form>
+    </validation-observer>
   </b-card>
 </template>
 
 <script>
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import {
   BButton, BForm, BFormGroup, BFormInput, BRow, BCol, BCard, BInputGroup, BInputGroupAppend,
 } from 'bootstrap-vue'
+import {
+  required, email, confirmed, password,
+} from '@validations'
 import Ripple from 'vue-ripple-directive'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
