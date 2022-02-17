@@ -10,20 +10,27 @@
             label-for="account-old-password"
           >
             <b-input-group class="input-group-merge">
-              <b-form-input
-                id="account-old-password"
-                v-model="passwordValueOld"
-                name="old-password"
-                :type="passwordFieldTypeOld"
-                placeholder="Old Password"
-              />
-              <b-input-group-append is-text>
-                <feather-icon
-                  :icon="passwordToggleIconOld"
-                  class="cursor-pointer"
-                  @click="togglePasswordOld"
+              <validation-provider
+                #default="{ errors }"
+                name="Old Password"
+                rules="required"
+              >
+                <b-form-input
+                  id="account-old-password"
+                  v-model="passwordValueOld"
+                  name="old-password"
+                  :type="passwordFieldTypeOld"
+                  placeholder="Old Password"
                 />
-              </b-input-group-append>
+                <b-input-group-append is-text>
+                  <feather-icon
+                    :icon="passwordToggleIconOld"
+                    class="cursor-pointer"
+                    @click="togglePasswordOld"
+                  />
+                </b-input-group-append>
+                <small class="text-danger">{{ errors[0] }}</small>
+              </validation-provider>
             </b-input-group>
           </b-form-group>
         </b-col>
@@ -37,20 +44,28 @@
             label="New Password"
           >
             <b-input-group class="input-group-merge">
-              <b-form-input
-                id="account-new-password"
-                v-model="newPasswordValue"
-                :type="passwordFieldTypeNew"
-                name="new-password"
-                placeholder="New Password"
-              />
-              <b-input-group-append is-text>
-                <feather-icon
-                  :icon="passwordToggleIconNew"
-                  class="cursor-pointer"
-                  @click="togglePasswordNew"
+              <validation-provider
+                #default="{ errors }"
+                name="New Password"
+                vid="account-new-password"
+                rules="required|password"
+              >
+                <b-form-input
+                  id="account-new-password"
+                  v-model="newPasswordValue"
+                  :type="passwordFieldTypeNew"
+                  name="new-password"
+                  placeholder="New Password"
                 />
-              </b-input-group-append>
+                <b-input-group-append is-text>
+                  <feather-icon
+                    :icon="passwordToggleIconNew"
+                    class="cursor-pointer"
+                    @click="togglePasswordNew"
+                  />
+                </b-input-group-append>
+                <small class="text-danger">{{ errors[0] }}</small>
+              </validation-provider>
             </b-input-group>
           </b-form-group>
         </b-col>
@@ -63,20 +78,27 @@
             label="Retype New Password"
           >
             <b-input-group class="input-group-merge">
-              <b-form-input
-                id="account-retype-new-password"
-                v-model="RetypePassword"
-                :type="passwordFieldTypeRetype"
-                name="retype-password"
-                placeholder="New Password"
-              />
-              <b-input-group-append is-text>
-                <feather-icon
-                  :icon="passwordToggleIconRetype"
-                  class="cursor-pointer"
-                  @click="togglePasswordRetype"
+              <validation-provider
+                #default="{ errors }"
+                name="Retype Password"
+                rules="required|confirmed:account-new-password"
+              >
+                <b-form-input
+                  id="account-retype-new-password"
+                  v-model="RetypePassword"
+                  :type="passwordFieldTypeRetype"
+                  name="retype-password"
+                  placeholder="New Password"
                 />
-              </b-input-group-append>
+                <b-input-group-append is-text>
+                  <feather-icon
+                    :icon="passwordToggleIconRetype"
+                    class="cursor-pointer"
+                    @click="togglePasswordRetype"
+                  />
+                </b-input-group-append>
+                <small class="text-danger">{{ errors[0] }}</small>
+              </validation-provider>
             </b-input-group>
           </b-form-group>
         </b-col>
