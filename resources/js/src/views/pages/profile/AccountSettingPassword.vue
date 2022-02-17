@@ -200,6 +200,7 @@ export default {
               },
             })
       })
+      this.$router.push('profile')
     }
   },
 }
