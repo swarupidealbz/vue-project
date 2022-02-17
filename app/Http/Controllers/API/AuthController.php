@@ -310,11 +310,10 @@ class AuthController extends BaseController
     {
         try {
 
-            $input = $request->only('username','email', 'password', 'new_password','password_confirmation');
+            $input = $request->only('email', 'password', 'new_password','password_confirmation');
             
             $validator = Validator::make($input, 
                 [
-                    'username' => 'required',
                     'email' => 'required|email',
                     'password' => 'required|min:8',
                     'new_password' => 'required|min:8',
@@ -326,7 +325,7 @@ class AuthController extends BaseController
             }
             $user = Auth::user();
 
-            if (!Auth::attempt($request->only('username', 'password'))) {
+            if (!Auth::attempt($request->only('email', 'password'))) {
                 $user->forceFill(['password' => Hash::make($request->new_password)])->save();
             }
             return $this->handleResponse([], "Your password has been updated successfully.");

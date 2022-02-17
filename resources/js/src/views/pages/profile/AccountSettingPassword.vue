@@ -173,7 +173,6 @@ export default {
     updatePassword() {
       let payload = {
         email: this.userData.email,
-        username: this.userData.username,
         password: this.passwordValueOld,
         new_password: this.newPasswordValue,
         confirm_password: this.RetypePassword
