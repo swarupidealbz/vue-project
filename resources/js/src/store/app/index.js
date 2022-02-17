@@ -275,7 +275,7 @@ export default {
     changePassword({state, commit, dispatch}, payload) {
       return new Promise((resolve, reject) => {
         axios.post(state.apiBaseUrl + 'password/change-password', payload).then(res => {
-          resolve(res,data)
+          resolve(res.data)
         }).catch(err => {
           reject(err.response)
           console.log('error password update')
