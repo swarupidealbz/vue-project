@@ -134,5 +134,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/create-pepper-conclusion', [PeppertypeController::class, 'createConclusion']);
 
     Route::post('/dashboard/data', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::post('/password/change-password', 
+    [AuthController::class, 'changePassword'])->name('password.change');
 });
 

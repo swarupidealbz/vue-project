@@ -88,6 +88,7 @@
             v-ripple.400="'rgba(255, 255, 255, 0.15)'"
             variant="primary"
             class="mt-1 mr-1"
+            @click.once="updatePassword"
           >
             Save changes
           </b-button>
@@ -111,6 +112,7 @@ import {
   BButton, BForm, BFormGroup, BFormInput, BRow, BCol, BCard, BInputGroup, BInputGroupAppend,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
   components: {
@@ -126,6 +128,16 @@ export default {
   },
   directives: {
     Ripple,
+  },
+  props: {
+    isAdmin: {
+      type: Boolean,
+      default: true
+    },
+    userData: {
+      type: Object,
+      default: () => {}
+    }
   },
   data() {
     return {
@@ -158,6 +170,37 @@ export default {
     togglePasswordRetype() {
       this.passwordFieldTypeRetype = this.passwordFieldTypeRetype === 'password' ? 'text' : 'password'
     },
+    updatePassword() {
+      let payload = {
+        email: this.userData.email,
+        password: this.passwordValueOld,
+        new_password: this.newPasswordValue,
+        confirm_password: this.RetypePassword
+      }
+      this.$store.dispatch('app/changePassword', payload).then(res => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Success`,
+                icon: 'UserXIcon',
+                variant: 'success',
+                text: res.message,
+              },
+            })
+      }).catch(err => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserXIcon',
+                variant: 'danger',
+                text: err.message,
+              },
+            })
+      })
+    }
   },
 }
 </script>

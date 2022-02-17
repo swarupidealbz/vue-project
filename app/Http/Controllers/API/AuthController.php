@@ -305,4 +305,34 @@ class AuthController extends BaseController
     
         return $this->handleResponse([], "Email verification link sent on your email id");
     }
+
+    public function changePassword(Request $request)
+    {
+        try {
+
+            $input = $request->only('email', 'password', 'new_password','password_confirmation');
+            
+            $validator = Validator::make($input, 
+                [
+                    'email' => 'required|email',
+                    'password' => 'required|min:8',
+                    'new_password' => 'required|min:8',
+                    'password_confirmation' => 'required|min:8|same:new_password',
+                ]);
+            
+            if ($validator->fails()) {
+                return $this->handleError('Invalid data given.', $validator->errors()->all(), 400);
+            }
+            $user = Auth::user();
+
+            if($user->password == Hash::make($request->password)) {
+                $user->forceFill(['password' => Hash::make($request->new_password)])->save();
+            }
+            return $this->handleResponse([], "Your password has been updated successfully.");
+        }
+        catch(Exception $e) {
+            logger('change password error:'.$e->getMessage());
+            return $this->handleError('Something went wrong', [], 400);
+        }
+    }
 }

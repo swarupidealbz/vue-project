@@ -42,7 +42,8 @@
         <span class="font-weight-bold">Change Password</span>
       </template>
 
-      <account-setting-password />
+      <account-setting-password :is-admin="isAdmin"
+        :user-data="userData"/>
     </b-tab>
     <!--/ change password tab -->
 
