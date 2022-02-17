@@ -321,7 +321,7 @@ class AuthController extends BaseController
                 ]);
             
             if ($validator->fails()) {
-                return $this->handleError('Invalid data given.', $validator->errors()->all(), 400);
+                return $this->handleError('Given password does not match our record or confirm password does not matched.', $validator->errors()->all(), 400);
             }
             $user = Auth::user();
 

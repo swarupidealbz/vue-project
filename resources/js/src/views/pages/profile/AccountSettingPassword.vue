@@ -196,7 +196,7 @@ export default {
                 title: `Failed`,
                 icon: 'UserXIcon',
                 variant: 'danger',
-                text: err.message,
+                text: err.data.message,
               },
             })
       })
