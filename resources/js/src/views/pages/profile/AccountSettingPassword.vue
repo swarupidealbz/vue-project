@@ -200,7 +200,9 @@ export default {
               },
             })
       })
-      this.$router.push('profile')
+      this.passwordValueOld = '';
+      this.newPasswordValue = '';
+      this.RetypePassword = '';
     }
   },
 }
