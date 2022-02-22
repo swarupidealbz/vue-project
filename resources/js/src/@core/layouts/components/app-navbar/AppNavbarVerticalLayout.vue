@@ -27,7 +27,7 @@
       <website :websites="websites"/>
       <locale :locales="languages"/>
       <dark-Toggler class="d-none d-lg-block" />
-      <search-bar />
+      <search-bar v-if="isAdmin"/>
       <cart-dropdown v-if="isAdmin"/>
       <notification-dropdown :list="list"/>
       <user-dropdown />

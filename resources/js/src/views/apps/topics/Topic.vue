@@ -58,7 +58,23 @@
           :class="{'d-flex': selectedEmails.length}"
         >
 
-          <feather-icon
+          <b-button
+            v-ripple.400="'rgba(40, 199, 111, 0.15)'"
+            variant="flat-success"
+            @click="bulkApproved"
+          >
+            Accept
+          </b-button>
+
+          <b-button
+            v-ripple.400="'rgba(40, 199, 111, 0.15)'"
+            variant="flat-danger"
+            @click="bulkReject"
+          >
+            Reject
+          </b-button>
+
+          <!-- <feather-icon
             icon="CheckCircleIcon"
             size="21"
             class="cursor-pointer ml-1 text-success"
@@ -70,7 +86,7 @@
             size="21"
             class="cursor-pointer ml-1 text-danger"
             @click="bulkReject"
-          />
+          /> -->
 
         </div>
       </div>
@@ -212,7 +228,7 @@ import {
 } from '@vue/composition-api'
 import {
   BFormInput, BInputGroup, BInputGroupPrepend, BDropdown, BDropdownItem,
-  BFormCheckbox, BMedia, BMediaAside, BMediaBody, BAvatar,
+  BFormCheckbox, BMedia, BMediaAside, BMediaBody, BAvatar,BButton
 } from 'bootstrap-vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import { filterTags, formatDateToMonthShort } from '@core/utils/filter'
