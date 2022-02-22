@@ -61,6 +61,7 @@
           <b-button
             v-ripple.400="'rgba(40, 199, 111, 0.15)'"
             variant="flat-success"
+            class="btn-sm"
             @click="bulkApproved"
           >
             Accept
@@ -69,24 +70,11 @@
           <b-button
             v-ripple.400="'rgba(40, 199, 111, 0.15)'"
             variant="flat-danger"
+            class="btn-sm"
             @click="bulkReject"
           >
             Reject
           </b-button>
-
-          <!-- <feather-icon
-            icon="CheckCircleIcon"
-            size="21"
-            class="cursor-pointer ml-1 text-success"
-            @click="bulkApproved"
-          />
-
-          <feather-icon
-            icon="XCircleIcon"
-            size="21"
-            class="cursor-pointer ml-1 text-danger"
-            @click="bulkReject"
-          /> -->
 
         </div>
       </div>
