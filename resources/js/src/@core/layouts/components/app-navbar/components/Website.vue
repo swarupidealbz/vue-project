@@ -1,15 +1,13 @@
 <template>
-<div>
-<b-nav>
   <b-nav-item-dropdown
-    id="my-nav-dropdown"
-    :text="currentLocale.name"
-    toggle-class="nav-link-custom"
+    id="dropdown-grouped"
+    variant="link"
+    class="dropdown-language website-dropdown"
     right
   >
-    <!-- <template #button-content>
+    <template #button-content>
       <span class="ml-50 text-body">{{ currentLocale.name }}</span>
-    </template> -->
+    </template>
     <b-dropdown-item
       key="title"
       disabled
@@ -25,12 +23,10 @@
       <span class="ml-50">{{ website.name }}</span>
     </b-dropdown-item>
   </b-nav-item-dropdown>
-</b-nav>
-</div>
 </template>
 
 <script>
-import { BNavItemDropdown, BDropdownItem, BImg, BDropdownDivider, BNav } from 'bootstrap-vue'
+import { BNavItemDropdown, BDropdownItem, BImg, BDropdownDivider } from 'bootstrap-vue'
 
 export default {
   components: {
@@ -38,7 +34,6 @@ export default {
     BDropdownItem,
     BImg,
     BDropdownDivider,
-    BNav,
   },
   props: {
     websites: {}
@@ -63,7 +58,4 @@ export default {
 
 <style>
 
-.b-nav-dropdown .dropdown-toggle::after {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236e6b7b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") !important;
-}
 </style>
