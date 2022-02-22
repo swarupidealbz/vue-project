@@ -39,7 +39,7 @@
           class="px-xl-2 mx-auto"
         >
           <b-card-title class="mb-1">
-            Welcome to {{ appName }} 🚀
+            Welcome to {{ appName }}! 🚀
           </b-card-title>
           <b-card-text class="mb-2">
             Make your content creation easy and fun!
