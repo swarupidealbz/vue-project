@@ -39,10 +39,10 @@
           class="px-xl-2 mx-auto"
         >
           <b-card-title class="mb-1">
-            Adventure starts here 🚀
+            Welcome to {{ appName }} 🚀
           </b-card-title>
           <b-card-text class="mb-2">
-            Make your app management easy and fun!
+            Make your content creation easy and fun!
           </b-card-text>
 
           <!-- form -->
@@ -218,7 +218,7 @@
 
               <!-- register as -->
               <b-form-group
-                label="Register As"
+                label="Register As a"
                 label-for="register-role"
               >
                 <validation-provider
@@ -267,13 +267,13 @@
           </p>
 
           <!-- divider -->
-          <div class="divider my-2">
+          <!-- <div class="divider my-2">
             <div class="divider-text">
               or
             </div>
-          </div>
+          </div> -->
 
-          <div class="auth-footer-btn d-flex justify-content-center">
+          <!-- <div class="auth-footer-btn d-flex justify-content-center">
             <b-button
               variant="facebook"
               href="javascript:void(0)"
@@ -298,7 +298,7 @@
             >
               <feather-icon icon="GithubIcon" />
             </b-button>
-          </div>
+          </div> -->
         </b-col>
       </b-col>
     <!-- /Register-->

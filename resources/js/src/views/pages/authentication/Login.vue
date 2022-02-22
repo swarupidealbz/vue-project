@@ -44,31 +44,9 @@
             Welcome to {{ appName }}! 👋
           </b-card-title>
           <b-card-text class="mb-2">
-            Please sign-in to your account and start the adventure
+            Please sign-in to your account
           </b-card-text>
 
-          <!--
-          <b-alert
-            variant="primary"
-            show
-          >
-            <div class="alert-body font-small-2">
-              <p>
-                <small class="mr-50"><span class="font-weight-bold">Admin:</span> admin@demo.com | admin</small>
-              </p>
-              <p>
-                <small class="mr-50"><span class="font-weight-bold">Client:</span> client@demo.com | client</small>
-              </p>
-            </div>
-            <feather-icon
-              v-b-tooltip.hover.left="'This is just for ACL demo purpose'"
-              icon="HelpCircleIcon"
-              size="18"
-              class="position-absolute"
-              style="top: 10; right: 10;"
-            />
-          </b-alert>
-          -->
 
           <!-- form -->
           <validation-observer
@@ -171,14 +149,14 @@
           </b-card-text>
 
           <!-- divider -->
-          <div class="divider my-2">
+          <!-- <div class="divider my-2">
             <div class="divider-text">
               or
             </div>
-          </div>
+          </div> -->
 
           <!-- social buttons -->
-          <div class="auth-footer-btn d-flex justify-content-center">
+          <!-- <div class="auth-footer-btn d-flex justify-content-center">
             <b-button
               variant="facebook"
               href="javascript:void(0)"
@@ -203,7 +181,7 @@
             >
               <feather-icon icon="GithubIcon" />
             </b-button>
-          </div>
+          </div> -->
         </b-col>
       </b-col>
     <!-- /Login-->
