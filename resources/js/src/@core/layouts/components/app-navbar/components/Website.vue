@@ -1,7 +1,7 @@
 <template>
   <b-nav-item-dropdown
     id="dropdown-grouped"
-    variant="link"
+    variant="flat-primary"
     class="dropdown-language website-dropdown"
     right
   >
