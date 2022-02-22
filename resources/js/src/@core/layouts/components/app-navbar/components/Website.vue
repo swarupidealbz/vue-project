@@ -2,13 +2,13 @@
 <b-nav>
   <b-nav-item-dropdown
     id="my-nav-dropdown"
-    text="Dropdown"
+    :text="currentLocale.name"
     toggle-class="nav-link-custom"
     right
   >
-    <template #button-content>
+    <!-- <template #button-content>
       <span class="ml-50 text-body">{{ currentLocale.name }}</span>
-    </template>
+    </template> -->
     <b-dropdown-item
       key="title"
       disabled
