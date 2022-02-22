@@ -2,12 +2,10 @@
   <b-nav-item-dropdown
     id="dropdown-grouped"
     variant="link"
+    :text="currentLocale.name"
     class="dropdown-language website-dropdown"
     right
   >
-    <template #button-content>
-      <span class="ml-50 text-body">{{ currentLocale.name }}</span>
-    </template>
     <b-dropdown-item
       key="title"
       disabled
