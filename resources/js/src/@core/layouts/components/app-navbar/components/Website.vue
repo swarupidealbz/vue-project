@@ -1,4 +1,5 @@
 <template>
+<b-nav>
   <b-nav-item-dropdown
     id="my-nav-dropdown"
     text="Dropdown"
@@ -23,10 +24,11 @@
       <span class="ml-50">{{ website.name }}</span>
     </b-dropdown-item>
   </b-nav-item-dropdown>
+</b-nav>
 </template>
 
 <script>
-import { BNavItemDropdown, BDropdownItem, BImg, BDropdownDivider } from 'bootstrap-vue'
+import { BNavItemDropdown, BDropdownItem, BImg, BDropdownDivider, BNav } from 'bootstrap-vue'
 
 export default {
   components: {
@@ -34,6 +36,7 @@ export default {
     BDropdownItem,
     BImg,
     BDropdownDivider,
+    BNav,
   },
   props: {
     websites: {}
