@@ -1,4 +1,5 @@
 <template>
+<div>
 <b-nav>
   <b-nav-item-dropdown
     id="my-nav-dropdown"
@@ -25,6 +26,7 @@
     </b-dropdown-item>
   </b-nav-item-dropdown>
 </b-nav>
+</div>
 </template>
 
 <script>
