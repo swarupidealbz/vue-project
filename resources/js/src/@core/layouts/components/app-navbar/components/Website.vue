@@ -9,6 +9,13 @@
       <span class="ml-50 text-body">{{ currentLocale.name }}</span>
     </template>
     <b-dropdown-item
+      key="title"
+      disabled
+    >
+      <span class="ml-50">Websites</span>
+    </b-dropdown-item>
+    <b-dropdown-divider />
+    <b-dropdown-item
       v-for="website in websites"
       :key="'web-'+website.id"
       @click="setLocal(website)"
@@ -19,13 +26,14 @@
 </template>
 
 <script>
-import { BNavItemDropdown, BDropdownItem, BImg } from 'bootstrap-vue'
+import { BNavItemDropdown, BDropdownItem, BImg, BDropdownDivider } from 'bootstrap-vue'
 
 export default {
   components: {
     BNavItemDropdown,
     BDropdownItem,
     BImg,
+    BDropdownDivider,
   },
   props: {
     websites: {}
