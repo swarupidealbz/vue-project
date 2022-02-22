@@ -60,7 +60,7 @@
 
           <b-button
             v-ripple.400="'rgba(40, 199, 111, 0.15)'"
-            variant="outline-success"
+            variant="flat-success"
             @click="bulkApproved"
           >
             Accept
@@ -68,7 +68,7 @@
 
           <b-button
             v-ripple.400="'rgba(40, 199, 111, 0.15)'"
-            variant="outline-danger"
+            variant="flat-danger"
             @click="bulkReject"
           >
             Reject
