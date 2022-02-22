@@ -1,8 +1,8 @@
 <template>
   <b-nav-item-dropdown
-    id="dropdown-grouped"
-    variant="flat-primary"
-    class="dropdown-language website-dropdown"
+    id="my-nav-dropdown"
+    text="Dropdown"
+    toggle-class="nav-link-custom"
     right
   >
     <template #button-content>
