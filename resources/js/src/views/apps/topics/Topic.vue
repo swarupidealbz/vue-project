@@ -60,7 +60,7 @@
 
           <b-button
             v-ripple.400="'rgba(40, 199, 111, 0.15)'"
-            variant="flat-success"
+            variant="outline-success"
             @click="bulkApproved"
           >
             Accept
@@ -68,7 +68,7 @@
 
           <b-button
             v-ripple.400="'rgba(40, 199, 111, 0.15)'"
-            variant="flat-danger"
+            variant="outline-danger"
             @click="bulkReject"
           >
             Reject
@@ -242,6 +242,7 @@ import EmailCompose from './EmailCompose.vue'
 import axios from '@axios'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import TodoTaskHandlerSidebar from './TodoTaskHandlerSidebar.vue'
+import Ripple from 'vue-ripple-directive'
 
 export default {
   components: {
@@ -255,6 +256,7 @@ export default {
     BMediaAside,
     BMediaBody,
     BAvatar,
+    BButton,
 
     // 3rd Party
     VuePerfectScrollbar,
@@ -264,6 +266,9 @@ export default {
     TopicView,
     EmailCompose,
     TodoTaskHandlerSidebar,
+  },
+  directives: {
+    Ripple,
   },
   computed: {
     topics() {
