@@ -3,9 +3,9 @@ export default [
   //   header: 'Apps & Pages',
   // },
   {
-    title: 'Topics',
+    title: 'Articles',
     route: 'topics',
-    icon: 'FileIcon',
+    icon: 'ServerIcon',
   },
   // {
   //   title: 'Chat',
