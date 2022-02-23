@@ -32,7 +32,6 @@
           accept=".jpg, .png, .gif"
           :hidden="true"
           plain
-          @input="inputImageRenderer"
         />
         <!--/ upload button -->
 
