@@ -220,7 +220,7 @@ export default {
     },
     upload() {
       var formData = new FormData();
-      formData.append("image", this.profileFile);
+      formData.append("profile_image", this.profileFile);
       formData.append("action", this.image);
       this.$store.dispatch('app/updateProfileImage',formData).then(res => {
         this.local = res.data;
