@@ -42,6 +42,7 @@
           variant="outline-secondary"
           size="sm"
           class="mb-75 mr-75"
+          @click="resetForm"
         >
           Reset
         </b-button>
