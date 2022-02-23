@@ -164,7 +164,7 @@ export default {
       return isAdmin();
     },
     userData() {
-      return this.$store.state.app.userData || JSON.parse(localStorage.getItem('userData'));
+      return this.$store.state.app.userData.id ? this.$store.state.app.userData : JSON.parse(localStorage.getItem('userData'));
     }
   },
   methods: {
