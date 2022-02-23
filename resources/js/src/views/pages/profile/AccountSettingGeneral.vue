@@ -247,6 +247,9 @@ export default {
     updateProfile() {
       this.$store.dispatch('app/updateProfile', this.local).then(res => {
         this.local = res.data;
+        let user = JSON.parse(localStorage.getItem('userData'))
+        user.company = this.local.company;
+        localStorage.setItem('userData', JSON.stringify(user));
         this.$toast({
               component: ToastificationContent,
               position: 'top-right',
