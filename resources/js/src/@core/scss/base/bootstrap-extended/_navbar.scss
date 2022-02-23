@@ -100,13 +100,13 @@
   }
 
   // Hide navbar dropdown arrow
-  &:not(.navbar-horizontal) {
-    .nav-link {
-      &.dropdown-toggle::after {
-        display: none;
-      }
-    }
-  }
+  // &:not(.navbar-horizontal) {
+  //   .nav-link {
+  //     &.dropdown-toggle::after {
+  //       display: none;
+  //     }
+  //   }
+  // }
 
   //* Navbar modifiers
   //*------------------------
