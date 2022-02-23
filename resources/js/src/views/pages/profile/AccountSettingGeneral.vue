@@ -220,7 +220,10 @@ export default {
     },
     upload() {
       console.log(this.profileFile)
-      this.$store.dispatch('app/updateProfileImage',{profile_image: this.profileFile, action: this.image }).then(res => {
+      var formData = new FormData();
+      formData.append("image", this.profileFile);
+      formData.append("action", this.image);
+      this.$store.dispatch('app/updateProfileImage',formData).then(res => {
         this.local = res.data;
         this.$toast({
               component: ToastificationContent,
