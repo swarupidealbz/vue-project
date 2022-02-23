@@ -237,6 +237,7 @@ export default {
                 text: res.message,
               },
             })
+        this.$router.reload()
       }).catch(err => {
         this.$toast({
               component: ToastificationContent,
@@ -266,6 +267,7 @@ export default {
                 text: res.message,
               },
             })
+        this.$router.reload()
       }).catch(err => {
         this.$toast({
               component: ToastificationContent,
