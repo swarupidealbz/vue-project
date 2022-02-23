@@ -294,7 +294,11 @@ export default {
     },
     updateProfileImage({state, commit, dispatch}, payload) {
       return new Promise((resolve, reject) => {
-        axios.post(state.apiBaseUrl + 'profile/update-image', payload).then(res => {
+        axios.post(state.apiBaseUrl + 'profile/update-image', payload, {
+          headers: {
+           'content-type': 'multipart/form-data' // do not forget this 
+          }
+        }).then(res => {
           resolve(res.data)
         }).catch(err => {
           reject(err.response)

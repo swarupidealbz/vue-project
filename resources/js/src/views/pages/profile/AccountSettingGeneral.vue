@@ -219,8 +219,7 @@ export default {
       this.upload();
     },
     upload() {
-      console.log(this.$refs.refInputEl.files)
-      this.$store.dispatch('app/updateProfileImage',{profile_image: this.$refs.refInputEl.files, action: this.image }).then(res => {
+      this.$store.dispatch('app/updateProfileImage',{profile_image: this.profileFile, action: this.image }).then(res => {
         this.local = res.data;
         this.$toast({
               component: ToastificationContent,
