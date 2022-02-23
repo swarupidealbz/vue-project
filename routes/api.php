@@ -136,5 +136,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/dashboard/data', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::post('/password/change-password', 
     [AuthController::class, 'changePassword'])->name('password.change');
+    Route::post('/profile/update', 
+    [AuthController::class, 'updateProfile'])->name('profile.update');
+    Route::post('/profile/update-image', 
+    [AuthController::class, 'updateProfileImage'])->name('profile.update-image');
 });
 

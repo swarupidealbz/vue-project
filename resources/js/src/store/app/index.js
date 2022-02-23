@@ -281,6 +281,26 @@ export default {
           console.log('error password update')
         })
       })
+    },
+    updateProfile({state, commit, dispatch}, payload) {
+      return new Promise((resolve, reject) => {
+        axios.post(state.apiBaseUrl + 'profile/update', payload).then(res => {
+          resolve(res.data)
+        }).catch(err => {
+          reject(err.response)
+          console.log('error update profile')
+        })
+      })
+    },
+    updateProfileImage({state, commit, dispatch}, payload) {
+      return new Promise((resolve, reject) => {
+        axios.post(state.apiBaseUrl + 'profile/update-image', payload).then(res => {
+          resolve(res.data)
+        }).catch(err => {
+          reject(err.response)
+          console.log('error update profile image')
+        })
+      })
     }
   },
 }

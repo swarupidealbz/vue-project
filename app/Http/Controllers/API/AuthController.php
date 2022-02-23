@@ -335,4 +335,73 @@ class AuthController extends BaseController
             return $this->handleError('Something went wrong'.$e->getMessage(), [], 400);
         }
     }
+
+    public function updateProfile(Request $request)
+    {
+        try {
+
+            $input = $request->only('first_name', 'last_name', 'email','company');
+            
+            $validator = Validator::make($input, 
+                [
+                    'email' => 'required|email',
+                    'first_name' => 'required',
+                    'last_name' => 'required',
+                    'company' => 'required',
+                ]);
+            
+            if ($validator->fails()) {
+                return $this->handleError('Something is missing.', $validator->errors()->all(), 400);
+            }
+            $user = Auth::user();
+
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->email = $request->email;
+            $user->company = $request->company;
+
+            $user->save();
+            
+            return $this->handleResponse($user->fresh(), "Your profile has been updated successfully.");
+        }
+        catch(Exception $e) {
+            logger('update profile error:'.$e->getMessage());
+            return $this->handleError('Something went wrong'.$e->getMessage(), [], 400);
+        }
+    }
+
+    public function updateProfileImage(Request $request)
+    {
+        try {
+
+            $input = $request->only('profile_image');
+            
+            $validator = Validator::make($input, 
+                [
+                    'profile_image' => 'required',
+                ]);
+            
+            if ($validator->fails()) {
+                return $this->handleError('Sorry your request could not processed at this moment. Please try again later.', $validator->errors()->all(), 400);
+            }
+            $user = Auth::user();
+
+            $storePath = '';
+            if($request->profile_image) {
+                $name = \Str::beforeLast($request->image->getClientOriginalName(),'.');
+                $imageName = $name.'_'.time().'.'.$request->image->extension(); 
+                $path = $request->image->move(storage_path('app/public/images'), $imageName); //public/images/filename
+                $storePath = asset('images/'.$imageName);
+            }
+            $user->profile_image = $storePath;
+
+            $user->save();
+            
+            return $this->handleResponse($user->fresh(), "Your profile has been updated successfully.");
+        }
+        catch(Exception $e) {
+            logger('update profile error:'.$e->getMessage());
+            return $this->handleError('Something went wrong'.$e->getMessage(), [], 400);
+        }
+    }
 }

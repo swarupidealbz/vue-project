@@ -8,7 +8,7 @@
           <b-img
             ref="previewEl"
             rounded
-            :src="optionsLocal.avatar"
+            :src="local.profile_image || optionsLocal.avatar"
             height="80"
           />
         </b-link>
@@ -42,7 +42,6 @@
           variant="outline-secondary"
           size="sm"
           class="mb-75 mr-75"
-          @click="resetForm"
         >
           Reset
         </b-button>
@@ -158,6 +157,7 @@ import {
 import Ripple from 'vue-ripple-directive'
 import { useInputImageRenderer } from '@core/comp-functions/forms/form-utils'
 import { ref } from '@vue/composition-api'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
   components: {
@@ -207,7 +207,56 @@ export default {
       this.local = JSON.parse(JSON.stringify(this.userData))
     },
     uploadProfileImage() {
-
+      this.$store.dispatch('app/uploadProfileImage', profileFile).then(res => {
+        this.local = res.data;
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Updated`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: res.message,
+              },
+            })
+      }).catch(err => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: err.message,
+              },
+            })
+      })
+    },
+    updateProfile() {
+      this.$store.dispatch('app/updateProfile', this.local).then(res => {
+        this.local = res.data;
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Updated`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: res.message,
+              },
+            })
+      }).catch(err => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: err.message,
+              },
+            })
+      })
     }
   },
   setup() {
