@@ -219,6 +219,7 @@ export default {
       this.upload();
     },
     upload() {
+      console.log(this.profileFile)
       this.$store.dispatch('app/updateProfileImage',{profile_image: this.profileFile, action: this.image }).then(res => {
         this.local = res.data;
         this.$toast({
