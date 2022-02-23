@@ -219,6 +219,7 @@ export default {
       this.upload();
     },
     upload() {
+      console.log(this.$refs.refInputEl)
       this.$store.dispatch('app/updateProfileImage',{profile_image: this.$refs.refInputEl.data.files[0], action: this.image }).then(res => {
         this.local = res.data;
         this.$toast({
