@@ -47,7 +47,6 @@ router.beforeEach((to, _, next) => {
     'topic-timeline',
     'notifications',
     'profile',
-    'images',
   ]  
   const find = rList.includes(to.name)
   var user = getUserData()
@@ -61,7 +60,7 @@ router.beforeEach((to, _, next) => {
     return next({ name: 'misc-not-authorized' })
   }
 
-  if(!find && isLoggedIn && ((user.role == 'client') || (user.role == 'writer'))) {
+  if(!find && to.includes('images/') && isLoggedIn && ((user.role == 'client') || (user.role == 'writer'))) {
     console.log('not listed');
     return next({ name: 'error-404' })
   }
