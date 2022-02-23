@@ -101,11 +101,16 @@
 
   // Hide navbar dropdown arrow
   &:not(.navbar-horizontal) {
-    &:not(.website-dropdown) {
-      .nav-link {
-        &.dropdown-toggle::after {
-          display: none;
-        }
+    .nav-link {
+      &.dropdown-toggle::after {
+        display: none;
+      }
+    }
+  }
+  &.website-dropdown {
+    .nav-link {
+      &.dropdown-toggle::after {
+        display: block;
       }
     }
   }
