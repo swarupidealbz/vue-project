@@ -32,6 +32,7 @@
           accept=".jpg, .png, .gif"
           :hidden="true"
           plain
+          @input="uploadProfileImage"
         />
         <!--/ upload button -->
 
@@ -59,7 +60,7 @@
             label-for="account-first_name"
           >
             <b-form-input
-              v-model="userData.first_name"
+              v-model="local.first_name"
               placeholder="First Name"
               name="first_name"
             />
@@ -71,7 +72,7 @@
             label-for="account-last_name"
           >
             <b-form-input
-              v-model="userData.last_name"
+              v-model="local.last_name"
               name="first_name"
               placeholder="Last Name"
             />
@@ -83,7 +84,7 @@
             label-for="account-e-mail"
           >
             <b-form-input
-              v-model="userData.email"
+              v-model="local.email"
               name="email"
               placeholder="Email"
             />
@@ -96,7 +97,7 @@
             label-for="account-company"
           >
             <b-form-input
-              v-model="userData.company"
+              v-model="local.company"
               name="company"
               placeholder="Company name"
             />
@@ -195,13 +196,18 @@ export default {
   data() {
     return {
       optionsLocal: JSON.parse(JSON.stringify(this.generalData)),
+      local: this.userData,
       profileFile: null,
     }
   },
   methods: {
     resetForm() {
       this.optionsLocal = JSON.parse(JSON.stringify(this.generalData))
+      this.local = this.userData
     },
+    uploadProfileImage() {
+
+    }
   },
   setup() {
     const refInputEl = ref(null)
