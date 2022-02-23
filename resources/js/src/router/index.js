@@ -47,6 +47,7 @@ router.beforeEach((to, _, next) => {
     'topic-timeline',
     'notifications',
     'profile',
+    'images',
   ]  
   const find = rList.includes(to.name)
   var user = getUserData()
