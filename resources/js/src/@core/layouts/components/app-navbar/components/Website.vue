@@ -3,6 +3,7 @@
     id="my-nav-dropdown"
     :text="currentLocale.name"
     toggle-class="nav-link-custom"
+    class="website-toggle"
     right
   >
     <b-dropdown-item
