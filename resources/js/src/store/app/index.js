@@ -30,6 +30,7 @@ export default {
     contentData: [],
     selectedNotificationType: '',
     allNotifications: [],
+    userData: {},
   },
   getters: {
     currentBreakPoint: state => {
@@ -86,6 +87,9 @@ export default {
     },
     setAllNotifications(state, val) {
       state.allNotifications = val
+    },
+    setUserData(state, val) {
+      state.userData = val
     }
   },
   actions: {
@@ -286,6 +290,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios.post(state.apiBaseUrl + 'profile/update', payload).then(res => {
           resolve(res.data)
+          state.userData = res.data.data
         }).catch(err => {
           reject(err.response)
           console.log('error update profile')
@@ -300,6 +305,7 @@ export default {
           }
         }).then(res => {
           resolve(res.data)
+          state.userData = res.data.data
         }).catch(err => {
           reject(err.response)
           console.log('error update profile image')

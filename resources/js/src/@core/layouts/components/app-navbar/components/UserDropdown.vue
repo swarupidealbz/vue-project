@@ -156,13 +156,15 @@ export default {
   },
   data() {
     return {
-      userData: JSON.parse(localStorage.getItem('userData')),
       avatarText,
     }
   },
   computed: {
     isAdmin() {
       return isAdmin();
+    },
+    userData() {
+      return this.$store.state.app.userData || JSON.parse(localStorage.getItem('userData'));
     }
   },
   methods: {
