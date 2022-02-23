@@ -397,7 +397,7 @@ class AuthController extends BaseController
 
             $user->save();
             
-            return $this->handleResponse($user->fresh(), "Your profile has been updated successfully.");
+            return $this->handleResponse($user->fresh(), "Your profile image has been updated successfully.");
         }
         catch(Exception $e) {
             logger('update profile error:'.$e->getMessage());

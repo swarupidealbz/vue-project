@@ -219,12 +219,14 @@ export default {
       this.upload();
     },
     upload() {
-      console.log(this.profileFile)
       var formData = new FormData();
       formData.append("image", this.profileFile);
       formData.append("action", this.image);
       this.$store.dispatch('app/updateProfileImage',formData).then(res => {
         this.local = res.data;
+        let user = JSON.parse(localStorage.getItem('userData'))
+        user.company = this.local.company;
+        localStorage.setItem('userData', JSON.stringify(user));
         this.$toast({
               component: ToastificationContent,
               position: 'top-right',
