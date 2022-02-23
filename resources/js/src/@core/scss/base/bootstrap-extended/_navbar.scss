@@ -101,7 +101,7 @@
 
   // Hide navbar dropdown arrow
   &:not(.navbar-horizontal) {
-    &:not(.website-dropdown) {
+    :not(.website-dropdown) {
       .nav-link {
         &.dropdown-toggle::after {
           display: none;
