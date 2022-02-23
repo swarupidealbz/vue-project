@@ -1,9 +1,8 @@
 <template>
   <b-nav-item-dropdown
-    id="dropdown-grouped"
-    variant="link"
+    id="my-nav-dropdown"
     :text="currentLocale.name"
-    class="dropdown-language website-dropdown"
+    toggle-class="nav-link-custom"
     right
   >
     <b-dropdown-item
