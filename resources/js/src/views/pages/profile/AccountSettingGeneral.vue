@@ -197,14 +197,14 @@ export default {
   data() {
     return {
       optionsLocal: JSON.parse(JSON.stringify(this.generalData)),
-      local: this.userData,
+      local: JSON.parse(JSON.stringify(this.userData)),
       profileFile: null,
     }
   },
   methods: {
     resetForm() {
       this.optionsLocal = JSON.parse(JSON.stringify(this.generalData))
-      this.local = this.userData
+      this.local = JSON.parse(JSON.stringify(this.userData))
     },
     uploadProfileImage() {
 
