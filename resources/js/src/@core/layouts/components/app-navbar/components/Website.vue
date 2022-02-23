@@ -3,7 +3,7 @@
     id="dropdown-grouped"
     variant="link"
     :text="currentLocale.name"
-    class="website-dropdown"
+    class="website-dropdown mr-1"
     right
   >
     <b-dropdown-item
