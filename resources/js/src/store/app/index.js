@@ -290,7 +290,12 @@ export default {
       return new Promise((resolve, reject) => {
         axios.post(state.apiBaseUrl + 'profile/update', payload).then(res => {
           resolve(res.data)
-          commit('setUserData', res.data.data)
+          let userData = res.data.data
+          let ability = [];
+          ability.push({ action: "manage", subject: "all" });
+          userData.ability = ability;
+          userData.fullName = userData.name;
+          commit('setUserData', userData)
         }).catch(err => {
           reject(err.response)
           console.log('error update profile')
@@ -305,7 +310,12 @@ export default {
           }
         }).then(res => {
           resolve(res.data)
-          commit('setUserData', res.data.data)
+          let userData = res.data.data
+          let ability = [];
+          ability.push({ action: "manage", subject: "all" });
+          userData.ability = ability;
+          userData.fullName = userData.name;
+          commit('setUserData', userData)
         }).catch(err => {
           reject(err.response)
           console.log('error update profile image')
