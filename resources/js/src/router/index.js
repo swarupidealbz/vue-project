@@ -60,7 +60,7 @@ router.beforeEach((to, _, next) => {
     return next({ name: 'misc-not-authorized' })
   }
 
-  if(!find && to.includes('images/') && isLoggedIn && ((user.role == 'client') || (user.role == 'writer'))) {
+  if(!find && !to.path.includes('images/') && isLoggedIn && ((user.role == 'client') || (user.role == 'writer'))) {
     console.log('not listed');
     return next({ name: 'error-404' })
   }
