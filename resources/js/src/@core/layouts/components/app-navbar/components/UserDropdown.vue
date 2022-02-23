@@ -13,7 +13,7 @@
       </div>
       <b-avatar
         size="40"
-        :src="userData.avatar"
+        :src="userData.profile_image"
         variant="light-primary"
         badge
         class="badge-minimal"
