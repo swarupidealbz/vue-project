@@ -207,7 +207,7 @@ export default {
       this.local = JSON.parse(JSON.stringify(this.userData))
     },
     uploadProfileImage() {
-      this.$store.dispatch('app/uploadProfileImage', profileFile).then(res => {
+      this.$store.dispatch('app/uploadProfileImage',{profile_image: profileFile }).then(res => {
         this.local = res.data;
         this.$toast({
               component: ToastificationContent,
