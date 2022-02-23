@@ -225,7 +225,7 @@ export default {
       this.$store.dispatch('app/updateProfileImage',formData).then(res => {
         this.local = res.data;
         let user = JSON.parse(localStorage.getItem('userData'))
-        user.company = this.local.company;
+        user.profile_image = this.local.profile_image;
         localStorage.setItem('userData', JSON.stringify(user));
         this.$toast({
               component: ToastificationContent,
