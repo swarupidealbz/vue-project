@@ -374,11 +374,11 @@ class AuthController extends BaseController
     {
         try {
 
-            $input = $request->only('profile_image');
+            $input = $request->only('action');
             
             $validator = Validator::make($input, 
                 [
-                    'profile_image' => 'required',
+                    'action' => 'required',
                 ]);
             
             if ($validator->fails()) {
@@ -387,7 +387,7 @@ class AuthController extends BaseController
             $user = Auth::user();
 
             $storePath = '';
-            if($request->profile_image) {
+            if($request->profile_image && ($request->action == 'set')) {
                 $name = \Str::beforeLast($request->image->getClientOriginalName(),'.');
                 $imageName = $name.'_'.time().'.'.$request->image->extension(); 
                 $path = $request->image->move(storage_path('app/public/images'), $imageName); //public/images/filename

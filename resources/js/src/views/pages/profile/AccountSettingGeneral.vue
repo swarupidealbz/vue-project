@@ -42,6 +42,7 @@
           variant="outline-secondary"
           size="sm"
           class="mb-75 mr-75"
+          @click="unsetImage"
         >
           Reset
         </b-button>
@@ -199,6 +200,7 @@ export default {
       optionsLocal: JSON.parse(JSON.stringify(this.generalData)),
       local: JSON.parse(JSON.stringify(this.userData)),
       profileFile: null,
+      image: 'set',
     }
   },
   methods: {
@@ -206,8 +208,17 @@ export default {
       this.optionsLocal = JSON.parse(JSON.stringify(this.generalData))
       this.local = JSON.parse(JSON.stringify(this.userData))
     },
+    unsetImage() {
+      this.image = 'unset';
+      this.profileFile = null;
+      this.upload();
+    },
     uploadProfileImage() {
-      this.$store.dispatch('app/uploadProfileImage',{profile_image: profileFile }).then(res => {
+      this.image ='set';
+      this.upload();
+    },
+    upload() {
+      this.$store.dispatch('app/uploadProfileImage',{profile_image: this.profileFile, action: this.image }).then(res => {
         this.local = res.data;
         this.$toast({
               component: ToastificationContent,
