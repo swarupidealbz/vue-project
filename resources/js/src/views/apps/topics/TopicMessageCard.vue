@@ -127,7 +127,7 @@ export default {
 
 <style>
 .card-body {
-  overflow-y: hidden;
+  overflow-x: hidden;
   margin-right: 1.5rem;
 }
 </style>
