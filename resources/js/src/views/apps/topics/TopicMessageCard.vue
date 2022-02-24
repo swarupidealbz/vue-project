@@ -53,7 +53,7 @@
       </div>
     </b-card-header>
 
-    <b-card-body class="mail-message-wrapper pt-2">
+    <b-card-body class="mail-message-wrapper topic-details pt-2">
       <!-- eslint-disable vue/no-v-html -->
       <div
         class="mail-message"
@@ -126,7 +126,7 @@ export default {
 </script>
 
 <style>
-.card-body img {
+.topic-details img {
   object-fit: contain;
   width: 100%;
 }
