@@ -376,6 +376,7 @@ export default {
       confirm_password: '',
       mobile: '',
       role: '',
+      countryCode: '',
       options: [
         { value: '', text: 'select' },
         { value: 'client', text: 'Client' },
@@ -409,6 +410,7 @@ export default {
   methods: {
     onSelect({name, iso2, dialCode}) {
        console.log(name, iso2, dialCode);
+       this.countryCode = dialCode;
      },
     register() {
       this.$refs.registerForm.validate().then(success => {
@@ -438,6 +440,7 @@ export default {
             password: this.password,
             confirm_password: this.confirm_password,
             mobile: this.mobile,
+            country_code: this.countryCode,
             role: this.role
           }).then(response => {
             this.$toast({

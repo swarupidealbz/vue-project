@@ -56,6 +56,7 @@ class AuthController extends BaseController
                 'password'      => Hash::make($request->password),
                 'mobile'        => $request->mobile,
                 'role'          => $request->role,
+                'country_code'  => $request->country_code,
             ]);
 			$user->sendEmailVerificationNotification();
 
