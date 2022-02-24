@@ -28,7 +28,7 @@
                   variant="light-primary"
                   class="float-right"
                 >
-                  {{ groupLists.length }}
+                  {{ topics.length }}
                 </b-badge>              
               </b-list-group-item>
               <b-list-group-item
@@ -119,6 +119,9 @@ export default {
     },
     statusLists() {
       return Object.values(this.groups).filter(s => s.static) || []
+    },
+    topics() {
+      return this.$store.state.app.topics;
     }
   },
   methods: {
