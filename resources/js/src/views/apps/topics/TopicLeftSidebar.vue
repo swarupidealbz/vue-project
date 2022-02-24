@@ -115,10 +115,10 @@ export default {
       return !this.$store.state.app.selectedOrder.id;
     },
     groupLists() {
-      return this.groups.filter(g => !g.static) || []
+      return Object.values(this.groups).filter(g => !g.static) || []
     },
     statusLists() {
-      return this.groups.filter(s => s.static) || []
+      return Object.values(this.groups).filter(s => s.static) || []
     }
   },
   methods: {
