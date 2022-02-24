@@ -40,6 +40,7 @@ import {
 } from 'bootstrap-vue'
 import Bookmarks from './components/Bookmarks.vue'
 import Locale from './components/Locale.vue'
+import website from './components/website.vue'
 import DarkToggler from './components/DarkToggler.vue'
 import SearchBar from './components/SearchBar.vue'
 import CartDropdown from './components/CartDropdown.vue'
@@ -57,6 +58,7 @@ export default {
     BNavbarNav,
     Bookmarks,
     Locale,
+    website,
     DarkToggler,
     SearchBar,
     CartDropdown,
