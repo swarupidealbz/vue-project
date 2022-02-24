@@ -45,7 +45,7 @@ class AuthController extends BaseController
             ]);
 
             if ($validator->fails()) {
-                return $this->handleError('Required field missing.', $validator->errors()->all()[0].' Please check and try again.', 400);
+                return $this->handleError($validator->errors()->all()[0].' Please check and try again.', 'Required field missing.', 400);
             }
 
             $user = User::create([
