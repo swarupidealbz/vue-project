@@ -30,7 +30,7 @@ import chartsAndMaps from './charts-and-maps'
 import uiElements from './ui-elements'
 import formAndTable from './forms-and-table'
 import others from './others'
-import appsAndPages from '..vertical/apps-and-pages'
+import appsAndPages from '../vertical/apps-and-pages'
 
 // Array of sections
 // export default [...dashboard, ...apps, ...uiElements, ...formAndTable, ...pages, ...chartsAndMaps, ...others]
