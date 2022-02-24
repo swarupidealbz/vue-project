@@ -205,6 +205,9 @@
                   vid="mobile"
                   rules="required"
                 >
+                <vue-country-code
+                  @onSelect="onSelect">
+                </vue-country-code>
                   <b-form-input
                     id="register-mobile"
                     v-model="mobile"
@@ -397,6 +400,9 @@ export default {
     }
   },
   methods: {
+    onSelect({name, iso2, dialCode}) {
+       console.log(name, iso2, dialCode);
+     },
     register() {
       this.$refs.registerForm.validate().then(success => {
         if (success) {

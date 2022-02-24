@@ -2,6 +2,7 @@ import Vue from 'vue'
 import { ToastPlugin, ModalPlugin } from 'bootstrap-vue'
 import VueCompositionAPI from '@vue/composition-api'
 import VueCookies from 'vue-cookies';
+import VueCountryCode from "vue-country-code-select";
 
 import i18n from '@/libs/i18n'
 import router from './router'
@@ -32,6 +33,7 @@ Vue.use(ModalPlugin)
 Vue.use(VueCompositionAPI)
 
 Vue.use(VueCookies)
+Vue.use(VueCountryCode);
 
 // Feather font icon - For form-wizard
 // * Shall remove it if not using font-icons of feather-icons - For form-wizard
