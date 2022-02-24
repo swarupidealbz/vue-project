@@ -205,7 +205,7 @@
                   vid="mobile"
                   rules="required"
                 >
-                  <b-input-group>
+                  <b-input-group class="input-group-merge">
                     <b-input-group-prepend>
                       <vue-country-code
                         @onSelect="onSelect">
@@ -213,13 +213,14 @@
                     </b-input-group-prepend>
                     <b-form-input
                       id="register-mobile"
+                      class="form-control-merge"
                       v-model="mobile"
                       name="register-mobile"
                       :state="errors.length > 0 ? false:null"
                       placeholder="Ex:9000000000"
                     />
-                    <small class="text-danger">{{ errors[0] }}</small>
                   </b-input-group>
+                  <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
 
