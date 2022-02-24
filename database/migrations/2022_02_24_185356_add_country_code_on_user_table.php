@@ -13,7 +13,10 @@ class AddCountryCodeOnUserTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('country_code')->nullable()->after('mobile');
+            $table->string('cost')->nullable()->after('country_code');
+        });
     }
 
     /**
@@ -23,6 +26,9 @@ class AddCountryCodeOnUserTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('country_code');
+            $table->dropColumn('cost');
+        });
     }
 }
