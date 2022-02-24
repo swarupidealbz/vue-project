@@ -205,7 +205,7 @@
                   vid="mobile"
                   rules="required"
                 >
-                  <b-input-group class="input-group-merge">
+                  <b-input-group>
                     <b-input-group-prepend>
                       <vue-country-code
                         @onSelect="onSelect">
