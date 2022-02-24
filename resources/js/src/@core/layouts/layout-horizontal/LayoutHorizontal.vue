@@ -145,6 +145,9 @@ export default {
     VerticalNavMenu,
   },
   mixins: [mixinLayoutHorizontal],
+  beforeCreate() {
+    this.$store.dispatch('app/loadAppData')
+  },
   computed: {
     layoutContentRenderer() {
       const rendererType = this.$route.meta.contentRenderer
