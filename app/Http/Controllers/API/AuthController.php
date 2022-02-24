@@ -99,7 +99,7 @@ class AuthController extends BaseController
             if (!Auth::attempt($request->only('username', 'password'))) {
                 return $this->handleError('Email/Password are invalid. Please check your details and try again.', [], 400);
             }
-            $user = User::select('id','first_name', 'last_name', 'mobile', 'email', 'role', 'email_verified_at')
+            $user = User::select('id','first_name', 'last_name', 'mobile', 'email', 'role', 'email_verified_at', 'company', 'profile_image')
             ->where('username', $request['username'])->firstOrFail();
             
 			if(!$user->email_verified_at) {
@@ -340,14 +340,13 @@ class AuthController extends BaseController
     {
         try {
 
-            $input = $request->only('first_name', 'last_name', 'email','company');
+            $input = $request->only('first_name', 'last_name', 'email');
             
             $validator = Validator::make($input, 
                 [
                     'email' => 'required|email',
                     'first_name' => 'required',
                     'last_name' => 'required',
-                    'company' => 'required',
                 ]);
             
             if ($validator->fails()) {
