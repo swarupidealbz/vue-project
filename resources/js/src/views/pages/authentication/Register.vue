@@ -205,17 +205,21 @@
                   vid="mobile"
                   rules="required"
                 >
-                <vue-country-code
-                  @onSelect="onSelect">
-                </vue-country-code>
-                  <b-form-input
-                    id="register-mobile"
-                    v-model="mobile"
-                    name="register-mobile"
-                    :state="errors.length > 0 ? false:null"
-                    placeholder="Ex:9000000000"
-                  />
-                  <small class="text-danger">{{ errors[0] }}</small>
+                  <b-input-group>
+                    <b-input-group-prepend>
+                      <vue-country-code
+                        @onSelect="onSelect">
+                      </vue-country-code>
+                    </b-input-group-prepend>
+                    <b-form-input
+                      id="register-mobile"
+                      v-model="mobile"
+                      name="register-mobile"
+                      :state="errors.length > 0 ? false:null"
+                      placeholder="Ex:9000000000"
+                    />
+                    <small class="text-danger">{{ errors[0] }}</small>
+                  </b-input-group>
                 </validation-provider>
               </b-form-group>
 
@@ -328,7 +332,8 @@ import {
   BImg,
   BCardTitle,
   BCardText,
-  BFormSelect
+  BFormSelect,
+  BInputGroupPrepend,
 } from 'bootstrap-vue'
 import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
@@ -352,6 +357,7 @@ export default {
     BFormInput,
     BInputGroup,
     BInputGroupAppend,
+    BInputGroupPrepend,
     BFormSelect,
     // validations
     ValidationProvider,
