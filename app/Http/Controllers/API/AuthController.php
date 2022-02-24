@@ -100,7 +100,7 @@ class AuthController extends BaseController
             if (!Auth::attempt($request->only('username', 'password'))) {
                 return $this->handleError('Email/Password are invalid. Please check your details and try again.', [], 400);
             }
-            $user = User::select('id','first_name', 'last_name', 'mobile', 'email', 'role', 'email_verified_at', 'company', 'profile_image')
+            $user = User::select('id','first_name', 'last_name', 'mobile', 'country_code', 'cost', 'email', 'role', 'email_verified_at', 'company', 'profile_image')
             ->where('username', $request['username'])->firstOrFail();
             
 			if(!$user->email_verified_at) {
