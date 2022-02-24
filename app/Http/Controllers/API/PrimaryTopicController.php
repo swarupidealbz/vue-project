@@ -146,13 +146,23 @@ class PrimaryTopicController extends BaseController
 				});
 				
 				$selectedGroups = [
+                    Topics::STATUS_OPEN => [
+                        'id' => Topics::STATUS_OPEN,
+                        'name' => ucwords(Topics::STATUS_OPEN),
+                        'static' => true,
+                        'color' => 'warning',
+                    ],
                     Topics::STATUS_APPROVED => [
                         'id' => Topics::STATUS_APPROVED,
                         'name' => ucwords(Topics::STATUS_APPROVED),
+                        'static' => true,
+                        'color' => 'success',
                     ],
                     Topics::STATUS_REJECTED => [
                         'id' => Topics::STATUS_REJECTED,
-                        'name' => ucwords(Topics::STATUS_REJECTED)
+                        'name' => ucwords(Topics::STATUS_REJECTED),
+                        'static' => true,
+                        'color' => 'danger',
                     ]
                 ];
                 $topicList->each(function($topic) use(&$selectedGroups){

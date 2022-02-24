@@ -22,16 +22,49 @@
                 @click="showAll"
                 class="cursor-pointer"
               >
-                <span class="align-text-bottom line-height-1">All</span>                
+                <span class="align-text-bottom line-height-1">All</span>  
+                <b-badge
+                  pill
+                  variant="light-primary"
+                  class="float-right"
+                >
+                  {{ groupLists.length }}
+                </b-badge>              
               </b-list-group-item>
               <b-list-group-item
-                v-for="group in groups"
+                v-for="group in groupLists"
                 :key="group.name"
                 :active="isActive(group)"
                 @click="sortGroup(group)"
                 class="cursor-pointer"
               >
+              <feather-icon
+                  icon="TagIcon"
+                  size="18"
+                  class="mr-75 rotation-custom"
+                />
                 <span class="align-text-bottom line-height-1">{{ group.name }}</span>                
+              </b-list-group-item>
+            </b-list-group>
+
+            <!-- Status -->
+            <h6 class="section-label mt-3 mb-1 px-2">
+              Status
+            </h6>
+
+            <b-list-group class="list-group-labels">
+              <b-list-group-item
+                v-for="status in statusLists"
+                :key="status.name"
+                :active="isActive(status)"
+                @click="sortGroup(status)"
+                class="cursor-pointer"
+              >
+                <span
+                  class="bullet bullet-sm mr-1"
+                  :class="`bullet-${status.color}`"
+                />
+                <span>{{ status.name }}</span>
               </b-list-group-item>
             </b-list-group>
 
@@ -80,6 +113,12 @@ export default {
     },
     activeAll() {
       return !this.$store.state.app.selectedOrder.id;
+    },
+    groupLists() {
+      return this.groups.filter(g => !g.static) || []
+    },
+    statusLists() {
+      return this.groups.filter(s => s.static) || []
     }
   },
   methods: {
