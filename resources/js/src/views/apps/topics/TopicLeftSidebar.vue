@@ -41,7 +41,7 @@
               <feather-icon
                   icon="TagIcon"
                   size="18"
-                  class="mr-75 rotation-custom"
+                  class="mr-75 custom-rotation"
                 />
                 <span class="align-text-bottom line-height-1">{{ group.name }}</span>                
               </b-list-group-item>
@@ -177,5 +177,8 @@ export default {
 </script>
 
 <style>
+.custom-rotation {
+  transform: rotate(135deg);
+}
 
 </style>
