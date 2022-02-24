@@ -129,5 +129,8 @@ export default {
 .card-body {
   overflow-x: hidden;
   margin-right: 1.5rem;
+  img {
+    width: 100%;
+  }
 }
 </style>
