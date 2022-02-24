@@ -126,11 +126,8 @@ export default {
 </script>
 
 <style>
-.card-body {
-  overflow-x: hidden;
-  margin-right: 1.5rem;
-  img {
-    width: 100%;
-  }
+.card-body img {
+  object-fit: contain;
+  width: 100%;
 }
 </style>
