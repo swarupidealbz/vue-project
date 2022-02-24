@@ -255,6 +255,9 @@ export default {
         this.local = res.data;
         let user = JSON.parse(localStorage.getItem('userData'))
         user.company = this.local.company;
+        user.first_name = this.local.first_name;
+        user.last_name = this.local.last_name;
+        user.email = this.local.email;
         localStorage.setItem('userData', JSON.stringify(user));
         this.$toast({
               component: ToastificationContent,
