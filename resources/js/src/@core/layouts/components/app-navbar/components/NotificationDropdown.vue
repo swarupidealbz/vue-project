@@ -94,6 +94,16 @@
       :to="{ name: 'notifications' }"
     >Read all notifications</b-button>
     </li>
+    <b-dropdown-item
+      link-class="d-flex align-items-center"
+    >      
+      <b-button
+      v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+      variant="primary"
+      block
+      :to="{ name: 'notifications' }"
+    >Read all notifications</b-button>
+    </b-dropdown-item>
   </b-nav-item-dropdown>
 </template>
 
