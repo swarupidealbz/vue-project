@@ -95,6 +95,9 @@ export default {
     setTopicCount(state, val) {
       state.topicCount = val
     },
+    setNotificationCount(state, val) {
+      state.topBar.notifications.count = val;
+    },
   },
   actions: {
     loadAppData({commit, state, dispatch}, payload){
@@ -275,6 +278,8 @@ export default {
       return new Promise((resolve, reject) => {
           axios.post(state.apiBaseUrl + 'notification/update', payload).then((res) => {
             commit('setAllNotifications', res.data.data)
+            let unread = res.data.data.filter(n => !n.is_read);
+            commit('setNotificationCount', unread.length);
             resolve(res.data)
           }).catch((error) => {
             reject(error.response);
