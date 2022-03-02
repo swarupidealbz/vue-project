@@ -87,15 +87,15 @@
     </vue-perfect-scrollbar>
 
     <!-- Cart Footer -->
-    <li class="dropdown-menu-footer"><b-button
+    <!-- <li class="dropdown-menu-footer"><b-button
       v-ripple.400="'rgba(255, 255, 255, 0.15)'"
       variant="primary"
       block
       :to="{ name: 'notifications' }"
     >Read all notifications</b-button>
-    </li>
+    </li> -->
     <b-dropdown-item
-      class="dropdown-menu-footer"
+      class="dropdown-menu-footer p-0"
       link-class="align-items-center"
     >      
       <b-button
