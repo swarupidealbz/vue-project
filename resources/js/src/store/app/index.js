@@ -31,6 +31,7 @@ export default {
     selectedNotificationType: '',
     allNotifications: [],
     userData: {},
+    topicCount: 0,
   },
   getters: {
     currentBreakPoint: state => {
@@ -90,7 +91,10 @@ export default {
     },
     setUserData(state, val) {
       state.userData = val
-    }
+    },
+    setTopicCount(state, val) {
+      state.topicCount = val
+    },
   },
   actions: {
     loadAppData({commit, state, dispatch}, payload){
@@ -166,6 +170,7 @@ export default {
           console.log('topics list');
           commit('setTopics', res.data.data.topics);
           commit('setGroups', res.data.data.groups);
+          commit('setTopicCount', res.data.data.count);
         }).catch(() => {
           console.log('error load topics data');
         })
@@ -174,7 +179,8 @@ export default {
     sortRecord({commit, state, dispatch}, payload) {
       axios.post(state.apiBaseUrl+'topic/sort-record', payload).then((res) => {
         console.log('sort topics');
-        commit('setTopics', res.data.data);
+        commit('setTopics', res.data.data.list);
+        commit('setTopicCount', res.data.data.count);
       }).catch(() => {
         console.log('error load sort record data');
       })

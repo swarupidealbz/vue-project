@@ -193,6 +193,7 @@
         :emails-meta="emailsMeta"
         :class="{'show': mqShallShowLeftSidebar}"
         @close-left-sidebar="mqShallShowLeftSidebar = false"
+        @close-topic-view="showTopicDetails = false"
       />
     </portal>
 

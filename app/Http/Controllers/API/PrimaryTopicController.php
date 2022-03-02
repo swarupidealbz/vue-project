@@ -172,7 +172,8 @@ class PrimaryTopicController extends BaseController
                 });
                 $response = [
                     'topics' => $topicList,
-                    'groups' => $selectedGroups
+                    'groups' => $selectedGroups,
+                    'count' => $topicList->count(),
                 ];
             /*}
             else {
@@ -304,8 +305,12 @@ class PrimaryTopicController extends BaseController
                 }
                 return $topic;
             });
+            $list = [
+                'list' => $topicList,
+                'count' => Topics::where('is_primary_topic', 1)->whereIn('website_id', $website)->count()
+            ];
            
-            return $this->handleResponse($topicList, 'Fetched matched website lists.');
+            return $this->handleResponse($list, 'Fetched matched website lists.');
         }
         catch(Exception $e) 
         {

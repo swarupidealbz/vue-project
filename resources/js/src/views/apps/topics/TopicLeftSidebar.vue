@@ -28,7 +28,7 @@
                   variant="light-primary"
                   class="float-right"
                 >
-                  {{ topics.length }}
+                  {{ count }}
                 </b-badge>              
               </b-list-group-item>
               <b-list-group-item
@@ -122,7 +122,10 @@ export default {
     },
     topics() {
       return this.$store.state.app.topics;
-    }
+    },
+    count() {
+      return this.$store.state.app.topicCount;
+    },
   },
   methods: {
     isActive(group) {
@@ -130,6 +133,7 @@ export default {
     },
     sortGroup(group) {
       this.$emit('close-left-sidebar');
+      this.$emit('close-topic-view');
       this.$store.commit('app/setSelectedOrder', group);
       this.$store.dispatch('app/sortRecord', { website: this.$store.state.app.selectedWebsite.id, order: group.id});
     },
