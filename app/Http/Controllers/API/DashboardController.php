@@ -221,7 +221,8 @@ class DashboardController extends BaseController
             $outlineStartText = 'Since Last Month';
             $diffLastCurrent = $currentMonthOutline - $lastMonthOutline;
             $incText = $diffLastCurrent > 0 ? 'inc' : 'dec';
-            $inc = (abs($diffLastCurrent) / ($lastMonthOutline ?? 1)) * 100;
+            $lastMonthOutline = $lastMonthOutline == 0 ? 1 : $lastMonthOutline;
+            $inc = (abs($diffLastCurrent) / $lastMonthOutline) * 100;
             $outlineInc = number_format($inc, 2).'%';
         }
         $outlineContent = [
