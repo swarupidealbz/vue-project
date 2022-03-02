@@ -95,6 +95,7 @@
     >Read all notifications</b-button>
     </li> -->
     <b-dropdown-item
+      class="dropdown-menu-footer"
       link-class="align-items-center"
     >      
       <b-button
