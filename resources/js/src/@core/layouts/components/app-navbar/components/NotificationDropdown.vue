@@ -109,7 +109,7 @@
 
 <script>
 import {
-  BNavItemDropdown, BBadge, BMedia, BLink, BAvatar, BButton, BFormCheckbox,
+  BNavItemDropdown, BBadge, BMedia, BLink, BAvatar, BButton, BFormCheckbox,BDropdownItem
 } from 'bootstrap-vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import Ripple from 'vue-ripple-directive'
@@ -126,6 +126,7 @@ export default {
     VuePerfectScrollbar,
     BButton,
     BFormCheckbox,
+    BDropdownItem,
   },
   directives: {
     Ripple,
