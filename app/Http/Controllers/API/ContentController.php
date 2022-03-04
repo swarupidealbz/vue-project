@@ -137,7 +137,7 @@ class ContentController extends BaseController
                 $limit = $request->limit * 2;
             }
 
-            $contentLists = Content::where('primary_topic_id', trim($request->primary_topic))
+            $contentLists = Content::select('id','title', 'created_at')->where('primary_topic_id', trim($request->primary_topic))
             ->where('website_id',trim($request->website));
             if($request->child_topic) {
                 $contentLists = $contentLists
@@ -145,7 +145,7 @@ class ContentController extends BaseController
             }
             $contentLists = $contentLists->get();
             
-            $commentLists = Comments::where('primary_topic_id', trim($request->primary_topic))
+            $commentLists = Comments::select('id','created_at')->where('primary_topic_id', trim($request->primary_topic))
             ->where('website_id',trim($request->website));
             if($request->child_topic) {
                 $commentLists = $commentLists
@@ -153,13 +153,29 @@ class ContentController extends BaseController
             }
             $commentLists = $commentLists->get();
            
+            $contentIds = [];
+            $commentIds = [];
 
-            $allData = $contentLists->merge($commentLists)->sortByDesc('created_at')->take($limit);
+            $allData = $contentLists->merge($commentLists)->sortByDesc('created_at')->take($limit)
+            ->each(function($item) use(&$contentIds, &$commentIds){
+                if(array_key_exists('title', $item)) {
+                    array_push($contentIds,$item->id);
+                }
+                else {
+                    array_push($commentIds,$item->id);
+                }
+            });
+
+            $contentLists = Content::whereIn('id', $contentIds)->get();
+            
+            $commentLists = Comments::whereIn('id', $commentIds)->get();
+
+            $allData = $contentLists->merge($commentLists)->sort('created_at');
 
             $timeline = [
                 'contents' => $contentLists,
                 'comments' => $commentLists,
-                'content_comment' => $allData->values()->reverse(),
+                'content_comment' => $allData,
                 'show_more' => ($contentLists->count() + $commentLists->count()) > $allData->count(),
                 'primary_topic' => Topics::find($request->primary_topic),
             ];
