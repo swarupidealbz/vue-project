@@ -470,6 +470,8 @@ export default {
         status: 'approved'
       };
       this.$store.dispatch('app/updateContentStatus', payload).then(res => {
+        console.log(content)
+        console.log(this.blogDetail)
         let index = this.blogDetail.indexOf(content);
         content.status = 'approved';
         this.blogDetail[index] = content;
@@ -504,7 +506,7 @@ export default {
       };
       this.$store.dispatch('app/updateContentStatus', payload).then(res => {
         console.log(content)
-        oconsole.log(this.blogDetail)
+        console.log(this.blogDetail)
          let index = this.blogDetail.indexOf(content);
         content.status = 'rejected';
         this.blogDetail[index] = content;
