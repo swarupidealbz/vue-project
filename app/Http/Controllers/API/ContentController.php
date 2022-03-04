@@ -158,7 +158,7 @@ class ContentController extends BaseController
 
             $allData = $contentLists->merge($commentLists)->sortByDesc('created_at')->take($limit)
             ->each(function($item) use(&$contentIds, &$commentIds){
-                if(array_key_exists('title', $item)) {
+                if(array_key_exists('title', $item->toArray())) {
                     array_push($contentIds,$item->id);
                 }
                 else {
