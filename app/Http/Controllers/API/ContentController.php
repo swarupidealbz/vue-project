@@ -119,7 +119,7 @@ class ContentController extends BaseController
 
     public function contentForTimeline(Request $request)
     {
-        // try {
+        try {
 
             $input = $request->only('website', 'primary_topic');
                 
@@ -137,26 +137,26 @@ class ContentController extends BaseController
                 $limit = $request->limit * 2;
             }
 
-            $contentLists = Content::select('id','title', 'created_at')->where('primary_topic_id', trim($request->primary_topic))
+            $contentALists = Content::select('id','title', 'created_at')->where('primary_topic_id', trim($request->primary_topic))
             ->where('website_id',trim($request->website));
             if($request->child_topic) {
-                $contentLists = $contentLists
+                $contentALists = $contentALists
                 ->where('child_topic_id', trim($request->child_topic));
             }
-            $contentLists = $contentLists->get();
+            $contentALists = $contentALists->get();
             
-            $commentLists = Comments::select('id','created_at')->where('primary_topic_id', trim($request->primary_topic))
+            $commentALists = Comments::select('id','created_at')->where('primary_topic_id', trim($request->primary_topic))
             ->where('website_id',trim($request->website));
             if($request->child_topic) {
-                $commentLists = $commentLists
+                $commentALists = $commentALists
                 ->where('child_topic_id', trim($request->child_topic));
             }
-            $commentLists = $commentLists->get();
+            $commentALists = $commentALists->get();
            
             $contentIds = [];
             $commentIds = [];
 
-            $allData = $contentLists->merge($commentLists)->sortByDesc('created_at')->take($limit)
+            $allData = $contentALists->merge($commentALists)->sortByDesc('created_at')->take($limit)
             ->each(function($item) use(&$contentIds, &$commentIds){
                 if(array_key_exists('title', $item->toArray())) {
                     array_push($contentIds,$item->id);
@@ -176,17 +176,17 @@ class ContentController extends BaseController
                 'contents' => $contentLists,
                 'comments' => $commentLists,
                 'content_comment' => $allData,
-                'show_more' => ($contentLists->count() + $commentLists->count()) > $allData->count(),
+                'show_more' => ($contentALists->count() + $commentALists->count()) > $allData->count(),
                 'primary_topic' => Topics::find($request->primary_topic),
             ];
             
             return $this->handleResponse($timeline, 'Fetched matched record.');            
-        // }
-        // catch(Exception $e) 
-        // {
-        //     logger('content list for timeline error');
-        //     return $this->handleError('Something went wrong', [], 500);
-        // }
+        }
+        catch(Exception $e) 
+        {
+            logger('content list for timeline error');
+            return $this->handleError('Something went wrong', [], 500);
+        }
 
     }
 
