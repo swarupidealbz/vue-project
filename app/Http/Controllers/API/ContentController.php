@@ -159,7 +159,7 @@ class ContentController extends BaseController
             $timeline = [
                 'contents' => $contentLists,
                 'comments' => $commentLists,
-                'content_comment' => $allData->reverse()->values(),
+                'content_comment' => $allData->values()->reverse(),
                 'show_more' => ($contentLists->count() + $commentLists->count()) > $allData->count(),
                 'primary_topic' => Topics::find($request->primary_topic),
             ];
