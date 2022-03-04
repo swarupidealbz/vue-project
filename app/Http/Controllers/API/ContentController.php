@@ -170,12 +170,12 @@ class ContentController extends BaseController
             
             $commentLists = Comments::whereIn('id', $commentIds)->get();
 
-            $allData = $contentLists->merge($commentLists)->sort('created_at');
+            $allData = $contentLists->merge($commentLists)->sortBy('created_at');
 
             $timeline = [
                 'contents' => $contentLists,
                 'comments' => $commentLists,
-                'content_comment' => $allData->reverse(),
+                'content_comment' => $allData,
                 'show_more' => ($contentLists->count() + $commentLists->count()) > $allData->count(),
                 'primary_topic' => Topics::find($request->primary_topic),
             ];
