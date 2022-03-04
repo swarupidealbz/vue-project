@@ -73,6 +73,33 @@
                 <span class="text-muted ml-75 mr-50">|</span>
                 <small class="text-muted">{{ fullDate(item.created_at) }}</small>
               </b-media-body>
+              <div class="float-right">
+                <b-dropdown
+                  variant="link"
+                  no-caret
+                  toggle-class="p-0"
+                  right
+                >
+                  <template #button-content>
+                    <feather-icon
+                      icon="MoreVerticalIcon"
+                      size="17"
+                      class="ml-50 text-body"
+                    />
+                  </template>
+
+                  <b-dropdown-item variant="success">
+                    <feather-icon icon="CheckCircleIcon" />
+                    <span class="align-middle ml-50">Accept</span>
+                  </b-dropdown-item>
+
+                  <b-dropdown-item variant="danger">
+                    <feather-icon icon="XCircleIcon" />
+                    <span class="align-middle ml-50 text-danger">Reject</span>
+                  </b-dropdown-item>
+                            
+                </b-dropdown>
+              </div>
             </b-media>
             <!-- <div class="my-1 py-25">
               <b-link
