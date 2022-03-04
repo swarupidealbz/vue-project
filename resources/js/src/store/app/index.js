@@ -332,6 +332,16 @@ export default {
           console.log('error update profile image')
         })
       })
-    }
+    },
+    updateContentStatus({state, commit, dispatch}, payload) {
+      return new Promise((resolve, reject) => {
+        axios.post(state.apiBaseUrl + 'content/update-status', payload).then(res => {
+          resolve(res.data)
+        }).catch(err => {
+          reject(err.response)
+          console.log('error update content status')
+        })
+      })
+    },
   },
 }

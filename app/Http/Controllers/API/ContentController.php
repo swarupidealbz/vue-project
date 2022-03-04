@@ -102,13 +102,13 @@ class ContentController extends BaseController
             $status = strtolower(trim($request->status));
 
             if(empty($content)) {
-                return $this->handleError('Invalid content', $validator->errors()->all(), 403);
+                return $this->handleError('Invalid content', $validator->errors()->all(), 400);
             }
 
             $content->status = $status;
             $content->save();
 
-            return $this->handleResponse($content->fresh(), 'Success');
+            return $this->handleResponse($content->fresh(), 'Content status updated to '.ucwords($status).' successfully');
         }
         catch(Exception $e) 
         {

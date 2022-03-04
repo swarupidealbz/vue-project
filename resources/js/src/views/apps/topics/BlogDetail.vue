@@ -68,10 +68,14 @@
               <b-media-body>
                 <small class="text-muted mr-50">by</small>
                 <small>
-                  <b-link class="text-body">{{ item.created_user.name }} {{ item.status }}</b-link>
+                  <b-link class="text-body">{{ item.created_user.name }}</b-link>
                 </small>
                 <span class="text-muted ml-75 mr-50">|</span>
                 <small class="text-muted">{{ fullDate(item.created_at) }}</small>
+                <span
+                    class="mx-50 bullet bullet-sm"
+                    :class="`bullet-${item.status == 'approved' ? 'success' : (item.status == 'rejected' ? 'danger' : 'warning')}`"
+                />
               </b-media-body>
               <div class="float-right">
                 <b-dropdown
@@ -88,12 +92,12 @@
                     />
                   </template>
 
-                  <b-dropdown-item variant="success">
+                  <b-dropdown-item variant="success" @click="acceptStatus(item)">
                     <feather-icon icon="CheckCircleIcon" />
                     <span class="align-middle ml-50">Accept</span>
                   </b-dropdown-item>
 
-                  <b-dropdown-item variant="danger">
+                  <b-dropdown-item variant="danger" @click="rejectStatus(item)">
                     <feather-icon icon="XCircleIcon" />
                     <span class="align-middle ml-50 text-danger">Reject</span>
                   </b-dropdown-item>
@@ -101,47 +105,13 @@
                 </b-dropdown>
               </div>
             </b-media>
-            <!-- <div class="my-1 py-25">
-              <b-link
-                v-for="tag in blogDetail.blog.tags"
-                :key="tag"
-              >
-                <b-badge
-                  pill
-                  class="mr-75"
-                  :variant="tagsColor(tag)"
-                >
-                  {{ tag }}
-                </b-badge>
-              </b-link>
-            </div> -->
             <!-- eslint-disable vue/no-v-html -->
             <div
-              class="blog-content"
+              class="blog-content mt-1"
               v-html="item.description"
             />
 
-            <!-- user commnets -->
-            <!-- <b-media
-              v-for="user in blogDetail.blog.UserComment"
-              :key="user.avatar"
-              no-body
-            >
-              <b-media-aside>
-                <b-avatar
-                  size="60"
-                  :src="user.avatar"
-                />
-              </b-media-aside>
-              <b-media-body>
-                <h6 class="font-weight-bolder">
-                  {{ user.fullName }}
-                </h6>
-                <b-card-text>
-                  {{ user.comment }}
-                </b-card-text>
-              </b-media-body>
-            </b-media> -->
+            
             <!-- eslint-enable -->
             <hr class="my-2">
 
@@ -494,8 +464,70 @@ export default {
         this.show = res.data.show_more
       })
     },
-    addContent() {
+    acceptStatus(content) {
+      let payload = {
+        content: content.id,
+        status: 'approved'
+      };
+      this.$store.dispatch('app/updateContentStatus', payload).then(res => {
+        let index = this.blogDetail.indexOf(content);
+        content.status = 'approved';
+        this.blogDetail[index] = content;
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Success`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: res.message,
+              },
+            })
+      }).catch(err => {
+         this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: err.message,
+              },
+            })
+      })
 
+    },
+    rejectStatus(content) {
+      let payload = {
+        content: content.id,
+        status: 'rejected'
+      };
+      this.$store.dispatch('app/updateContentStatus', payload).then(res => {
+         let index = this.blogDetail.indexOf(content);
+        content.status = 'rejected';
+        this.blogDetail[index] = content;
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Success`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: res.message,
+              },
+            })
+      }).catch(err => {
+         this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: err.message,
+              },
+            })
+      })
     }
   },
 }
