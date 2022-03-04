@@ -108,6 +108,39 @@ class ContentController extends BaseController
             $content->status = $status;
             $content->save();
 
+            $loginUser = Auth::user();
+            $website = Websites::find($content->website_id);
+            $owners = explode(',', $website->owners);
+			$time = Carbon::now()->toDateTimeString();
+            $notify = [];
+            foreach($owners as $owner) {
+                $notify[] = [
+                    'recipient_user_id' => $owner,
+                    'sender_user_id' => $loginUser->id,
+                    'website_id' => $website->id,
+                    'heading' => 'Record updated',
+                    'details' => sprintf('%s for %s has been updated.', $content->title, $website->name),
+                    'created_by_id' => $loginUser->id,
+                    'updated_by_id' => $loginUser->id,
+                    'created_at' => $time,
+                    'updated_at' => $time
+                ];
+            }
+            $notify[] = [
+                'recipient_user_id' => $content->created_by_id,
+                'sender_user_id' => $loginUser->id,
+                'website_id' => $website->id,
+                'heading' => 'Status updated',
+                'details' => sprintf('%s has been %s by %s.', $content->title, $content->fresh()->status, $loginUser->name),
+                'created_by_id' => $loginUser->id,
+                'updated_by_id' => $loginUser->id,
+                'created_at' => $time,
+                'updated_at' => $time
+            ];
+            if(count($notify)) {
+                Notifications::insert($notify);
+            }
+
             return $this->handleResponse($content->fresh(), 'Content status updated to '.ucwords($status).' successfully');
         }
         catch(Exception $e) 
