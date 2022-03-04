@@ -38,7 +38,7 @@
   </b-row>
 
   
-    <div class="text-center" v-if="show">
+    <div class="text-center mb-1" v-if="show">
       <b-link @click="more">Show more</b-link>
     </div>
 
