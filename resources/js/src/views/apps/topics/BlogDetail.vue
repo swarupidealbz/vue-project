@@ -515,7 +515,7 @@ export default {
                 variant: 'success',
                 text: res.message,
               },
-            })
+            });
       }).catch(err => {
          this.$toast({
               component: ToastificationContent,
