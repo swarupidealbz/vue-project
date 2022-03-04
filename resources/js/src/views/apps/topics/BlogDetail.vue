@@ -68,7 +68,7 @@
               <b-media-body>
                 <small class="text-muted mr-50">by</small>
                 <small>
-                  <b-link class="text-body">{{ item.created_user.name }}</b-link>
+                  <b-link class="text-body">{{ item.created_user.name }} {{ item.status }}</b-link>
                 </small>
                 <span class="text-muted ml-75 mr-50">|</span>
                 <small class="text-muted">{{ fullDate(item.created_at) }}</small>
