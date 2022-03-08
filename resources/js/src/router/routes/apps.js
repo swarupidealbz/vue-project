@@ -106,7 +106,7 @@ export default [
     name: 'topics',
     component: () => import('@/views/apps/topics/Topic.vue'),
     meta: {
-      contentRenderer: 'sidebar-left-detached',
+      contentRenderer: 'sidebar-left',
       contentClass: 'email-application',
       pageTitle: 'Topics',
       breadcrumb: [
