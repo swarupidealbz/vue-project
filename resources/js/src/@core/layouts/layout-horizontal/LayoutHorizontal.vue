@@ -12,7 +12,7 @@
       :style="{
         backgroundColor: 'white',
         boxShadow: navbarType === 'static' && scrolledTo ? 'rgba(0, 0, 0, 0.05) 0px 4px 20px 0px' : null,
-        borderBottom: navbarType === 'static' && scrolledTo && skin === 'light' ? null : '1px solid',
+        borderBottom: navbarType === 'static' && scrolledTo && skin === 'light' ? null : '1px solid #dfdfdf',
       }"
       :toggleable="false"
       class="header-navbar navbar-shadow align-items-center navbar-brand-center navbar-fixed"
@@ -221,4 +221,9 @@ export default {
 
 <style lang="scss">
 @import "~@core/scss/base/themes/bordered-layout.scss";
+.navbar-header{
+  left: 0!important;
+  padding:0.8rem 2rem!important;
+  border-bottom: 1px solid #dfdfdf;
+}
 </style>

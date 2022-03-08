@@ -113,19 +113,6 @@ class ContentController extends BaseController
             $owners = explode(',', $website->owners);
 			$time = Carbon::now()->toDateTimeString();
             $notify = [];
-            foreach($owners as $owner) {
-                $notify[] = [
-                    'recipient_user_id' => $owner,
-                    'sender_user_id' => $loginUser->id,
-                    'website_id' => $website->id,
-                    'heading' => 'Record updated',
-                    'details' => sprintf('%s for %s has been updated.', $content->title, $website->name),
-                    'created_by_id' => $loginUser->id,
-                    'updated_by_id' => $loginUser->id,
-                    'created_at' => $time,
-                    'updated_at' => $time
-                ];
-            }
             $notify[] = [
                 'recipient_user_id' => $content->created_by_id,
                 'sender_user_id' => $loginUser->id,
