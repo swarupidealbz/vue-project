@@ -25,7 +25,6 @@
             :key="notification.id"
             class="todo-item"
             :class="{ 'completed': notification.is_read }"
-            @click="handleTaskClick(notification)"
           >
             <feather-icon
               icon="MoreVerticalIcon"
@@ -99,6 +98,8 @@ import { useResponsiveAppLeftSidebarVisibility } from '@core/comp-functions/ui/a
 import NotificationLeftSidebar from './NotificationLeftSidebar.vue'
 import todoStoreModule from './todoStoreModule'
 import TodoTaskHandlerSidebar from './TodoTaskHandlerSidebar.vue'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+
 
 export default {
   components: {
@@ -200,7 +201,29 @@ export default {
         })
     }
     const updateTask = taskData => {
-      store.dispatch('app/updateNotification', taskData)
+      store.dispatch('app/updateNotification', taskData).then(res => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Updated`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: 'Notification Updated Successfully.',
+              },
+            })
+      }).catch(err => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: 'Notification Update failed.',
+              },
+            })
+      })
       // store.dispatch('app-todo/updateTask', { task: taskData })
       //   .then(() => {
       //     // eslint-disable-next-line no-use-before-define
