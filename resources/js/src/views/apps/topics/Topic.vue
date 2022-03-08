@@ -186,7 +186,7 @@
     />
 
     <!-- Sidebar -->
-    <portal to="content-renderer-sidebar-left">
+    <portal to="content-renderer-sidebar-default">
       <topic-left-sidebar
         :shall-show-email-compose-modal.sync="shallShowEmailComposeModal"
         :is-task-handler-sidebar-active.sync="isTaskHandlerSidebarActive"
