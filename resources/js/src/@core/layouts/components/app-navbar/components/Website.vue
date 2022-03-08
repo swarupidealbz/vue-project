@@ -48,8 +48,9 @@ export default {
       this.$store.commit('app/setSelectedWebsite', website)
       this.$store.dispatch('app/loadAppData');
       this.$store.dispatch('app/loadTopics', {website:this.$store.state.app.selectedWebsite.id}).then(res => {
-       console.log(this.$router)
-       this.$router.push('/')
+        if(this.$router.history.current.name != 'dashboard') {
+          this.$router.push('/')
+        }
       })
     }
   }
