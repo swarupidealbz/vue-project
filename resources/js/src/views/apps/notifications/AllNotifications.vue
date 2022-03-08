@@ -99,6 +99,7 @@ import NotificationLeftSidebar from './NotificationLeftSidebar.vue'
 import todoStoreModule from './todoStoreModule'
 import TodoTaskHandlerSidebar from './TodoTaskHandlerSidebar.vue'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import { useToast } from 'vue-toastification/composition'
 
 
 export default {
@@ -130,6 +131,7 @@ export default {
   },
   setup() {
     const TODO_APP_STORE_MODULE_NAME = 'app-todo'
+    const toast = useToast()
 
     // Register module
     if (!store.hasModule(TODO_APP_STORE_MODULE_NAME)) store.registerModule(TODO_APP_STORE_MODULE_NAME, todoStoreModule)
@@ -202,7 +204,7 @@ export default {
     }
     const updateTask = taskData => {
       store.dispatch('app/updateNotification', taskData).then(res => {
-        $toast({
+        toast({
               component: ToastificationContent,
               position: 'top-right',
               props: {
@@ -213,7 +215,7 @@ export default {
               },
             })
       }).catch(err => {
-        $toast({
+        toast({
               component: ToastificationContent,
               position: 'top-right',
               props: {
