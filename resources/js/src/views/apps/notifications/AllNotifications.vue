@@ -202,7 +202,7 @@ export default {
     }
     const updateTask = taskData => {
       store.dispatch('app/updateNotification', taskData).then(res => {
-        this.$toast({
+        $toast({
               component: ToastificationContent,
               position: 'top-right',
               props: {
@@ -213,7 +213,7 @@ export default {
               },
             })
       }).catch(err => {
-        this.$toast({
+        $toast({
               component: ToastificationContent,
               position: 'top-right',
               props: {
