@@ -48,7 +48,7 @@ export default {
       this.$store.commit('app/setSelectedWebsite', website)
       this.$store.dispatch('app/loadAppData');
       this.$store.dispatch('app/loadTopics', {website:this.$store.state.app.selectedWebsite.id}).then(res => {
-        this.$router.push('/')
+        this.$router.push('/login')
       })
     }
   }
