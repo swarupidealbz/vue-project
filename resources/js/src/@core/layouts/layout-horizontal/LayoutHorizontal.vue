@@ -224,6 +224,5 @@ export default {
 .navbar-header{
   left: 0!important;
   padding:0.8rem 2rem!important;
-  border-bottom: 1px solid #dfdfdf;
 }
 </style>
