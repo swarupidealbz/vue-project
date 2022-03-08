@@ -108,13 +108,13 @@ export default [
     meta: {
       contentRenderer: 'sidebar-left',
       contentClass: 'email-application',
-      pageTitle: 'Topics',
-      breadcrumb: [
-        {
-          text: 'Topics',
-          active: true,
-        },
-      ],
+      // pageTitle: 'Topics',
+      // breadcrumb: [
+      //   {
+      //     text: 'Topics',
+      //     active: true,
+      //   },
+      // ],
     },
   },
   {
@@ -125,12 +125,12 @@ export default [
       contentRenderer: 'sidebar-left',
       contentClass: 'todo-application',
       pageTitle: 'Notifications',
-      breadcrumb: [
-        {
-          text: 'Notifications',
-          active: true,
-        },
-      ],
+      // breadcrumb: [
+      //   {
+      //     text: 'Notifications',
+      //     active: true,
+      //   },
+      // ],
     },
   },
 ]
