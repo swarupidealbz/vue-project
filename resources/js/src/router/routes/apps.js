@@ -124,7 +124,7 @@ export default [
     meta: {
       contentRenderer: 'sidebar-left',
       contentClass: 'todo-application',
-      pageTitle: 'Notifications',
+      // pageTitle: 'Notifications',
       // breadcrumb: [
       //   {
       //     text: 'Notifications',
