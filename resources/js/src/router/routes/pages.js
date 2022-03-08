@@ -337,6 +337,19 @@ export default [
     path: '/topic/timeline/:id',
     name: 'topic-timeline',
     component: () => import('@/views/apps/topics/BlogDetail.vue'),
+    meta: {
+      pageTitle: 'Articles',
+      breadcrumb: [
+        {
+          text: 'Topics',
+          to: '/topics',
+        },
+        {
+          text: 'Articles',
+          active: true,
+        },
+      ],
+    },
     
   },
 ]
