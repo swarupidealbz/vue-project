@@ -149,6 +149,7 @@ class DashboardController extends BaseController
             $topicStartText = 'Since Last Month';
             $diffLastCurrent = $currentMonthTopics - $lastMonthTopics;
             $incText = $diffLastCurrent > 0 ? 'inc' : 'dec';
+            $lastMonthTopics = $lastMonthTopics == 0 ? 1 : $lastMonthTopics;
             $inc = (abs($diffLastCurrent) / $lastMonthTopics) * 100;
             $topicInc = number_format($inc, 2).'%';
         }
@@ -185,6 +186,7 @@ class DashboardController extends BaseController
             $contentStartText = 'Since Last Month';
             $diffLastCurrent = $currentMonthContent - $lastMonthContent;
             $incText = $diffLastCurrent > 0 ? 'inc' : 'dec';
+            $lastMonthContent = $lastMonthContent == 0 ? 1 : $lastMonthContent;
             $inc = (abs($diffLastCurrent) / $lastMonthContent) * 100;
             $contentInc = number_format($inc, 2).'%';
         }
@@ -253,6 +255,7 @@ class DashboardController extends BaseController
             $commentStartText = 'Since Last Month';
             $diffLastCurrent = $currentMonthComment - $lastMonthComment;
             $incText = $diffLastCurrent > 0 ? 'inc' : 'dec';
+            $lastMonthComment = $lastMonthComment == 0 ? 1 : $lastMonthComment;
             $inc = (abs($diffLastCurrent) / $lastMonthComment) * 100;
             $commentInc = number_format($inc, 2).'%';
         }
