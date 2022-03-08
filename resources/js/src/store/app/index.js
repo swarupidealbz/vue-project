@@ -136,7 +136,9 @@ export default {
       })
     },
     loadData({commit, state, dispatch}) {
-      axios.post(state.apiBaseUrl+'dashboard/data', {parts: 'data'}).then(response => {
+      let web = localStorage.getItem('website')
+      web  = JSON.parse(web);
+      axios.post(state.apiBaseUrl+'dashboard/data', {parts: 'data', website: web.id}).then(response => {
         console.log('dash data');
         // console.log(response.data);
         let data = {
