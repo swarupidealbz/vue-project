@@ -55,7 +55,7 @@
             :title="item.title"
             class="content-data"
           >
-              <div class="float-right">
+              <div class="float-right" v-if="!isWriter">
                 <b-dropdown
                   variant="link"
                   no-caret
