@@ -788,7 +788,6 @@ export default {
       shallShowEmailComposeModal,
 
       isTaskHandlerSidebarActive,
-      isContentHandlerSidebarActive,
       task,
       clearTaskData,
 
