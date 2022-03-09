@@ -104,6 +104,22 @@ export default [
   {
     path: '/topics',
     name: 'topics',
+    component: () => import('@/views/apps/topics/Topic.vue'),
+    meta: {
+      contentRenderer: 'sidebar-left',
+      contentClass: 'email-application',
+      // pageTitle: 'Topics',
+      // breadcrumb: [
+      //   {
+      //     text: 'Topics',
+      //     active: true,
+      //   },
+      // ],
+    },
+  },
+  {
+    path: '/topics-temp',
+    name: 'topics-temp',
     component: () => import('@/views/apps/topics/TopicWrapper.vue'),
     meta: {
       contentRenderer: 'sidebar-left',
