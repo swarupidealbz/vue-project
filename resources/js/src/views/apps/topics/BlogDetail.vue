@@ -54,31 +54,7 @@
             img-alt="Blog Detail Pic"
             :title="item.title"
           >
-            <b-media no-body>
-              <b-media-aside
-                vertical-align="center"
-                class="mr-50"
-              >
-                <b-avatar
-                  href="javascript:void(0)"
-                  size="24"
-                  :src="item.avatar"
-                />
-              </b-media-aside>
-              <b-media-body>
-                <small class="text-muted mr-50">by</small>
-                <small>
-                  <b-link class="text-body">{{ item.created_user.name }}</b-link>
-                </small>
-                <span class="text-muted ml-75 mr-50">|</span>
-                <small class="text-muted">{{ fullDate(item.created_at) }}</small>
-                <span
-                    class="mx-50 bullet bullet-sm"
-                    :class="`bullet-${item.status == 'approved' ? 'success' : (item.status == 'rejected' ? 'danger' : 'warning')}`"
-                />
-              </b-media-body>              
-            </b-media>
-            <div class="float-right">
+              <div class="float-right">
                 <b-dropdown
                   variant="link"
                   no-caret
@@ -105,6 +81,30 @@
                             
                 </b-dropdown>
               </div>
+            <b-media no-body>
+              <b-media-aside
+                vertical-align="center"
+                class="mr-50"
+              >
+                <b-avatar
+                  href="javascript:void(0)"
+                  size="24"
+                  :src="item.avatar"
+                />
+              </b-media-aside>
+              <b-media-body>
+                <small class="text-muted mr-50">by</small>
+                <small>
+                  <b-link class="text-body">{{ item.created_user.name }}</b-link>
+                </small>
+                <span class="text-muted ml-75 mr-50">|</span>
+                <small class="text-muted">{{ fullDate(item.created_at) }}</small>
+                <span
+                    class="mx-50 bullet bullet-sm"
+                    :class="`bullet-${item.status == 'approved' ? 'success' : (item.status == 'rejected' ? 'danger' : 'warning')}`"
+                />
+              </b-media-body>              
+            </b-media>            
             <!-- eslint-disable vue/no-v-html -->
             <div
               class="blog-content mt-1"
@@ -118,7 +118,7 @@
             <div class="d-flex align-items-center justify-content-between">
               
               <!-- dropdown -->
-              <div class="blog-detail-share">
+              <div class="blog-detail-share float-right">
                 <b-dropdown
                   variant="link"
                   toggle-class="p-0"
