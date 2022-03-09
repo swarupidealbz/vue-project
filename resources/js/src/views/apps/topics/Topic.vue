@@ -127,7 +127,7 @@
                   </b-dropdown-item>
 
                   <b-dropdown-item
-                  @click="addContentBlock"
+                  @click="addContentBlock(topic.id)"
                   v-if="isWriter"
                   >
                     <feather-icon icon="PlusIcon" />
@@ -193,6 +193,7 @@
       v-model="isContentHandlerSidebarActive"
       :task="task"
       :clear-task-data="clearTaskData" 
+      :t-id="tId"
       @reload-content="reloadContent"
     />
   </div>
@@ -254,6 +255,7 @@ export default {
   data() {
     return {
       isContentHandlerSidebarActive: false,
+      topicId: '',
     }
   },
   computed: {
@@ -269,8 +271,9 @@ export default {
     }
   },
   methods: {
-    addContentBlock(){
+    addContentBlock(tId){
       this.isContentHandlerSidebarActive = true
+      this.topicId = tId;
     },
     reloadContent(id) {
       this.$router.push('/topic/timeline/'+id);

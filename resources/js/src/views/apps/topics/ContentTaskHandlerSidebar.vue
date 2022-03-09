@@ -197,6 +197,9 @@ export default {
       type: Function,
       required: true,
     },
+    tId: {
+      type: String
+    }
   },
   data() {
     return {
@@ -209,7 +212,7 @@ export default {
     addContent() {
       let payload = {
         website: this.$store.state.app.selectedWebsite.id,
-        primary_topic: this.$route.params.id,
+        primary_topic: this.$route.params.id || this.tId,
         child_topic: 0,
         content_type: this.taskLocal.content_type,
         title: this.taskLocal.title,
