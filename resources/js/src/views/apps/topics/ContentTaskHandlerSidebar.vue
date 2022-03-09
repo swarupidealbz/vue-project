@@ -227,7 +227,6 @@ export default {
                 text: res.message,
               },
             })
-        this.hide();
         this.$emit('reload-content');
       }).catch(error => {
         this.$toast({
