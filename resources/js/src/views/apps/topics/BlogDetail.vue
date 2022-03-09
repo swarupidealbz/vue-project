@@ -53,6 +53,7 @@
             img-top
             img-alt="Blog Detail Pic"
             :title="item.title"
+            :class="content-data"
           >
               <div class="float-right">
                 <b-dropdown
@@ -542,5 +543,10 @@ export default {
 }
 img {
   width: 100% !important;
+}
+.content-data h4 {
+  width: 95%;
+  display: inline;
+  margin-bottom: 1.53rem;
 }
 </style>
