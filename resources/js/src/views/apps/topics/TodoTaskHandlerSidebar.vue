@@ -27,7 +27,7 @@
             v-else
             class="mb-0"
           >
-            Add Topic
+            Create Topic
           </h5>
           <div>
             <feather-icon
