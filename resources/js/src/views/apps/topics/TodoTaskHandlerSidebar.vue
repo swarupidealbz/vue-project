@@ -38,13 +38,6 @@
             />
             <feather-icon
               class="ml-1 cursor-pointer"
-              icon="StarIcon"
-              size="16"
-              :class="{ 'text-warning': taskLocal.isImportant }"
-              @click="taskLocal.isImportant = !taskLocal.isImportant"
-            />
-            <feather-icon
-              class="ml-1 cursor-pointer"
               icon="XIcon"
               size="16"
               @click="hide"
@@ -132,7 +125,7 @@
                 type="submit"
                 @click="addTopic"
               >
-                {{ taskLocal.id ? 'Update' : 'Add ' }}
+                {{ taskLocal.id ? 'Update' : 'Create Topic' }}
               </b-button>
               <b-button
                 v-ripple.400="'rgba(186, 191, 199, 0.15)'"
