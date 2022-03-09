@@ -228,6 +228,9 @@ export default {
               },
             })
         this.$emit('reload-content');
+        this.taskLocal.content_type = 'article';
+        this.taskLocal.title = '';
+        this.taskLocal.description = '';
       }).catch(error => {
         this.$toast({
               component: ToastificationContent,
