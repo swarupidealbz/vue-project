@@ -112,41 +112,6 @@
               v-html="item.description"
             />
 
-            
-            <!-- eslint-enable -->
-            <hr class="my-2">
-
-            <div class="d-flex align-items-center justify-content-between">
-              
-              <!-- dropdown -->
-              <div class="blog-detail-share float-right">
-                <b-dropdown
-                  variant="link"
-                  toggle-class="p-0"
-                  no-caret
-                  right
-                >
-                  <template #button-content>
-                    <feather-icon
-                      size="21"
-                      icon="Share2Icon"
-                      class="text-body"
-                    />
-                  </template>
-                  <b-dropdown-item
-                    v-for="icon in socialShareIcons"
-                    :key="icon"
-                    href="#"
-                  >
-                    <feather-icon
-                      :icon="icon"
-                      size="18"
-                    />
-                  </b-dropdown-item>
-                </b-dropdown>
-              </div>
-              <!--/ dropdown -->
-            </div>
           </b-card>
         </b-col>
         <!--/ blogs -->
