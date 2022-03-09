@@ -124,13 +124,13 @@ export default [
     meta: {
       contentRenderer: 'sidebar-left',
       contentClass: 'todo-application',
-      pageTitle: 'Notifications',
-      breadcrumb: [
-        {
-          text: 'Notifications',
-          active: true,
-        },
-      ],
+      // pageTitle: 'Notifications',
+      // breadcrumb: [
+      //   {
+      //     text: 'Notifications',
+      //     active: true,
+      //   },
+      // ],
     },
   },
 ]
