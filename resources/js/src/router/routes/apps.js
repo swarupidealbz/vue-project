@@ -104,7 +104,7 @@ export default [
   {
     path: '/topics',
     name: 'topics',
-    component: () => import('@/views/apps/topics/Topic.vue'),
+    component: () => import('@/views/apps/topics/TopicWrapper.vue'),
     meta: {
       contentRenderer: 'sidebar-left',
       contentClass: 'email-application',
