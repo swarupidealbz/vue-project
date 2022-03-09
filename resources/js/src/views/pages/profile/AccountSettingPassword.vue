@@ -234,7 +234,10 @@ export default {
                 variant: 'success',
                 text: res.message,
               },
-            })
+            })            
+        this.passwordValueOld = '';
+        this.newPasswordValue = '';
+        this.RetypePassword = '';
       }).catch(err => {
         this.$toast({
               component: ToastificationContent,
@@ -247,9 +250,6 @@ export default {
               },
             })
       })
-      this.passwordValueOld = '';
-      this.newPasswordValue = '';
-      this.RetypePassword = '';
     }
   },
 }
