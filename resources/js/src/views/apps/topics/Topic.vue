@@ -7,6 +7,10 @@
       @click="mqShallShowLeftSidebar = false"
     />
 
+    <div class="d-flex justify-content-start breadcrumb-wrapper">
+      <b-breadcrumb :items="bitems" />
+    </div>
+
     <!-- Email List -->
     <div class="email-app-list">
 
@@ -191,7 +195,7 @@ import {
 } from '@vue/composition-api'
 import {
   BFormInput, BInputGroup, BInputGroupPrepend, BDropdown, BDropdownItem,
-  BFormCheckbox, BMedia, BMediaAside, BMediaBody, BAvatar,BButton, BSpinner 
+  BFormCheckbox, BMedia, BMediaAside, BMediaBody, BAvatar,BButton, BSpinner, BBreadcrumb
 } from 'bootstrap-vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import { filterTags, formatDateToMonthShort } from '@core/utils/filter'
@@ -221,6 +225,7 @@ export default {
     BAvatar,
     BButton,
     BSpinner,
+    BBreadcrumb,
 
     // 3rd Party
     VuePerfectScrollbar,
@@ -240,6 +245,20 @@ export default {
     },
     loader() {
       return this.$store.state.app.loading;
+    },
+    bitems() {
+      return [
+        {
+          text: 'Dashboard',
+        },
+        {
+          text: 'Library',
+        },
+        {
+          text: 'Data',
+          active: true,
+        },
+      ]
     }
   },
   methods: {
