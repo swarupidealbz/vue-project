@@ -197,9 +197,7 @@ export default {
       type: Function,
       required: true,
     },
-    tId: {
-      type: String
-    }
+    tId: '',
   },
   data() {
     return {
