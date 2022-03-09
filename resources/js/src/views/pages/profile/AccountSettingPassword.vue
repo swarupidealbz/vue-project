@@ -31,7 +31,7 @@
                   />
                 </b-input-group-append>
               </b-input-group>
-              <small class="text-danger">{{ errors[0] }}</small>
+              <small class="text-danger" v-if="!disabledUpdate">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
         </b-col>
@@ -66,7 +66,7 @@
                   />
                 </b-input-group-append>
               </b-input-group>
-              <small class="text-danger">{{ errors[0] }}</small>
+              <small class="text-danger" v-if="!disabledUpdate">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
         </b-col>
@@ -99,7 +99,7 @@
                   />
                 </b-input-group-append>
               </b-input-group>
-              <small class="text-danger">{{ errors[0] }}</small>
+              <small class="text-danger" v-if="!disabledUpdate">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
         </b-col>
@@ -111,6 +111,7 @@
             v-ripple.400="'rgba(255, 255, 255, 0.15)'"
             variant="primary"
             class="mt-1 mr-1"
+            :disabled="disabledUpdate"
             @click="updatePassword"
           >
             Save changes
@@ -181,6 +182,7 @@ export default {
       password,
       email,
       confirmed,
+      disabledUpdate: true,
     }
   },
   computed: {
@@ -218,6 +220,9 @@ export default {
             })
             return;
       }
+      else {
+        this.disabledUpdate = false;
+      }
       let payload = {
         email: this.userData.email,
         password: this.passwordValueOld,
@@ -238,6 +243,7 @@ export default {
         this.passwordValueOld = '';
         this.newPasswordValue = '';
         this.RetypePassword = '';
+        this.disabledUpdate = true;
       }).catch(err => {
         this.$toast({
               component: ToastificationContent,
