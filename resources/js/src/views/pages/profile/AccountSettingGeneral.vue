@@ -210,18 +210,18 @@ export default {
       this.local = JSON.parse(JSON.stringify(this.userData))
     },
     unsetImage() {
-      console.log('unset image');
       this.image = 'unset';
       this.profileFile = null;
       this.upload();
     },
     uploadProfileImage() {
-      console.log('upload image');
       this.image ='set';
       this.upload();
     },
     upload() {
-      console.log('upload');
+      if(this.profileFile == null) {
+        return false;
+      }
       var formData = new FormData();
       formData.append("profile_image", this.profileFile);
       formData.append("action", this.image);
