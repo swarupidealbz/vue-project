@@ -126,6 +126,14 @@
                     <span class="align-middle ml-50">Show Content</span>
                   </b-dropdown-item>
 
+                  <b-dropdown-item
+                  @click="addContentBlock"
+                  v-if="isWriter"
+                  >
+                    <feather-icon icon="PlusIcon" />
+                    <span class="align-middle ml-50">Add Content</span>
+                  </b-dropdown-item>
+
                   <b-dropdown-item variant="success" @click="approved(topic)">
                     <feather-icon icon="CheckCircleIcon" />
                     <span class="align-middle ml-50">Accept</span>
