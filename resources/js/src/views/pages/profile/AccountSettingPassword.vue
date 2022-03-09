@@ -182,7 +182,6 @@ export default {
       password,
       email,
       confirmed,
-      disabledUpdate: true,
     }
   },
   computed: {
@@ -195,6 +194,13 @@ export default {
     passwordToggleIconRetype() {
       return this.passwordFieldTypeRetype === 'password' ? 'EyeIcon' : 'EyeOffIcon'
     },
+    disabledUpdate() {
+      if(this.passwordValueOld && this.newPasswordValue && this.RetypePassword) {
+        return false;
+      }
+
+      return true;
+    }
   },
   methods: {
     togglePasswordOld() {
@@ -220,9 +226,6 @@ export default {
             })
             return;
       }
-      else {
-        this.disabledUpdate = false;
-      }
       let payload = {
         email: this.userData.email,
         password: this.passwordValueOld,
@@ -243,7 +246,6 @@ export default {
         this.passwordValueOld = '';
         this.newPasswordValue = '';
         this.RetypePassword = '';
-        this.disabledUpdate = true;
       }).catch(err => {
         this.$toast({
               component: ToastificationContent,
