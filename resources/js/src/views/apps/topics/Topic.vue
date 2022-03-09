@@ -54,7 +54,7 @@
         :settings="perfectScrollbarSettings"
         class="email-user-list scroll-area"
       >
-        <div class="text-center" v-if="loader">
+        <div class="text-center mt-5" v-if="loader">
           <b-spinner variant="primary" style="width: 3rem; height: 3rem;" label="Loading..."/>
         </div>
         <ul class="email-media-list" v-else>
