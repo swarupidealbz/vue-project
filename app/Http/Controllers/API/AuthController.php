@@ -387,7 +387,7 @@ class AuthController extends BaseController
             $user = Auth::user();
 
             $storePath = '';
-            if(filled($request->profile_image) && ($request->action == 'set')) {
+            if(filled($request->profile_image) && ($request->action == 'set') && ($request->profile_image != 'unset')) {
                 $name = \Str::beforeLast($request->profile_image->getClientOriginalName(),'.');
                 $imageName = $name.'_'.time().'.'.$request->profile_image->extension(); 
                 $path = $request->profile_image->move(public_path('images'), $imageName); //public/images/filename
