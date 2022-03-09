@@ -211,7 +211,7 @@ export default {
     },
     unsetImage() {
       this.image = 'unset';
-      this.profileFile = null;
+      this.profileFile = '';
       this.upload();
     },
     uploadProfileImage() {
