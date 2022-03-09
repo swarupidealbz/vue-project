@@ -546,7 +546,6 @@ img {
 }
 .content-data h4 {
   width: 95%;
-  display: inline;
-  margin-bottom: 1.53rem;
+  display: inline-flex;
 }
 </style>
