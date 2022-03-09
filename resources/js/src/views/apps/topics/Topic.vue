@@ -54,7 +54,8 @@
         :settings="perfectScrollbarSettings"
         class="email-user-list scroll-area"
       >
-        <ul class="email-media-list">
+        <b-spinner style="width: 3rem; height: 3rem;" type="grow" label="Loading..." v-if="loader" />
+        <ul class="email-media-list" v-else>
           <b-media
             v-for="topic in topics"
             :key="topic.id"
@@ -139,6 +140,7 @@
         <div
           class="no-results"
           :class="{'show': !topics.length}"
+          v-if="!loader"
         >
           <h5>No Items Found</h5>
         </div>
@@ -187,7 +189,7 @@ import {
 } from '@vue/composition-api'
 import {
   BFormInput, BInputGroup, BInputGroupPrepend, BDropdown, BDropdownItem,
-  BFormCheckbox, BMedia, BMediaAside, BMediaBody, BAvatar,BButton
+  BFormCheckbox, BMedia, BMediaAside, BMediaBody, BAvatar,BButton, BSpinner 
 } from 'bootstrap-vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import { filterTags, formatDateToMonthShort } from '@core/utils/filter'
@@ -216,6 +218,7 @@ export default {
     BMediaBody,
     BAvatar,
     BButton,
+    BSpinner,
 
     // 3rd Party
     VuePerfectScrollbar,
@@ -232,6 +235,9 @@ export default {
   computed: {
     topics() {
       return this.$store.state.app.topics;
+    },
+    loader() {
+      return this.$store.state.app.loading;
     }
   },
   methods: {

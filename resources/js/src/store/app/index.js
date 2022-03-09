@@ -32,6 +32,7 @@ export default {
     allNotifications: [],
     userData: {},
     topicCount: 0,
+    loading: false,
   },
   getters: {
     currentBreakPoint: state => {
@@ -98,6 +99,9 @@ export default {
     setNotificationCount(state, val) {
       state.topBar.notifications.count = val;
     },
+    setloading(state, val) {
+      state.loading = val
+    }
   },
   actions: {
     loadAppData({commit, state, dispatch}, payload){
@@ -170,12 +174,14 @@ export default {
       })
     },
     loadTopics({commit, state, dispatch}, payload) {
+      commit('setLoading', true);
       if(payload.website) {        
         axios.post(state.apiBaseUrl+'primary-topic/list-by-website', payload).then((res) => {
           console.log('topics list');
           commit('setTopics', res.data.data.topics);
           commit('setGroups', res.data.data.groups);
           commit('setTopicCount', res.data.data.count);
+          commit('setLoading', false);
         }).catch(() => {
           console.log('error load topics data');
         })
