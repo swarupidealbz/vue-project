@@ -87,6 +87,7 @@
             <b-form-input
               v-model="local.email"
               name="email"
+              disabled
               placeholder="Email"
             />
 

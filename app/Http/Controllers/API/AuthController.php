@@ -341,11 +341,10 @@ class AuthController extends BaseController
     {
         try {
 
-            $input = $request->only('first_name', 'last_name', 'email');
+            $input = $request->only('first_name', 'last_name');
             
             $validator = Validator::make($input, 
                 [
-                    'email' => 'required|email',
                     'first_name' => 'required',
                     'last_name' => 'required',
                 ]);
@@ -357,7 +356,6 @@ class AuthController extends BaseController
 
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;
-            $user->email = $request->email;
             $user->company = $request->company;
 
             $user->save();
