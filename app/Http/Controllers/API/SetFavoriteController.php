@@ -26,7 +26,7 @@ class SetFavoriteController extends BaseController
             ]);
 			
 			if ($validator->fails()) {
-                return $this->handleError('Select a topic to set favorite.', $validator->errors()->all(), 422);
+                return $this->handleError('Select a topic to add into favorites.', $validator->errors()->all(), 422);
             }
 			
 			$favorite = $user->favoriteTopic()->create(['topic_id' => $request->topic]);
@@ -38,7 +38,7 @@ class SetFavoriteController extends BaseController
                 $topic->is_favorite = false; 
             }
 			
-			return $this->handleResponse($topic, 'Selected topic set as favorite successfully.');
+			return $this->handleResponse($topic, 'Topic added to favorites.');
 			
 		}
         catch(Exception $e) 
@@ -61,7 +61,7 @@ class SetFavoriteController extends BaseController
             ]);
 			
 			if ($validator->fails()) {
-                return $this->handleError('Select a topic to unset favorite.', $validator->errors()->all(), 422);
+                return $this->handleError('Select a topic to remove from favorites.', $validator->errors()->all(), 422);
             }
 			
 			$favorite = $user->favoriteTopic()->where(['topic_id' => $request->topic])->delete();
@@ -73,7 +73,7 @@ class SetFavoriteController extends BaseController
                 $topic->is_favorite = false; 
             }
 
-			return $this->handleResponse($topic, 'Selected topic unset from favorite successfully.');
+			return $this->handleResponse($topic, 'Topic removed from favorites.');
 			
 		}
         catch(Exception $e) 

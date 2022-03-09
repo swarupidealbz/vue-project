@@ -10,37 +10,7 @@
     <!-- Email List -->
     <div class="email-app-list">
 
-      <!-- App Searchbar Header -->
-      <div class="app-fixed-search d-flex align-items-center">
-
-        <!-- Toggler -->
-        <div class="sidebar-toggle d-block d-lg-none ml-1">
-          <feather-icon
-            icon="MenuIcon"
-            size="21"
-            class="cursor-pointer"
-            @click="mqShallShowLeftSidebar = true"
-          />
-        </div>
-
-        <!-- Searchbar -->
-        <!-- <div class="d-flex align-content-center justify-content-between w-100">
-          <b-input-group class="input-group-merge">
-            <b-input-group-prepend is-text>
-              <feather-icon
-                icon="SearchIcon"
-                class="text-muted"
-              />
-            </b-input-group-prepend>
-            <b-form-input
-              :value="searchQuery"
-              placeholder="Search email"
-              @input="updateRouteQuery"
-            />
-          </b-input-group>
-        </div> -->
-      </div>
-
+      
       <!-- App Action Bar -->
       <div class="app-action">
         <div class="action-left">
