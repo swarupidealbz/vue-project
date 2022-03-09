@@ -214,14 +214,14 @@ export default {
       this.profileFile = null;
       this.upload();
     },
-    uploadProfileImage() {
+    uploadProfileImage() {      
+      if(this.profileFile == null) {
+        return false;
+      }
       this.image ='set';
       this.upload();
     },
     upload() {
-      if(this.profileFile == null) {
-        return false;
-      }
       var formData = new FormData();
       formData.append("profile_image", this.profileFile);
       formData.append("action", this.image);
