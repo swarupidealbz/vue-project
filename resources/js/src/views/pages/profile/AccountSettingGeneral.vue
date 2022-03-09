@@ -8,7 +8,7 @@
           <b-img
             ref="previewEl"
             rounded
-            :src="local.profile_image || '/account.png'"
+            :src="local.profile_image || '/images/account.png'"
             height="80"
           />
         </b-link>
