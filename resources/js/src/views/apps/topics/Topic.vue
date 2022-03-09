@@ -648,6 +648,7 @@ export default {
       topic: '',
       dueDate: new Date(),
       description: '',
+      content_type: 'article',
       assignee: null,
       tags: [],
       isCompleted: false,
