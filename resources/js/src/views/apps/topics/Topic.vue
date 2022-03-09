@@ -193,7 +193,7 @@
       v-model="isContentHandlerSidebarActive"
       :task="task"
       :clear-task-data="clearTaskData" 
-      :t-id="tId"
+      :t-id="topicId"
       @reload-content="reloadContent"
     />
   </div>
