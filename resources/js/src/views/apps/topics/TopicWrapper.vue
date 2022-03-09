@@ -1,8 +1,10 @@
 <template>
-    <div class="d-flex justify-content-start breadcrumb-wrapper">
-      <b-breadcrumb :items="bitems" />
+    <div>
+        <div class="d-flex justify-content-start breadcrumb-wrapper">
+        <b-breadcrumb :items="bitems" />
+        </div>
+        <topic/>
     </div>
-    <topic/>
 </template>
 <script>
 import store from '@/store'
@@ -16,6 +18,22 @@ export default {
   components: {
     BBreadcrumb,
     Topic
+  },
+  computed: {
+    bitems() {
+      return [
+        {
+          text: 'Dashboard',
+        },
+        {
+          text: 'Library',
+        },
+        {
+          text: 'Data',
+          active: true,
+        },
+      ]
+    }
   },
 }
 </script>
