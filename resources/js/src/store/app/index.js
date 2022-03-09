@@ -99,7 +99,7 @@ export default {
     setNotificationCount(state, val) {
       state.topBar.notifications.count = val;
     },
-    setloading(state, val) {
+    setLoading(state, val) {
       state.loading = val
     }
   },
