@@ -38,13 +38,6 @@
             />
             <feather-icon
               class="ml-1 cursor-pointer"
-              icon="StarIcon"
-              size="16"
-              :class="{ 'text-warning': taskLocal.isImportant }"
-              @click="taskLocal.isImportant = !taskLocal.isImportant"
-            />
-            <feather-icon
-              class="ml-1 cursor-pointer"
               icon="XIcon"
               size="16"
               @click="hide"
@@ -234,7 +227,8 @@ export default {
                 text: res.message,
               },
             })
-        this.$router.push('/topics');
+        this.hide();
+        this.$emit('reload-content');
       }).catch(error => {
         this.$toast({
               component: ToastificationContent,

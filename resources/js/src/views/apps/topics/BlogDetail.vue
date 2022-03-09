@@ -277,6 +277,7 @@
       v-model="isTaskHandlerSidebarActive"
       :task="task"
       :clear-task-data="clearTaskData" 
+      @reload-content="reloadContent"
     />
 
   </content-with-sidebar>
@@ -453,6 +454,18 @@ export default {
     },
     more() {
       this.limit += 1
+      this.show = false
+      let web = JSON.parse(localStorage.getItem('website'))
+      let payload = {
+        website: web.id,
+        primary_topic: this.$route.params.id,
+        limit: this.limit
+      }
+      this.$store.dispatch('app/loadContent', payload).then(res => {
+        this.show = res.data.show_more
+      })
+    },
+    reloadContent() {
       this.show = false
       let web = JSON.parse(localStorage.getItem('website'))
       let payload = {
