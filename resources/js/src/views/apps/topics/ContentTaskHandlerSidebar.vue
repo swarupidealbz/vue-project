@@ -228,7 +228,7 @@ export default {
                 text: res.message,
               },
             })
-        this.$emit('reload-content', this.$route.params.id);
+        this.$emit('reload-content');
         this.taskLocal.content_type = 'article';
         this.taskLocal.title = '';
         this.taskLocal.description = '';

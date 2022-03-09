@@ -275,8 +275,8 @@ export default {
       this.isContentHandlerSidebarActive = true
       this.topicId = tId;
     },
-    reloadContent(id) {
-      this.$router.push('/topic/timeline/'+id);
+    reloadContent() {
+      this.$router.push('/topic/timeline/'+this.topicId);
     },
     acceptStatus() {
       this.$store.dispatch('app/topicStatusUpdate', {
