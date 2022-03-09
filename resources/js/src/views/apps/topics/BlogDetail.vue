@@ -53,7 +53,7 @@
             img-top
             img-alt="Blog Detail Pic"
             :title="item.title"
-            :class="content-data"
+            class="content-data"
           >
               <div class="float-right">
                 <b-dropdown
