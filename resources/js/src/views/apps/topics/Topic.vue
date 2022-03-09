@@ -180,6 +180,13 @@
       :task="task"
       :clear-task-data="clearTaskData" 
     />
+
+    <content-task-handler-sidebar
+      v-model="isContentHandlerSidebarActive"
+      :task="task"
+      :clear-task-data="clearTaskData" 
+      @reload-content="reloadContent"
+    />
   </div>
 </template>
 
@@ -206,6 +213,7 @@ import axios from '@axios'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import TodoTaskHandlerSidebar from './TodoTaskHandlerSidebar.vue'
 import Ripple from 'vue-ripple-directive'
+import ContentTaskHandlerSidebar from './ContentTaskHandlerSidebar.vue'
 
 export default {
   components: {
@@ -230,9 +238,15 @@ export default {
     TopicView,
     EmailCompose,
     TodoTaskHandlerSidebar,
+    ContentTaskHandlerSidebar,
   },
   directives: {
     Ripple,
+  },
+  data() {
+    return {
+      isContentHandlerSidebarActive: false,
+    }
   },
   computed: {
     topics() {
@@ -241,22 +255,18 @@ export default {
     loader() {
       return this.$store.state.app.loading;
     },
-    bitems() {
-      return [
-        {
-          text: 'Dashboard',
-        },
-        {
-          text: 'Library',
-        },
-        {
-          text: 'Data',
-          active: true,
-        },
-      ]
+    isWriter() {
+      let user = JSON.parse(localStorage.getItem('userData'))
+      return user.role == 'writer';
     }
   },
   methods: {
+    addContentBlock(){
+      this.isContentHandlerSidebarActive = true
+    },
+    reloadContent(id) {
+      this.$router.push('/topic/timeline/'+id);
+    },
     acceptStatus() {
       this.$store.dispatch('app/topicStatusUpdate', {
         website: this.$store.state.app.selectedWebsite.id,
@@ -770,6 +780,7 @@ export default {
       shallShowEmailComposeModal,
 
       isTaskHandlerSidebarActive,
+      isContentHandlerSidebarActive,
       task,
       clearTaskData,
 

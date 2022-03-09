@@ -76,8 +76,9 @@
                     class="mx-50 bullet bullet-sm"
                     :class="`bullet-${item.status == 'approved' ? 'success' : (item.status == 'rejected' ? 'danger' : 'warning')}`"
                 />
-              </b-media-body>
-              <div class="float-right">
+              </b-media-body>              
+            </b-media>
+            <div class="float-right">
                 <b-dropdown
                   variant="link"
                   no-caret
@@ -104,7 +105,6 @@
                             
                 </b-dropdown>
               </div>
-            </b-media>
             <!-- eslint-disable vue/no-v-html -->
             <div
               class="blog-content mt-1"
@@ -116,37 +116,7 @@
             <hr class="my-2">
 
             <div class="d-flex align-items-center justify-content-between">
-              <div class="d-flex align-items-center">
-                <div class="d-flex align-items-center mr-1">
-                  <b-link class="mr-50">
-                    <feather-icon
-                      icon="MessageSquareIcon"
-                      size="21"
-                      class="text-body"
-                    />
-                  </b-link>
-                  <b-link>
-                    <div class="text-body">
-                      {{ kFormatter(19989) }}
-                    </div>
-                  </b-link>
-                </div>
-                <div class="d-flex align-items-center">
-                  <b-link class="mr-50">
-                    <feather-icon
-                      size="21"
-                      icon="BookmarkIcon"
-                      class="text-body"
-                    />
-                  </b-link>
-                  <b-link>
-                    <div class="text-body">
-                      {{ kFormatter(1134) }}
-                    </div>
-                  </b-link>
-                </div>
-              </div>
-
+              
               <!-- dropdown -->
               <div class="blog-detail-share">
                 <b-dropdown
