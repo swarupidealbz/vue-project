@@ -8,6 +8,7 @@
               v-ripple.400="'rgba(255, 255, 255, 0.15)'"
               variant="primary"
               block
+              v-if="!isWriter"
               @click="$emit('update:is-task-handler-sidebar-active', true); $emit('close-left-sidebar')"
             >
               Create Topic
@@ -125,6 +126,10 @@ export default {
     },
     count() {
       return this.$store.state.app.topicCount;
+    },
+    isWriter() {
+      let user = JSON.parse(localStorage.getItem('userData'))
+      return user.role == 'writer';
     },
   },
   methods: {
