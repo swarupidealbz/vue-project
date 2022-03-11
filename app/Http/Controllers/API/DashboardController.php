@@ -67,12 +67,20 @@ class DashboardController extends BaseController
     private function websites()
     {
         $loginUser = Auth::user();
+        $result = collect([
+            [
+                'id' => 0,
+                'name' => 'All'
+            ]
+        ]);
         $rec = Websites::all()->filter(function($item) use($loginUser){
             $owners = explode(',', $item->owners);
             return in_array($loginUser->id, $owners);
+        })->map(function($web) use(&$result){
+            $result->push($web);
         });
 
-        return $rec;
+        return $result;
     }
 
     private function languages()
@@ -110,7 +118,10 @@ class DashboardController extends BaseController
             return in_array($loginUser->id, $owners);
         })->first();
         $websiteId = optional($rec)->id;
-        if($request->website) {
+        if($request->website == 0) {
+            $websiteId = '';
+        }
+        elseif($request->website) {
             $websiteId = $request->website;
         }
         $startOfMonth = Carbon::now()->startOfMonth()->toDateTimeString();
@@ -136,12 +147,18 @@ class DashboardController extends BaseController
     private function topicRecord($websiteId, $startOfMonth, $currentDate, $firstDayofPreviousMonth, $lastDayofPreviousMonth)
     {
         //getting topic
-        $currentMonthTopics = Topics::where('website_id', $websiteId)
+        $currentMonthTopics = Topics::when($websiteId, function($q) use($websiteId){
+            $q->where('website_id', $websiteId);
+        })
         ->whereBetween('created_at',[$startOfMonth, $currentDate])->count();
-        $lastMonthTopics = Topics::where('website_id', $websiteId)
+        $lastMonthTopics = Topics::when($websiteId, function($q) use($websiteId){
+            $q->where('website_id', $websiteId);
+        })
         ->whereBetween('created_at',[$firstDayofPreviousMonth, $lastDayofPreviousMonth])->count();
 
-        $firstTopic = Topics::where('website_id', $websiteId)->oldest()->get()->first();
+        $firstTopic = Topics::when($websiteId, function($q) use($websiteId){
+            $q->where('website_id', $websiteId);
+        })->oldest()->get()->first();
         $topicStartText = 'Since The Start';
         $topicInc = '100%';
         $incText = '--';
@@ -169,14 +186,20 @@ class DashboardController extends BaseController
     private function articleRecord($websiteId, $startOfMonth, $currentDate, $firstDayofPreviousMonth, $lastDayofPreviousMonth)
     {
         //getting content
-        $currentMonthContent = Content::where('website_id', $websiteId)
+        $currentMonthContent = Content::when($websiteId, function($q) use($websiteId){
+            $q->where('website_id', $websiteId);
+        })
         ->where('content_type', 'like', 'article')
         ->whereBetween('created_at',[$startOfMonth, $currentDate])->count();
-        $lastMonthContent = Content::where('website_id', $websiteId)
+        $lastMonthContent = Content::when($websiteId, function($q) use($websiteId){
+            $q->where('website_id', $websiteId);
+        })
         ->where('content_type', 'like', 'article')
         ->whereBetween('created_at',[$firstDayofPreviousMonth, $lastDayofPreviousMonth])->count();
 
-        $firstContent = Content::where('website_id', $websiteId)
+        $firstContent = Content::when($websiteId, function($q) use($websiteId){
+            $q->where('website_id', $websiteId);
+        })
         ->where('content_type', 'like', 'article')
         ->oldest()->get()->first();
         $contentStartText = 'Since The Start';
@@ -206,14 +229,20 @@ class DashboardController extends BaseController
     private function outlineRecord($websiteId, $startOfMonth, $currentDate, $firstDayofPreviousMonth, $lastDayofPreviousMonth)
     {
         //getting outline
-        $currentMonthOutline = Content::where('website_id', $websiteId)
+        $currentMonthOutline = Content::when($websiteId, function($q) use($websiteId){
+            $q->where('website_id', $websiteId);
+        })
         ->where('content_type', 'like', 'outline')
         ->whereBetween('created_at',[$startOfMonth, $currentDate])->count();
-        $lastMonthOutline = Content::where('website_id', $websiteId)
+        $lastMonthOutline = Content::when($websiteId, function($q) use($websiteId){
+            $q->where('website_id', $websiteId);
+        })
         ->where('content_type', 'like', 'outline')
         ->whereBetween('created_at',[$firstDayofPreviousMonth, $lastDayofPreviousMonth])->count();
 
-        $firstOutline = Content::where('website_id', $websiteId)
+        $firstOutline = Content::when($websiteId, function($q) use($websiteId){
+            $q->where('website_id', $websiteId);
+        })
         ->where('content_type', 'like', 'outline')
         ->oldest()->get()->first();
         $outlineStartText = 'Since The Start';
@@ -242,12 +271,18 @@ class DashboardController extends BaseController
 
     private function commentRecord($websiteId, $startOfMonth, $currentDate, $firstDayofPreviousMonth, $lastDayofPreviousMonth)
     {
-        $currentMonthComment = Comments::where('website_id', $websiteId)
+        $currentMonthComment = Comments::when($websiteId, function($q) use($websiteId){
+            $q->where('website_id', $websiteId);
+        })
         ->whereBetween('created_at',[$startOfMonth, $currentDate])->count();
-        $lastMonthComment = Comments::where('website_id', $websiteId)
+        $lastMonthComment = Comments::when($websiteId, function($q) use($websiteId){
+            $q->where('website_id', $websiteId);
+        })
         ->whereBetween('created_at',[$firstDayofPreviousMonth, $lastDayofPreviousMonth])->count();
 
-        $firstComment = Comments::where('website_id', $websiteId)->oldest()->get()->first();
+        $firstComment = Comments::when($websiteId, function($q) use($websiteId){
+            $q->where('website_id', $websiteId);
+        })->oldest()->get()->first();
         $commentStartText = 'Since The Start';
         $commentInc = '100%';
         $incText = '--';
@@ -280,11 +315,16 @@ class DashboardController extends BaseController
             return in_array($loginUser->id, $owners);
         })->first();
         $websiteId = optional($rec)->id;
-        if($request->website) {
+        if($request->website == 0) {
+            $websiteId = '';
+        }
+        elseif($request->website) {
             $websiteId = $request->website;
         }
 		
-		$topics = Topics::where('website_id', $websiteId)->latest()->take(10)->get();
+		$topics = Topics::when($websiteId, function($q) use($websiteId){
+            $q->where('website_id', $websiteId);
+        })->latest()->take(10)->get();
 		
 		return $topics;
 	}
@@ -297,11 +337,16 @@ class DashboardController extends BaseController
             return in_array($loginUser->id, $owners);
         })->first();
         $websiteId = optional($rec)->id;
-        if($request->website) {
+        if($request->website == 0) {
+            $websiteId = '';
+        }
+        elseif($request->website) {
             $websiteId = $request->website;
         }
 		
-		$articles = Content::where('website_id', $websiteId)
+		$articles = Content::when($websiteId, function($q) use($websiteId){
+            $q->where('website_id', $websiteId);
+        })
         ->where('content_type', 'like', 'article')->latest()->take(10)->get();
 		
 		return $articles;

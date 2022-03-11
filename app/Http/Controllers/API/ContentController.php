@@ -343,10 +343,15 @@ class ContentController extends BaseController
             if ($validator->fails()) {
                 return $this->handleError('Required field missing.', $validator->errors()->all(), 422);
             }
+            $website = $request->website;
+            if($website == 0) {
+                $primary = Topics::find($request->primary_topic);
+                $website = $primary->website_id;
+            }
 
             $time = Carbon::now()->toDateTimeString();
             $data = [
-                'website_id' => $request->website,
+                'website_id' => $website,
                 'primary_topic_id' => $request->primary_topic,
                 'child_topic_id' => $request->child_topic,
                 'content_type' => $request->content_type,
@@ -363,7 +368,7 @@ class ContentController extends BaseController
                       
 
             if($content) {
-                $website = Websites::find($request->website);
+                $website = Websites::find($website);
                 $owners = explode(',', $website->owners);
                 $notify = [];
                 foreach($owners as $owner) {
