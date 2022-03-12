@@ -134,7 +134,7 @@ class PrimaryTopicController extends BaseController
             $loginUser = Auth::user();
             $website = is_array($request->website) ? $request->website : explode(',',$request->website);
             if($website == 0) {
-                $website = '';
+                $website = [];
             }
             //if($loginUser->role == 'client') {
                 $topicList = Topics::where('is_primary_topic', 1)
@@ -294,7 +294,7 @@ class PrimaryTopicController extends BaseController
             $sort = $request->order;
             $website = is_array($request->website) ? $request->website : explode(',',$request->website);
             if($website == 0) {
-                $website = '';
+                $website = [];
             }
             $topicList = Topics::where('is_primary_topic', 1)
             ->when($website, function($q) use($website){
