@@ -120,6 +120,20 @@
                     />
                   </template>
                   <b-dropdown-item
+                  @click="assigneSelf(topic)"
+                  v-if="canAssign(topic)"
+                  >
+                    <feather-icon icon="FileIcon" />
+                    <span class="align-middle ml-50">Assign to Self</span>
+                  </b-dropdown-item>
+                  <b-dropdown-item
+                  @click="removeAssign(topic)"
+                  v-if="canRemoveAssign(topic)"
+                  >
+                    <feather-icon icon="FileIcon" />
+                    <span class="align-middle ml-50">Remove from assign</span>
+                  </b-dropdown-item>
+                  <b-dropdown-item
                   :to="{ name: 'topic-timeline', params: { id: topic.id } }"
                   >
                     <feather-icon icon="FileIcon" />
@@ -129,6 +143,7 @@
                   <b-dropdown-item
                   @click="addContentBlock(topic.id)"
                   v-if="isWriter"
+                  :disabled="addContentDisabled(topic)"
                   >
                     <feather-icon icon="PlusIcon" />
                     <span class="align-middle ml-50">Add Content</span>
@@ -268,6 +283,9 @@ export default {
     isWriter() {
       let user = JSON.parse(localStorage.getItem('userData'))
       return user.role == 'writer';
+    },
+    user() {
+      return JSON.parse(localStorage.getItem('userData'));
     }
   },
   methods: {
@@ -277,6 +295,92 @@ export default {
     },
     reloadContent() {
       this.$router.push('/topic/timeline/'+this.topicId);
+    },
+    addContentDisabled(topic) {
+      if(topic.assignee_id) {
+        if(topic.assignee_id != this.user.id) {
+          return true;
+        }
+      }
+      return false;
+    },
+    canAssign(topic) {
+      if(this.isWriter) {
+        if(topic.can_self_assign) {
+          return true;
+        }
+      }
+
+      return false;
+    },
+    canRemoveAssign(topic) {
+      if(this.isWriter) {
+        if(topic.assignee_id == this.user.id) {
+          return true;
+        }
+      }
+
+      return false;
+    },
+    assigneSelf(topic) {
+      this.$store.dispatch('app/topicSelfAssign', {
+        assignee: this.user.id,
+        topic: topic.id,
+        action: 'assign'
+      }).then((res) => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Assigned`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: res.message,
+              },
+            })
+        this.$store.dispatch('app/sortRecord', { website: this.$store.state.app.selectedWebsite.id });
+      }).catch(error => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: error.message,
+              },
+            })
+      });
+    },
+    removeAssign(topic) {
+      this.$store.dispatch('app/topicSelfAssign', {
+        assignee: this.user.id,
+        topic: topic.id,
+        action: 'unassign'
+      }).then((res) => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Assigned`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+                text: res.message,
+              },
+            })
+        this.$store.dispatch('app/sortRecord', { website: this.$store.state.app.selectedWebsite.id });
+      }).catch(error => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: error.message,
+              },
+            })
+      });
     },
     acceptStatus() {
       this.$store.dispatch('app/topicStatusUpdate', {

@@ -53,4 +53,9 @@ class Topics extends Model
     {
         return $this->hasMany(TopicFavorite::class, 'topic_id');
     }
+
+    public function getCanSelfAssignAttribute()
+    {
+        return blank($this->assignee_id);
+    }
 }

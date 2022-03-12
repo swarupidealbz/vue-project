@@ -363,4 +363,38 @@ class PrimaryTopicController extends BaseController
             return $this->handleError('Something went wrong', [], 500);
         }
     }
+
+    public function setAssignee(Request $request)
+    {
+        try {
+                
+            $input = $request->only('topic', 'assignee', 'action');
+                
+            $validator = Validator::make($input,['assignee' => 'required', 'topic' => 'required', 'action' => 'required']);
+
+            if ($validator->fails()) {
+                return $this->handleError('Required field missing.', $validator->errors()->all(), 422);
+            }
+
+            $loginUser = Auth::user();
+            $topic = Topics::find($request->topic);
+            if($request->action == 'assign') {
+                $topic->assignee_id = $request->assignee;
+                $msg = 'You are assigned to the topic';
+            }
+            elseif($request->action == 'unassign') {
+                $topic->assignee_id = null;
+                $msg = 'You are unassigned to the topic';
+            }
+
+            $topic->save();
+
+            return $this->handleResponse($topic->fresh(), $msg);
+        }
+        catch(Exception $e) 
+        {
+            logger('topic assignee set error : '.$e->getMessage());
+            return $this->handleError('Something went wrong', [], 500);
+        }
+    }
 }

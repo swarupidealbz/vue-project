@@ -27,6 +27,7 @@
         @click="addContentBlock"
         class="btn-sm float-right"
         v-if="isWriter"
+        :disabled="addContentDisabled(topic)"
       >
         <feather-icon
           icon="PlusIcon"
@@ -315,6 +316,9 @@ export default {
     isWriter() {
       let user = JSON.parse(localStorage.getItem('userData'))
       return user.role == 'writer';
+    },
+    user() {
+      return JSON.parse(localStorage.getItem('userData'));
     }
   },
   created() {
@@ -352,6 +356,14 @@ export default {
     back() {
       // this.$router.push('/topics')
       history.back()
+    },
+    addContentDisabled(topic) {
+      if(topic.assignee_id) {
+        if(topic.assignee_id != this.user.id) {
+          return true;
+        }
+      }
+      return false;
     },
     addComment() {
       let web = JSON.parse(localStorage.getItem('website'))

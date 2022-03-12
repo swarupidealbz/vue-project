@@ -122,6 +122,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 		Route::post('/favorite', [SetFavoriteController::class, 'setFavoriteTopic'])->name('favorite');
 		Route::post('/unfavorite', [SetFavoriteController::class, 'unsetFavoriteTopic'])->name('unfavorite');
 		Route::post('/favorite-list', [PrimaryTopicController::class, 'favoriteTopicList'])->name('favorite-list');
+		Route::post('/set-assignee', [PrimaryTopicController::class, 'setAssignee'])->name('set-assignee');
     });
 
     Route::post('/notifications', [DashboardController::class, 'allNotifications']);
