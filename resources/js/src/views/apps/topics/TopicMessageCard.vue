@@ -39,12 +39,20 @@
             <span class="align-middle ml-50">Show Content</span>
           </b-dropdown-item>
 
-          <b-dropdown-item variant="success" @click="$emit('accept-status')">
+          <b-dropdown-item 
+          variant="success" 
+          @click="$emit('accept-status')"
+          v-if="!isWriter"
+          >
             <feather-icon icon="CheckCircleIcon" />
             <span class="align-middle ml-50">Accept</span>
           </b-dropdown-item>
 
-          <b-dropdown-item variant="danger" @click="$emit('reject-status')">
+          <b-dropdown-item 
+          variant="danger"
+          @click="$emit('reject-status')"
+          v-if="!isWriter"
+          >
             <feather-icon icon="XCircleIcon" />
             <span class="align-middle ml-50 text-danger">Reject</span>
           </b-dropdown-item>
@@ -116,6 +124,15 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  computed: {
+    isWriter() {
+      let user = JSON.parse(localStorage.getItem('userData'))
+      return user.role == 'writer';
+    },
+    user() {
+      return JSON.parse(localStorage.getItem('userData'));
+    }
   },
   setup() {
     return {
