@@ -305,6 +305,7 @@ export default {
       return false;
     },
     canAssign(topic) {
+      console.log(this.isWriter,topic.can_self_assign);
       if(this.isWriter) {
         if(topic.can_self_assign) {
           return true;
