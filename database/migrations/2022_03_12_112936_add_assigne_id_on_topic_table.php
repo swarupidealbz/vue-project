@@ -13,7 +13,9 @@ class AddAssigneIdOnTopicTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('topics', function (Blueprint $table) {
+            $table->integer('assignee_id')->nullable()->after('status');
+        });
     }
 
     /**
@@ -23,6 +25,8 @@ class AddAssigneIdOnTopicTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('topics', function (Blueprint $table) {
+            $table->dropColumn('assignee_id');
+        });
     }
 }
