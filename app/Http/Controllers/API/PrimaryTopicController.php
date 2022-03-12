@@ -133,12 +133,12 @@ class PrimaryTopicController extends BaseController
 
             $loginUser = Auth::user();
             $website = is_array($request->website) ? $request->website : explode(',',$request->website);
-            if($website == 0) {
-                $website = [];
+            if($request->website == 0) {
+                $website = '';
             }
             //if($loginUser->role == 'client') {
                 $topicList = Topics::where('is_primary_topic', 1)
-                ->when(count($website), function($q) use($website){
+                ->when($website, function($q) use($website){
                     return $q->whereIn('website_id', $website);
                 })
                 ->with(['groups.group'])->latest()->get()
@@ -293,11 +293,11 @@ class PrimaryTopicController extends BaseController
             $loginUser = Auth::user();
             $sort = $request->order;
             $website = is_array($request->website) ? $request->website : explode(',',$request->website);
-            if($website == 0) {
-                $website = [];
+            if($request->website == 0) {
+                $website = '';
             }
             $topicList = Topics::where('is_primary_topic', 1)
-            ->when(count($website), function($q) use($website){
+            ->when($website, function($q) use($website){
                 return $q->whereIn('website_id', $website);
             })
             ->when($sort, function($q) use($sort) {
@@ -321,7 +321,7 @@ class PrimaryTopicController extends BaseController
             $list = [
                 'list' => $topicList,
                 'count' => Topics::where('is_primary_topic', 1)
-                ->when(count($website), function($q) use($website){
+                ->when($website, function($q) use($website){
                     return $q->whereIn('website_id', $website);
                 })
                 ->count()
