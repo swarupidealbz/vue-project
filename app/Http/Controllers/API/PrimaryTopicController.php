@@ -138,7 +138,7 @@ class PrimaryTopicController extends BaseController
             }
             //if($loginUser->role == 'client') {
                 $topicList = Topics::where('is_primary_topic', 1)
-                ->when($website, function($q) use($website){
+                ->when(count($website), function($q) use($website){
                     return $q->whereIn('website_id', $website);
                 })
                 ->with(['groups.group'])->latest()->get()
@@ -297,7 +297,7 @@ class PrimaryTopicController extends BaseController
                 $website = [];
             }
             $topicList = Topics::where('is_primary_topic', 1)
-            ->when($website, function($q) use($website){
+            ->when(count($website), function($q) use($website){
                 return $q->whereIn('website_id', $website);
             })
             ->when($sort, function($q) use($sort) {
@@ -321,7 +321,7 @@ class PrimaryTopicController extends BaseController
             $list = [
                 'list' => $topicList,
                 'count' => Topics::where('is_primary_topic', 1)
-                ->when($website, function($q) use($website){
+                ->when(count($website), function($q) use($website){
                     return $q->whereIn('website_id', $website);
                 })
                 ->count()
