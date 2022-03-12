@@ -133,8 +133,15 @@ class PrimaryTopicController extends BaseController
 
             $loginUser = Auth::user();
             $website = is_array($request->website) ? $request->website : explode(',',$request->website);
+            if($website == 0) {
+                $website = '';
+            }
             //if($loginUser->role == 'client') {
-                $topicList = Topics::where('is_primary_topic', 1)->whereIn('website_id', $website)->with(['groups.group'])->latest()->get()
+                $topicList = Topics::where('is_primary_topic', 1)
+                ->when($website, function($q) use($website){
+                    return $q->whereIn('website_id', $website);
+                })
+                ->with(['groups.group'])->latest()->get()
 				->map(function($topic) use($loginUser){
 					if($topic->usersFavorite()->where(['user_id' => $loginUser->id])->exists()) {
 						$topic->is_favorite = true;
@@ -286,7 +293,13 @@ class PrimaryTopicController extends BaseController
             $loginUser = Auth::user();
             $sort = $request->order;
             $website = is_array($request->website) ? $request->website : explode(',',$request->website);
-            $topicList = Topics::where('is_primary_topic', 1)->whereIn('website_id', $website)
+            if($website == 0) {
+                $website = '';
+            }
+            $topicList = Topics::where('is_primary_topic', 1)
+            ->when($website, function($q) use($website){
+                return $q->whereIn('website_id', $website);
+            })
             ->when($sort, function($q) use($sort) {
                 if(in_array($sort, [Topics::STATUS_APPROVED, Topics::STATUS_REJECTED])) {
                     return $q->where('status', strtolower($sort));
@@ -307,7 +320,11 @@ class PrimaryTopicController extends BaseController
             });
             $list = [
                 'list' => $topicList,
-                'count' => Topics::where('is_primary_topic', 1)->whereIn('website_id', $website)->count()
+                'count' => Topics::where('is_primary_topic', 1)
+                ->when($website, function($q) use($website){
+                    return $q->whereIn('website_id', $website);
+                })
+                ->count()
             ];
            
             return $this->handleResponse($list, 'Fetched matched website lists.');

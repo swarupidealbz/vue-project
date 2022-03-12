@@ -175,7 +175,7 @@ export default {
     },
     loadTopics({commit, state, dispatch}, payload) {
       commit('setLoading', true);
-      if(payload.website) {        
+      if((payload.website == 0) || payload.website) {        
         axios.post(state.apiBaseUrl+'primary-topic/list-by-website', payload).then((res) => {
           console.log('topics list');
           commit('setTopics', res.data.data.topics);
