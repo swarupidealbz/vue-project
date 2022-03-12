@@ -13,6 +13,7 @@ class Topics extends Model
     protected $table = 'topics';
     protected $guarded = [];
     protected $with = ['website', 'createdUser', 'updatedUser'];
+    public $appends = ['can_self_assign'];
 
     const STATUS_OPEN = 'open';
     const STATUS_WORKIN_PROGRESS = 'work in progress';
