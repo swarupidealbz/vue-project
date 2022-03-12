@@ -134,12 +134,12 @@
                     <span class="align-middle ml-50">Add Content</span>
                   </b-dropdown-item>
 
-                  <b-dropdown-item variant="success" @click="approved(topic)">
+                  <b-dropdown-item variant="success" @click="approved(topic)" v-if="!isWriter">
                     <feather-icon icon="CheckCircleIcon" />
                     <span class="align-middle ml-50">Accept</span>
                   </b-dropdown-item>
 
-                  <b-dropdown-item variant="danger" @click="reject(topic)">
+                  <b-dropdown-item variant="danger" @click="reject(topic)" v-if="!isWriter">
                     <feather-icon icon="XCircleIcon" />
                     <span class="align-middle ml-50 text-danger">Reject</span>
                   </b-dropdown-item>
