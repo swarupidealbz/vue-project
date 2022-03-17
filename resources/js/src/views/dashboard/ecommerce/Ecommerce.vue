@@ -136,16 +136,14 @@ export default {
   },
   computed: {
     stat() {
-      return  this.statData.filter((i,k) => i != 'self_topics_count');
-    },
-    statData() {
       return Object.values(this.$store.state.app.dashboardData.statistics) || []
-    }
+    },
   },
   created() {
     // data
     this.$http.get('/ecommerce/data').then(response => {
       this.data = response.data
+      this.stat.delete('self_topics_count')
 
       this.data.statistics = this.stat;
       // ? Your API will return name of logged in user or you might just directly get name of logged in user
