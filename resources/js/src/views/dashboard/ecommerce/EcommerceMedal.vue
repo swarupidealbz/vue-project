@@ -8,7 +8,7 @@
       {{ $t('congratulation_card.level') }} {{ data.level }}
     </b-card-text>
     <h3 class="mb-75 mt-2 pt-50">
-      <b-link>${{ kFormatter(data.cost_amount) }}</b-link>
+      <b-link>${{ kFormatter(cost_amount) }}</b-link>
     </h3>
     <small class="mt-1">{{ data.role == 'client' ? $t('congratulation_card.client_text') : $t('congratulation_card.writer_text') }}</small>
     <b-img
@@ -42,6 +42,14 @@ export default {
       type: Object,
       default: () => {},
     },
+  },
+  computed: {
+    stat() {
+      return  Object.values(this.$store.state.app.dashboardData.statistics) || []
+    },
+    cost_amount() {
+      return this.stat.self_topics_count * data.cost;
+    }
   },
   methods: {
     kFormatter,
