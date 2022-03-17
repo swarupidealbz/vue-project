@@ -19,7 +19,7 @@
           sm="6"
           :class="item.customClass"
         >
-          <b-media no-body>
+          <b-media no-body v-if="item.text">
             <b-media-aside
 
               class="mr-2"
