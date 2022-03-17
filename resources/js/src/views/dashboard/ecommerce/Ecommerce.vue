@@ -150,8 +150,8 @@ export default {
       const userData = getUserData()
       this.data.congratulations.name = userData.fullName.split(' ')[0] || userData.username
       this.data.congratulations.role = userData.role
-      this.data.congratulations.level = this.getLevel(userData.job_units)
-      this.data.congratulations.cost = userData.unit_cost
+      this.data.congratulations.level = this.getLevel(userData.user.job_units)
+      this.data.congratulations.cost = userData.user.unit_cost
     })
   },
   methods: {
