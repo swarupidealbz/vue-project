@@ -149,6 +149,7 @@ export default {
       // ? This is just for demo purpose
       const userData = getUserData()
       this.data.congratulations.name = userData.fullName.split(' ')[0] || userData.username
+      this.data.congratulations.role = userData.role
       this.data.congratulations.level = this.getLevel(userData.job_units)
       this.data.congratulations.cost_amount = this.getAmount(userData.unit_cost)
     })
