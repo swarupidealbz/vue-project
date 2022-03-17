@@ -48,6 +48,15 @@ class AuthController extends BaseController
                 return $this->handleError($validator->errors()->all()[0].' Please check and try again.', 'Required field missing.', 400);
             }
 
+            $unitCost = 3.28;
+            $jobUnits = 0;
+            $goal = 20;
+            if($request->role == 'client') {
+                $unitCost = 50;
+                $jobUnits = 0;
+                $goal = 20; 
+            }
+
             $user = User::create([
                 'first_name'    => $request->first_name,
                 'last_name'     => $request->last_name,
@@ -57,6 +66,9 @@ class AuthController extends BaseController
                 'mobile'        => $request->mobile,
                 'role'          => $request->role,
                 'country_code'  => $request->country_code,
+                'unit_cost'     => $unitCost,
+                'job_units'     => $jobUnits,
+                'monthly_goal'  => $goal
             ]);
 			$user->sendEmailVerificationNotification();
 
