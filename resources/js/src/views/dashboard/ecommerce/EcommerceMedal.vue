@@ -45,10 +45,9 @@ export default {
   },
   computed: {
     stat() {
-      return  Object.values(this.$store.state.app.dashboardData.statistics) || []
+      return  this.$store.state.app.dashboardData.statistics || []
     },
     cost_amount() {
-      console.log(this.stat.self_topics_count, this.stat)
       return this.stat.self_topics_count * this.data.cost;
     }
   },
