@@ -48,6 +48,7 @@ export default {
       return  this.$store.state.app.dashboardData.statistics || []
     },
     cost_amount() {
+      console.log(this.stat.self_topics_count, this.data.cost)
       return this.stat.self_topics_count * this.data.cost;
     }
   },
