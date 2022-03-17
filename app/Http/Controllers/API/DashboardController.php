@@ -134,14 +134,34 @@ class DashboardController extends BaseController
         $articles = $this->articleRecord($websiteId, $startOfMonth, $currentDate, $firstDayofPreviousMonth, $lastDayofPreviousMonth);
         $outlines = $this->outlineRecord($websiteId, $startOfMonth, $currentDate, $firstDayofPreviousMonth, $lastDayofPreviousMonth);
         $comments = $this->commentRecord($websiteId, $startOfMonth, $currentDate, $firstDayofPreviousMonth, $lastDayofPreviousMonth);    
+        $selfTopicCount = $this->selfTopicCount($websiteId, $startOfMonth, $currentDate);    
 
         return [
             'topics' => $topics,
             'articles' => $articles,
             'outlines' => $outlines,
             'comments' => $comments,
+            'self_topics_count' => $selfTopicCount
         ];       
 
+    }
+
+    public function selfTopicCount($websiteId, $startOfMonth, $currentDate)
+    {
+        $user = Auth::user();
+        $topics = Topics::when($websiteId, function($q) use($websiteId){
+            $q->where('website_id', $websiteId);
+        })
+        ->whereBetween('created_at',[$startOfMonth, $currentDate]);
+
+        if($user->role == 'writer') {
+            $topics = $topics->where('assignee_id', $user->id);
+        }
+        else {
+            $topics = $topics->where('created_by_id', $user->id);
+        }
+        
+        return $topics->count();
     }
 
     private function topicRecord($websiteId, $startOfMonth, $currentDate, $firstDayofPreviousMonth, $lastDayofPreviousMonth)

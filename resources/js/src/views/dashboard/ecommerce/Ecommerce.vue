@@ -151,7 +151,7 @@ export default {
       this.data.congratulations.name = userData.fullName.split(' ')[0] || userData.username
       this.data.congratulations.role = userData.role
       this.data.congratulations.level = this.getLevel(userData.job_units)
-      this.data.congratulations.cost_amount = this.getAmount(userData.unit_cost)
+      this.data.congratulations.cost_amount = this.getAmount(userData.unit_cost, this.stat.self_topics_count || 0)
     })
   },
   methods: {
@@ -166,8 +166,8 @@ export default {
         return 3;
       }
     },
-    getAmount(cost) {
-      return cost;
+    getAmount(cost, count) {
+      return cost * count;
     }
   }
 }
