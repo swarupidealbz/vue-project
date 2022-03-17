@@ -14,9 +14,9 @@ class AddUnitCostOnUserTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->double('unit_cost')->nullable()->after('cost');
-            $table->integer('job_units')->nullable()->after('unit_cost');
-            $table->integer('monthly_goal')->nullable()->after('job_units');
+            $table->double('unit_cost')->nullable()->after('cost')->default(0);
+            $table->integer('job_units')->nullable()->after('unit_cost')->default(0);
+            $table->integer('monthly_goal')->nullable()->after('job_units')->default(0);
         });
     }
 
