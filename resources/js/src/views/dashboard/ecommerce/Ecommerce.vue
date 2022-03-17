@@ -136,7 +136,7 @@ export default {
   },
   computed: {
     stat() {
-      return  this.statData.filter((i,k) => k != 'self_topics_count');
+      return  this.statData.filter((i,k) => i != 'self_topics_count');
     },
     statData() {
       return Object.values(this.$store.state.app.dashboardData.statistics) || []
