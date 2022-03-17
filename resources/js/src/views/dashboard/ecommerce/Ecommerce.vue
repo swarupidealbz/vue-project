@@ -149,8 +149,26 @@ export default {
       // ? This is just for demo purpose
       const userData = getUserData()
       this.data.congratulations.name = userData.fullName.split(' ')[0] || userData.username
+      this.data.congratulations.level = this.getLevel(userData.job_units)
+      this.data.congratulations.cost_amount = this.getAmount(userData.unit_cost)
     })
   },
+  methods: {
+    getLevel(units) {
+      if(units <= 100) {
+        return 1;
+      }
+      else if(units > 100 && units <= 300) {
+        return 2;
+      }
+      else if(units > 300 && units <= 500) {
+        return 3;
+      }
+    },
+    getAmount(cost) {
+      return cost;
+    }
+  }
 }
 </script>
 

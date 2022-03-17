@@ -177,6 +177,10 @@
   "congratulation_card": {
     "greetings":"Congratulations",
     "welcome_message":"You have won gold medal",
-    "congrats_btn": "View Sales"
+    "congrats_btn": "View Sales",
+    "welcome_dashboard": "'s dashboard",
+    "client_text": "Amount spent this month",
+    "writer_text": "Amount earned this month",
+    "level": "Level"
   }
 }

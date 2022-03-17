@@ -3,14 +3,19 @@
     v-if="data"
     class="card-congratulation-medal"
   >
-    <h5>{{ data.name }}{{ $t('congratulation_card.welcome_dashboard') }}</h5>
+    <h5>{{ $t('congratulation_card.greetings') }} 🎉 {{ data.name }}!</h5>
     <b-card-text class="font-small-3">
-      {{ $t('congratulation_card.level') }} {{ data.level }}
+      {{ $t('congratulation_card.welcome_message') }}
     </b-card-text>
     <h3 class="mb-75 mt-2 pt-50">
-      <b-link>${{ kFormatter(data.cost_amount) }}</b-link>
+      <b-link>${{ kFormatter(data.saleToday) }}</b-link>
     </h3>
-    <small class="mt-1">{{ data.role == 'client' ? $t('congratulation_card.client_text') : $t('congratulation_card.writer_text') }}</small>
+    <b-button
+      v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+      variant="primary"
+    >
+      {{ $t('congratulation_card.congrats_btn') }}
+    </b-button>
     <b-img
       :src="require('@/assets/images/illustration/badge.svg')"
       class="congratulation-medal"
