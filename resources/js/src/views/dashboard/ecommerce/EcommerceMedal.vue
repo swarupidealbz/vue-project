@@ -48,7 +48,7 @@ export default {
       return  Object.values(this.$store.state.app.dashboardData.statistics) || []
     },
     cost_amount() {
-      return this.stat.self_topics_count * data.cost;
+      return this.stat.self_topics_count * this.data.cost;
     }
   },
   methods: {
