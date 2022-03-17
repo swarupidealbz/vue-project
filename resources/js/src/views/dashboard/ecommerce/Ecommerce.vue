@@ -144,7 +144,7 @@ export default {
     this.$http.get('/ecommerce/data').then(response => {
       this.data = response.data
 
-      this.data.statistics = this.stat.filter((i,k) => k != 'self_topics_count');
+      this.data.statistics = this.stat.filter((k,i) => k != 'self_topics_count');
       // ? Your API will return name of logged in user or you might just directly get name of logged in user
       // ? This is just for demo purpose
       const userData = getUserData()
