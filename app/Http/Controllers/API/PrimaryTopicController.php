@@ -143,16 +143,7 @@ class PrimaryTopicController extends BaseController
                 })
                 ->with(['groups.group'])->latest();
                 $more = $topicList->count();
-                $topicList = $topicList->take(10)->get()
-				->map(function($topic) use($loginUser){
-					if($topic->usersFavorite()->where(['user_id' => $loginUser->id])->exists()) {
-						$topic->is_favorite = true;
-					}
-					else {
-                        $topic->is_favorite = false; 
-                    }
-					return $topic;
-				});
+               
 				
 				$selectedGroups = [
                     Topics::STATUS_OPEN => [
@@ -179,6 +170,16 @@ class PrimaryTopicController extends BaseController
                         $selectedGroups[$group->group_id] = $group->group;
                     });
                 });
+                $topicList = $topicList->take(10)->get()
+				->map(function($topic) use($loginUser){
+					if($topic->usersFavorite()->where(['user_id' => $loginUser->id])->exists()) {
+						$topic->is_favorite = true;
+					}
+					else {
+                        $topic->is_favorite = false; 
+                    }
+					return $topic;
+				});
                 $response = [
                     'topics' => $topicList,
                     'groups' => $selectedGroups,
