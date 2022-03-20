@@ -139,6 +139,7 @@ export default {
       this.data.congratulations.role = userData.role
       this.data.congratulations.level = this.getLevel(userData.job_units)
       this.data.congratulations.cost = userData.unit_cost
+      this.data.goalOverview.monthly_goal = userData.monthly_goal
     })
   },
   methods: {

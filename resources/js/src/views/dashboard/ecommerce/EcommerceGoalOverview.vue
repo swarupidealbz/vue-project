@@ -22,7 +22,7 @@
       height="245"
       class="my-2"
       :options="goalOverviewRadialBar"
-      :series="data.series"
+      :series="series"
     />
     <b-row class="text-center mx-0">
       <b-col
@@ -30,10 +30,10 @@
         class="border-top border-right d-flex align-items-between flex-column py-1"
       >
         <b-card-text class="text-muted mb-0">
-          Completed
+          Monthly Goal
         </b-card-text>
         <h3 class="font-weight-bolder mb-0">
-          {{ data.completed }}
+          {{ monthlyGoal }}
         </h3>
       </b-col>
 
@@ -42,10 +42,10 @@
         class="border-top d-flex align-items-between flex-column py-1"
       >
         <b-card-text class="text-muted mb-0">
-          In Progress
+          Completed
         </b-card-text>
         <h3 class="font-weight-bolder mb-0">
-          {{ data.inProgress }}
+          {{ completed }}
         </h3>
       </b-col>
     </b-row>
@@ -141,6 +141,25 @@ export default {
           },
         },
       },
+    }
+  },
+  computed: {
+    stat() {
+      return this.$store.state.app.dashboardData.statistics || []
+    },
+    percentage() {
+      return this.stat.self_topics_count * (this.data.monthly_goal/100);
+    },
+    monthlyGoal() {
+      return this.data.monthly_goal;
+    },
+    compleetd() {
+      return this.stat.self_topics_count
+    },
+    series() {
+      return [
+        this.percentage
+      ]
     }
   },
 }
