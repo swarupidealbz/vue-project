@@ -447,9 +447,10 @@ class PrimaryTopicController extends BaseController
                 }
                 return $topic;
             });
+            $skip = $request->off;
             $list = [
                 'list' => $topicList,
-                'more' => $more > $topicList->count() ? true : false
+                'more' => $more > ($skip + $topicList->count()) ? true : false
             ];
            
             return $this->handleResponse($list, 'Fetched matched website lists.');
