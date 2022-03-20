@@ -302,7 +302,7 @@ export default {
       this.$store.dispatch('app/loadMoreTopic', { 
         website: this.$store.state.app.selectedWebsite.id, 
         order: this.$store.state.app.selectedOrder.id,
-        off: loadingTopic
+        off: this.loadingTopic
       }).then(res => {
         this.loadingTopic += 10;
       });
