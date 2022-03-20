@@ -274,7 +274,6 @@ export default {
     return {
       isContentHandlerSidebarActive: false,
       topicId: '',
-      show: false,
       loadingTopic: 10,
     }
   },
@@ -292,7 +291,7 @@ export default {
     user() {
       return JSON.parse(localStorage.getItem('userData'));
     },
-    loader() {
+    show() {
       return this.$store.state.app.topicMore;
     },
   },
