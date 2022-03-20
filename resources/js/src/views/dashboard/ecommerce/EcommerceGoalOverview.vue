@@ -153,7 +153,7 @@ export default {
     monthlyGoal() {
       return this.data.monthly_goal;
     },
-    compleetd() {
+    completed() {
       return this.stat.self_topics_count
     },
     series() {
