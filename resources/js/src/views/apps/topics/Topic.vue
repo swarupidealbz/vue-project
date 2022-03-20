@@ -160,10 +160,11 @@
                   </b-dropdown-item>
                 </b-dropdown>
               </div>
+              
+          </b-media>
               <div class="text-center mt-1" v-if="show">
                 <b-link @click="more">Show more</b-link>
               </div>
-          </b-media>
         </ul>
         <div
           class="no-results"
@@ -225,7 +226,7 @@ import {
 } from '@vue/composition-api'
 import {
   BFormInput, BInputGroup, BInputGroupPrepend, BDropdown, BDropdownItem,
-  BFormCheckbox, BMedia, BMediaAside, BMediaBody, BAvatar,BButton, BSpinner
+  BFormCheckbox, BMedia, BMediaAside, BMediaBody, BAvatar,BButton, BSpinner, BLink
 } from 'bootstrap-vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import { filterTags, formatDateToMonthShort } from '@core/utils/filter'
@@ -256,6 +257,7 @@ export default {
     BAvatar,
     BButton,
     BSpinner,
+    BLink,
 
     // 3rd Party
     VuePerfectScrollbar,
