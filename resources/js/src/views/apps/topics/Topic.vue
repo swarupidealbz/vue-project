@@ -299,7 +299,7 @@ export default {
   },
   methods: {
     more() {
-      this.$store.commit('setTopicMore', false);
+      this.$store.commit('app/setTopicMore', false);
       this.$store.dispatch('app/loadMoreTopic', { 
         website: this.$store.state.app.selectedWebsite.id, 
         order: this.$store.state.app.selectedOrder.id,
