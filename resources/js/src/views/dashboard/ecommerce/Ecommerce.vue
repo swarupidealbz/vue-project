@@ -19,27 +19,14 @@
       <b-col lg="4">
         <b-row class="match-height">
           <!-- Bar Chart - Orders -->
-          <b-col
-            lg="6"
-            md="3"
-            cols="6"
-          >
-            <ecommerce-order-chart :data="data.statisticsOrder" />
-          </b-col>
-          <!--/ Bar Chart - Orders -->
-          <b-col
-            lg="6"
-            md="3"
-            cols="6"
-          >
-            <ecommerce-profit-chart :data="data.statisticsProfit" />
-          </b-col>
+          <!-- Goal Overview Card -->
           <b-col
             lg="12"
             md="6"
           >
-            <ecommerce-earnings-chart :data="data.earningsChart" />
+            <ecommerce-goal-overview :data="data.goalOverview" />
           </b-col>
+          <!--/ Goal Overview Card -->
         </b-row>
       </b-col>
 
