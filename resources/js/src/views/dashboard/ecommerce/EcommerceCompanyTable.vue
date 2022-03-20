@@ -1,17 +1,17 @@
 <template>
   <b-card
-    v-if="tableData"
+    v-if="leaders"
     no-body
     class="card-company-table"
   >
     <b-table
-      :items="tableData"
+      :items="leaders"
       responsive
       :fields="fields"
       class="mb-0"
     >
       <!-- company -->
-      <template #cell(company)="data">
+      <template #cell(profile_image)="data">
         <div class="d-flex align-items-center">
           <b-avatar
             rounded
@@ -19,59 +19,32 @@
             variant="light-company"
           >
             <b-img
-              :src="data.item.avatarImg"
+              :src="data.item.profile_image"
               alt="avatar img"
             /></b-avatar>
           <div>
             <div class="font-weight-bolder">
-              {{ data.item.title }}
+              {{ data.item.full_name }}
             </div>
             <div class="font-small-2 text-muted">
-              {{ data.item.subtitle }}
+              {{ data.item.email }}
             </div>
           </div>
         </div>
       </template>
 
-      <!-- category -->
-      <template #cell(category)="data">
-        <div class="d-flex align-items-center">
-          <b-avatar
-            class="mr-1"
-            :variant="data.item.avatarColor"
-          >
-            <feather-icon
-              size="18"
-              :icon="data.item.avatarIcon"
-            />
-          </b-avatar>
-          <span>{{ data.item.avatarTitle }}</span>
-        </div>
-      </template>
-
       <!-- views -->
-      <template #cell(views)="data">
+      <template #cell(level)="data">
         <div class="d-flex flex-column">
-          <span class="font-weight-bolder mb-25">{{ data.item.viewTitle }}</span>
-          <span class="font-small-2 text-muted text-nowrap">{{ data.item.viewsub }}</span>
+          <span class="font-weight-bolder mb-25">{{ data.item.level }}</span>
         </div>
       </template>
 
       <!-- revenue -->
-      <template #cell(revenue)="data">
-        {{ '$'+data.item.revenue }}
+      <template #cell(job_units)="data">
+        {{ data.item.job_units }}
       </template>
 
-      <!-- sales -->
-      <template #cell(sales)="data">
-        <div class="d-flex align-items-center">
-          <span class="font-weight-bolder mr-1">{{ data.item.sales+'%' }}</span>
-          <feather-icon
-            :icon="data.item.loss ? 'TrendingDownIcon':'TrendingUpIcon'"
-            :class="data.item.loss ? 'text-danger':'text-success'"
-          />
-        </div>
-      </template>
     </b-table>
   </b-card>
 </template>
@@ -98,13 +71,16 @@ export default {
   data() {
     return {
       fields: [
-        { key: 'company', label: 'COMPANY' },
-        { key: 'category', label: 'CATEGORY' },
-        { key: 'views', label: 'VIEWS' },
-        { key: 'revenue', label: 'REVENUE' },
-        { key: 'sales', label: 'SALES' },
+        { key: 'profile_image', label: 'FULL NAME' },
+        { key: 'level', label: 'LEVEL' },
+        { key: 'job_units', label: 'JOB UNITS' },
       ],
     }
+  },
+  computed: {
+    leaders() {
+      return this.$store.state.app.dashboardData.leaders || []
+    },
   },
 }
 </script>

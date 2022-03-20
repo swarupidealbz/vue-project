@@ -8,6 +8,7 @@ use App\Models\Content;
 use App\Models\Notifications;
 use App\Models\SideMenus;
 use App\Models\Topics;
+use App\Models\User;
 use App\Models\Websites;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class DashboardController extends BaseController
             'notifications' => (blank($request->parts) || ($request->parts == 'top_bar')) ? $this->notifications() : [],
             'statistics' => (blank($request->parts) || ($request->parts == 'data')) ? $this->contents($request) : [],
 			'topic_lists' => (blank($request->parts) || ($request->parts == 'data')) ? $this->topics($request) : [],
-			'article_lists' => (blank($request->parts) || ($request->parts == 'data')) ? $this->articles($request) : []
+			'leaders' => (blank($request->parts) || ($request->parts == 'data')) ? $this->leaders($request) : []
         ];
 
         return $this->handleResponse($result, 'Dashboard content is ready');
@@ -349,7 +350,7 @@ class DashboardController extends BaseController
 		return $topics;
 	}
 	
-	private function articles($request)
+	private function leaders($request)
 	{
 		$loginUser = Auth::user();
         $rec = Websites::all()->filter(function($item) use($loginUser){
@@ -364,13 +365,34 @@ class DashboardController extends BaseController
             $websiteId = $request->website;
         }
 		
-		$articles = Content::when($websiteId, function($q) use($websiteId){
-            $q->where('website_id', $websiteId);
-        })
-        ->where('content_type', 'like', 'article')->latest()->take(10)->get();
+		$users = User::where('role', 'writer')->latest('job_units')->get()
+        ->map(function($user) {
+            return [
+                'profile_image' => $user->profile_image ?? '/images/account.png',
+                'full_name' => $user->name,
+                'level' => 'Level '.$this->getLevel($user->job_units),
+                'job_units' => $user->job_units,
+                'monthly_goal' => $user->monthly_goal,
+                'unit_cost' => $user->unit_cost,
+                'role' => $user->role,
+                'email' => $user->email,
+            ];
+        });
 		
-		return $articles;
+		return $users;
 	}
+
+    public function getLevel($units) {
+        if($units <= 100) {
+          return 1;
+        }
+        else if($units > 100 && $units <= 300) {
+          return 2;
+        }
+        else if($units > 300 && $units <= 500) {
+          return 3;
+        }
+    }
 
     public function allNotifications(Request $request)
     {

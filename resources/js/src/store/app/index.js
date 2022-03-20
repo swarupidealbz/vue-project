@@ -15,7 +15,7 @@ export default {
     dashboardData: {
       statistics: [],
       topic_lists: [],
-      article_lists: []
+      leaders: []
     },
     menu: {
       side_menus: []
@@ -148,7 +148,7 @@ export default {
         let data = {
           statistics: response.data.data.statistics,
           topic_lists: response.data.data.topic_lists,
-          article_lists: response.data.data.article_lists
+          leaders: response.data.data.leaders
         };
         var userData = JSON.parse(localStorage.getItem('userData'));
         commit('setDashboardData', data);
