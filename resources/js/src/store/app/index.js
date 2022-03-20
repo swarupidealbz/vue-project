@@ -33,6 +33,7 @@ export default {
     userData: {},
     topicCount: 0,
     loading: false,
+    topicMore: false,
   },
   getters: {
     currentBreakPoint: state => {
@@ -101,6 +102,9 @@ export default {
     },
     setLoading(state, val) {
       state.loading = val
+    },
+    setTopicMore(state, val) {
+      state.topicMore = val
     }
   },
   actions: {
@@ -182,6 +186,7 @@ export default {
           commit('setGroups', res.data.data.groups);
           commit('setTopicCount', res.data.data.count);
           commit('setLoading', false);
+          commit('setTopicMore', res.data.data.more);
         }).catch(() => {
           console.log('error load topics data');
         })
@@ -192,6 +197,7 @@ export default {
         console.log('sort topics');
         commit('setTopics', res.data.data.list);
         commit('setTopicCount', res.data.data.count);
+        commit('setTopicMore', res.data.data.more);
       }).catch(() => {
         console.log('error load sort record data');
       })
@@ -359,6 +365,16 @@ export default {
           reject(err.response)
           console.log('error on topic assignee')
         })
+      })
+    },
+    loadMoreTopic({commit, state, dispatch}, payload) {
+      axios.post(state.apiBaseUrl+'topic/load-more-topic', payload).then((res) => {
+        console.log('more topics');
+        let lists = state.topics.concat(res.data.data.list)
+        commit('setTopics', lists);
+        commit('setTopicMore', res.data.data.more);
+      }).catch(() => {
+        console.log('error load sort record data');
       })
     },
   },

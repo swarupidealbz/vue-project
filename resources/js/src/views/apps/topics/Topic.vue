@@ -160,6 +160,9 @@
                   </b-dropdown-item>
                 </b-dropdown>
               </div>
+              <div class="text-center mt-1" v-if="show">
+                <b-link @click="more">Show more</b-link>
+              </div>
           </b-media>
         </ul>
         <div
@@ -271,6 +274,8 @@ export default {
     return {
       isContentHandlerSidebarActive: false,
       topicId: '',
+      show: false,
+      loadingTopic: 10,
     }
   },
   computed: {
@@ -286,9 +291,21 @@ export default {
     },
     user() {
       return JSON.parse(localStorage.getItem('userData'));
-    }
+    },
+    loader() {
+      return this.$store.state.app.topicMore;
+    },
   },
   methods: {
+    more() {
+      this.$store.dispatch('app/loadMoreTopic', { 
+        website: this.$store.state.app.selectedWebsite.id, 
+        order: this.$store.state.app.selectedOrder.id,
+        off: loadingTopic
+      }).then(res => {
+        this.loadingTopic += 10;
+      });
+    },
     addContentBlock(tId){
       this.isContentHandlerSidebarActive = true
       this.topicId = tId;

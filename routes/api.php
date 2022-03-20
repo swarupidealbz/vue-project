@@ -123,6 +123,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 		Route::post('/unfavorite', [SetFavoriteController::class, 'unsetFavoriteTopic'])->name('unfavorite');
 		Route::post('/favorite-list', [PrimaryTopicController::class, 'favoriteTopicList'])->name('favorite-list');
 		Route::post('/set-assignee', [PrimaryTopicController::class, 'setAssignee'])->name('set-assignee');
+		Route::post('/load-more-topic', [PrimaryTopicController::class, 'loadMore'])->name('load-more-topic');
     });
 
     Route::post('/notifications', [DashboardController::class, 'allNotifications']);

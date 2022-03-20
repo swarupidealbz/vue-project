@@ -141,7 +141,9 @@ class PrimaryTopicController extends BaseController
                 ->when($website, function($q) use($website){
                     return $q->whereIn('website_id', $website);
                 })
-                ->with(['groups.group'])->latest()->get()
+                ->with(['groups.group'])->latest();
+                $more = $topicList->count();
+                $topicList = $topicList->take(10)->get()
 				->map(function($topic) use($loginUser){
 					if($topic->usersFavorite()->where(['user_id' => $loginUser->id])->exists()) {
 						$topic->is_favorite = true;
@@ -180,7 +182,8 @@ class PrimaryTopicController extends BaseController
                 $response = [
                     'topics' => $topicList,
                     'groups' => $selectedGroups,
-                    'count' => $topicList->count(),
+                    'count' => $more,
+                    'more' => $more > $topicList->count() ? true : false,
                 ];
             /*}
             else {
@@ -309,7 +312,9 @@ class PrimaryTopicController extends BaseController
                         return $groups->where('group_id', $sort);
                     });
                 }
-            })->latest()->get()->map(function($topic) use($loginUser){
+            })->latest();
+            $more = $topicList->count();
+            $topicList = $topicList->take(10)->get()->map(function($topic) use($loginUser){
                 if($topic->usersFavorite()->where(['user_id' => $loginUser->id])->exists()) {
                     $topic->is_favorite = true;
                 }
@@ -324,7 +329,8 @@ class PrimaryTopicController extends BaseController
                 ->when($website, function($q) use($website){
                     return $q->whereIn('website_id', $website);
                 })
-                ->count()
+                ->count(),
+                'more' => $more > $topicList->count() ? true : false
             ];
            
             return $this->handleResponse($list, 'Fetched matched website lists.');
@@ -394,6 +400,62 @@ class PrimaryTopicController extends BaseController
         catch(Exception $e) 
         {
             logger('topic assignee set error : '.$e->getMessage());
+            return $this->handleError('Something went wrong', [], 500);
+        }
+    }
+
+    public function loadMore(Request $request)
+    {
+        try {
+                
+            $input = $request->only('website');
+                
+            $validator = Validator::make($input,['website' => 'required']);
+
+            if ($validator->fails()) {
+                return $this->handleError('Required field missing.', $validator->errors()->all(), 422);
+            }
+
+            $loginUser = Auth::user();
+            $sort = $request->order;
+            $website = is_array($request->website) ? $request->website : explode(',',$request->website);
+            if($request->website == 0) {
+                $website = '';
+            }
+            $topicList = Topics::where('is_primary_topic', 1)
+            ->when($website, function($q) use($website){
+                return $q->whereIn('website_id', $website);
+            })
+            ->when($sort, function($q) use($sort) {
+                if(in_array($sort, [Topics::STATUS_APPROVED, Topics::STATUS_REJECTED])) {
+                    return $q->where('status', strtolower($sort));
+                }
+                else {
+                    return $q->whereHas('groups', function($groups) use($sort){
+                        return $groups->where('group_id', $sort);
+                    });
+                }
+            })->latest();
+            $more = $topicList->count();
+            $topicList = $topicList->skip($request->off)->take(10)->get()->map(function($topic) use($loginUser){
+                if($topic->usersFavorite()->where(['user_id' => $loginUser->id])->exists()) {
+                    $topic->is_favorite = true;
+                }
+                else {
+                    $topic->is_favorite = false; 
+                }
+                return $topic;
+            });
+            $list = [
+                'list' => $topicList,
+                'more' => $more > $topicList->count() ? true : false
+            ];
+           
+            return $this->handleResponse($list, 'Fetched matched website lists.');
+        }
+        catch(Exception $e) 
+        {
+            logger('topic load more error: '.$e->getMessage());
             return $this->handleError('Something went wrong', [], 500);
         }
     }
