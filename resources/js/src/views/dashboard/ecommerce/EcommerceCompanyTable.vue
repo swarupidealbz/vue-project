@@ -17,11 +17,10 @@
             rounded
             size="32"
             variant="light-company"
+             :src="data.item.profile_image"
           >
-            <b-img
-              :src="data.item.profile_image"
-              alt="avatar img"
-            /></b-avatar>
+            </b-avatar>
+            
           <div>
             <div class="font-weight-bolder">
               {{ data.item.full_name }}
