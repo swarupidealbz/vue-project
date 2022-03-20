@@ -49,7 +49,7 @@ export default {
     },
     cost_amount() {
       console.log(this.stat.self_topics_count, this.data.cost)
-      return this.stat.self_topics_count * this.data.cost;
+      return (this.stat.self_topics_count || 0) * this.data.cost;
     }
   },
   methods: {
