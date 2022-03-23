@@ -76,12 +76,13 @@ export default {
   },
   data() {
     return {
-      data: {},
+      data: {
+      },
     }
   },
   computed: {
     stat() {
-      return Object.values(this.$store.state.app.dashboardData.statistics) || []
+      return Object.values(this.$store.state.app.dashboardData.statistics)
     },
   },
   created() {
@@ -98,6 +99,7 @@ export default {
       this.data.congratulations.level = this.getLevel(userData.job_units)
       this.data.congratulations.cost = userData.unit_cost
       this.data.goalOverview.monthly_goal = userData.monthly_goal
+      this.data.goalOverview.role = userData.role
     })
   },
   methods: {

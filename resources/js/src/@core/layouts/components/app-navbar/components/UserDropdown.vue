@@ -176,6 +176,7 @@ export default {
 
       // Remove userData from localStorage
       localStorage.removeItem('userData')
+      localStorage.removeItem('website')
 
       // Reset ability
       this.$ability.update(initialAbility)

@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
+use App\Models\Websites;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\PasswordReset;
@@ -51,10 +52,12 @@ class AuthController extends BaseController
             $unitCost = 3.28;
             $jobUnits = 0;
             $goal = 20;
+            $website = '';
             if($request->role == 'client') {
                 $unitCost = 50;
                 $jobUnits = 0;
                 $goal = 20; 
+                $website = $request->website;
             }
 
             $user = User::create([
@@ -69,8 +72,21 @@ class AuthController extends BaseController
                 'unit_cost'     => $unitCost,
                 'job_units'     => $jobUnits,
                 'monthly_goal'  => $goal
-            ]);
-			$user->sendEmailVerificationNotification();
+            ]);			
+
+            if($website) {                    
+                Websites::create(
+                    [
+                        'name' => $website,
+                        'owners' => $user->id,
+                        'created_by_id' => $user->id,
+                        'updated_by_id' => $user->id,
+                        'created_at' => Carbon::now()->toDateTimeString(),
+                        'updated_at' => Carbon::now()->toDateTimeString(),
+                    ]
+                );
+            }
+            $user->sendEmailVerificationNotification();
 
             $token = $user->createToken('auth_token')->plainTextToken;
 
@@ -79,11 +95,12 @@ class AuthController extends BaseController
                 'token_type' => 'Bearer',
             ];
 
-            return $this->handleResponse($result, 'User registered successfully and email verification link sent to yor mail address!');
+            // return $this->handleResponse($result, 'User registered successfully and email verification link sent to yor mail address!');
+            return $this->handleResponse($result, 'Please check your email and verify your account to sign in.');
             
         }
         catch(Exception $e) {
-            logger('registration error');
+            logger('registration error'.$e->getMessage());
             return $this->handleError('Something went wrong', [], 400);
         }
     }
@@ -302,7 +319,8 @@ class AuthController extends BaseController
         //return redirect()->to(env('APP_FRONTEND_URL'))->withCookie(cookie('email_verified', true));
 		$response = [
 			'status' => true,
-			'message' => "Your email verified successfully"
+			// 'message' => "Your email verified successfully"
+			'message' => "Your email has been verified. Please sign in."
 		];
 		return redirect()->to(env('APP_URL'))->withCookie(cookie('email_verify', json_encode($response), time() + 10*60, '/', '99ideaz.com', false, false));
 		//return $this->handleResponse([], "Email verified successfully");

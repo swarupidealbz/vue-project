@@ -151,6 +151,10 @@ class ContentController extends BaseController
             if ($validator->fails()) {
                 return $this->handleError('Required field missing.', $validator->errors()->all(), 422);
             }
+            if($request->website == 0) {
+                $topic = Topics::find($request->primary_topic);
+                $request->website = $topic->website_id;
+            }
 
             $limit = 1*2;
             if ($request->limit) {

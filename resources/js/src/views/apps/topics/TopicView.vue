@@ -51,7 +51,7 @@
       </b-row>
 
       <!-- Email Actions: Reply or Forward -->
-      <b-row>
+      <b-row v-if="!isWriter">
         <b-col cols="12">
           <b-card>
             <div class="d-flex justify-content-between">
@@ -101,6 +101,15 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  computed: {
+    isWriter() {
+      let user = JSON.parse(localStorage.getItem('userData'))
+      return user.role == 'writer';
+    },
+    user() {
+      return JSON.parse(localStorage.getItem('userData'));
+    }
   },
   setup(props) {
     const { resolveLabelColor } = useEmail()

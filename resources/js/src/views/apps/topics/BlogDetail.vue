@@ -6,7 +6,7 @@
 
   <b-row class="mb-1">
     <b-col cols="12">
-      <span class="go-back mr-1 float-left">
+      <span class="go-back mr-1 float-left topic-back">
         <feather-icon
           icon="ChevronLeftIcon"
           size="22"
@@ -16,7 +16,7 @@
       </span>
 
       <span
-        class="font-weight-bolder cursor-pointer"
+        class="font-weight-bolder cursor-pointer topic-name"
         v-text="topicName"
          @click="back"
       ></span>
@@ -162,6 +162,14 @@
         <!--/ blog comment -->
       </b-row>
     </div>
+
+    <div
+      class="no-results text-center"
+      v-else
+    >
+      <h5>No content has been added to this topic</h5>
+    </div>
+
     <div class="blog-detail-wrapper">
       <b-row>
         <!-- Leave a Blog Comment -->
@@ -524,5 +532,12 @@ img {
 .content-data h4 {
   width: 95%;
   display: inline-flex;
+}
+.topic-name {
+  font-size: 1rem;
+}
+.topic-back {
+  height: 30px;
+  width: 30px;
 }
 </style>

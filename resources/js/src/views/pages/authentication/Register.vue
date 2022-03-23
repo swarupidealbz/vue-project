@@ -245,6 +245,29 @@
                 </validation-provider>
               </b-form-group>
 
+              <!-- website -->
+              <b-form-group
+                label="Website"
+                label-for="register-client-website"
+                v-if="role == 'client'"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  name="Website"
+                  vid="website"
+                  rules="required"
+                >
+                  <b-form-input
+                    id="register-client-website"
+                    v-model="website"
+                    name="register-client-website"
+                    :state="errors.length > 0 ? false:null"
+                    placeholder="example.io"
+                  />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+
               <!-- <b-form-group>
                 <b-form-checkbox
                   id="register-privacy-policy"
@@ -382,6 +405,7 @@ export default {
         { value: 'client', text: 'Client' },
         { value: 'writer', text: 'Writer' }
       ],
+      website: '',
       sideImg: require('@/assets/images/pages/register-v2.svg'),
       // validation
       required,
@@ -441,7 +465,8 @@ export default {
             confirm_password: this.confirm_password,
             mobile: this.mobile,
             country_code: this.countryCode,
-            role: this.role
+            role: this.role,
+            website: this.website
           }).then(response => {
             this.$toast({
               component: ToastificationContent,

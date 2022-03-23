@@ -18,6 +18,7 @@
             :checked="selectAllEmailCheckbox"
             :indeterminate="isSelectAllEmailCheckboxIndeterminate"
             @change="selectAllCheckboxUpdate"
+            v-if="!isWriter"
           >
             Select All
           </b-form-checkbox>
@@ -33,6 +34,7 @@
             variant="flat-success"
             class="btn-sm"
             @click="bulkApproved"
+            v-if="!isWriter"
           >
             Accept
           </b-button>
@@ -42,6 +44,7 @@
             variant="flat-danger"
             class="btn-sm"
             @click="bulkReject"
+            v-if="!isWriter"
           >
             Reject
           </b-button>
@@ -71,6 +74,7 @@
                   :checked="selectedEmails.includes(topic.id)"
                   @change="toggleSelectedMail(topic.id)"
                   @click.native.stop
+                  v-if="!isWriter"
                 /> 
                 <div class="email-favorite">
                   <feather-icon

@@ -8,11 +8,11 @@
         Goal Overview
       </h4>
       <b-card-text class="font-medium-5 mb-0">
-        <feather-icon
+        <!-- <feather-icon
           icon="HelpCircleIcon"
           size="21"
           class="text-muted cursor-pointer"
-        />
+        /> -->
       </b-card-text>
     </b-card-header>
 
@@ -42,7 +42,7 @@
         class="border-top d-flex align-items-between flex-column py-1"
       >
         <b-card-text class="text-muted mb-0">
-          Completed
+          {{ isClient ? 'Created' : 'Completed' }}
         </b-card-text>
         <h3 class="font-weight-bolder mb-0">
           {{ completed }}
@@ -148,18 +148,21 @@ export default {
       return this.$store.state.app.dashboardData.statistics || []
     },
     percentage() {
-      return (((this.stat.self_topics_count || 0) / this.data.monthly_goal)*100);
+      return ((this.completed / this.monthlyGoal) *100);
     },
     monthlyGoal() {
-      return this.data.monthly_goal;
+      return this.stat.monthly_goal || 0;
     },
     completed() {
-      return this.stat.self_topics_count
+      return this.stat.self_topics_count || 0
     },
     series() {
       return [
-        this.percentage
+        this.percentage || 0
       ]
+    },
+    isClient() {
+      return this.data.role == 'client'
     }
   },
 }

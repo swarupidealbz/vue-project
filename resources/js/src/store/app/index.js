@@ -13,7 +13,66 @@ export default {
       notifications: []
     },
     dashboardData: {
-      statistics: [],
+      statistics: {
+        topics: {
+          color: 'light-primary',
+          icon:'TrendingUpIcon',
+          text: 'Topics',
+          count: 0
+        },
+        articles: {
+          color: 'light-info',
+          icon:'UserIcon',
+          text: 'Articles',
+          count: 0
+        },
+        outlines: {
+          color: 'light-danger',
+          icon:'BoxIcon',
+          text: 'Outlines',
+          count: 0
+        },
+        comments: {
+          color: 'light-success',
+          icon:'DollarSignIcon',
+          text: 'Comments',
+          count: 0
+        },
+        self_topics_count: 0,
+        monthly_goal: 0
+      },
+      topic_lists: [],
+      leaders: []
+    },
+    copyDashboardData: {
+      statistics: {
+        topics: {
+          color: 'light-primary',
+          icon:'TrendingUpIcon',
+          text: 'Topics',
+          count: 0
+        },
+        articles: {
+          color: 'light-info',
+          icon:'UserIcon',
+          text: 'Articles',
+          count: 0
+        },
+        outlines: {
+          color: 'light-danger',
+          icon:'BoxIcon',
+          text: 'Outlines',
+          count: 0
+        },
+        comments: {
+          color: 'light-success',
+          icon:'DollarSignIcon',
+          text: 'Comments',
+          count: 0
+        },
+        self_topics_count: 0,
+        monthly_goal: 0
+      },
       topic_lists: [],
       leaders: []
     },
@@ -109,58 +168,68 @@ export default {
   },
   actions: {
     loadAppData({commit, state, dispatch}, payload){
-      dispatch('loadTop');
-      dispatch('loadData');
+      dispatch('loadTop').then(res => {
+        dispatch('loadData');
+      });
       dispatch('loadMenu');
       
     },
     loadTop({commit, state, dispatch}) {
-      axios.post(state.apiBaseUrl+'dashboard/data', {parts: 'top_bar'}).then(response => {
-        console.log('top data');
-        // console.log(response.data);
-        let top = {
-          websites: response.data.data.websites,
-          languages: response.data.data.languages,
-          notifications: response.data.data.notifications
-        };
-        var userData = JSON.parse(localStorage.getItem('userData'));
-        commit('setTopBar', top);
-        let web = localStorage.getItem('website')
-        commit('setSelectedWebsite', response.data.data.websites[0]);
-        localStorage.setItem('website', JSON.stringify(response.data.data.websites[0]))
-        if(web) {
-          web  = JSON.parse(web);
-          let sweb = response.data.data.websites.some(w => w.id === web.id)
-          if(sweb) {
-            commit('setSelectedWebsite', web);
-            localStorage.setItem('website', JSON.stringify(web))
+      return new Promise((resolve, reject) => {
+        axios.post(state.apiBaseUrl+'dashboard/data', {parts: 'top_bar'}).then(response => {
+          console.log('top data');
+          // console.log(response.data);
+          let top = {
+            websites: response.data.data.websites,
+            languages: response.data.data.languages,
+            notifications: response.data.data.notifications
+          };
+          var userData = JSON.parse(localStorage.getItem('userData'));
+          commit('setTopBar', top);
+          let web = localStorage.getItem('website')
+          let index = userData.role == 'client' ? 0 : 1;
+          commit('setSelectedWebsite', response.data.data.websites[index]);
+          localStorage.setItem('website', response.data.data.websites.length ? JSON.stringify(response.data.data.websites[index]) : [])
+          if(web) {
+            web  = JSON.parse(web);
+            let sweb = response.data.data.websites.some(w => w.id === web.id)
+            if(sweb) {
+              commit('setSelectedWebsite', web);
+              localStorage.setItem('website', JSON.stringify(web))
+            }
           }
-        }
-        dispatch('loadTopics', {website:state.selectedWebsite.id})
-        userData.top_bar = top;
-        localStorage.setItem('userData', JSON.stringify(userData))
-      }).catch(error => {
-        console.log('error load top data');
+          if(state.selectedWebsite) {
+            dispatch('loadTopics', {website:state.selectedWebsite.id})
+          }
+          userData.top_bar = top;
+          localStorage.setItem('userData', JSON.stringify(userData))
+          resolve(response.data)
+        }).catch(error => {
+          console.log('error load top data');
+          reject(error)
+        })
       })
     },
     loadData({commit, state, dispatch}) {
       let web = localStorage.getItem('website')
-      web  = JSON.parse(web);
-      axios.post(state.apiBaseUrl+'dashboard/data', {parts: 'data', website: web.id}).then(response => {
-        console.log('dash data');
-        // console.log(response.data);
-        let data = {
-          statistics: response.data.data.statistics,
-          topic_lists: response.data.data.topic_lists,
-          leaders: response.data.data.leaders
-        };
-        var userData = JSON.parse(localStorage.getItem('userData'));
-        commit('setDashboardData', data);
-        userData.stat = data;
-        localStorage.setItem('userData', JSON.stringify(userData))
-      }).catch(error => {
-        console.log('error load dash data');
-      })
+      if(web.length) {          
+        web  = JSON.parse(web);
+        axios.post(state.apiBaseUrl+'dashboard/data', {parts: 'data', website: web.id}).then(response => {
+          console.log('dash data');
+          // console.log(response.data);
+          let data = {
+            statistics: response.data.data.statistics,
+            topic_lists: response.data.data.topic_lists,
+            leaders: response.data.data.leaders
+          };
+          var userData = JSON.parse(localStorage.getItem('userData'));
+          commit('setDashboardData', data);
+          userData.stat = data;
+          localStorage.setItem('userData', JSON.stringify(userData))
+        }).catch(error => {
+          console.log('error load dash data');
+        })
+      }
     },
     loadMenu({commit, state, dispatch}) {
       axios.post(state.apiBaseUrl+'dashboard/data', {parts: 'side_menu'}).then(response => {

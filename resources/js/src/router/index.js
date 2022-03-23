@@ -51,8 +51,6 @@ router.beforeEach((to, _, next) => {
   ]  
   const find = rList.includes(to.name)
   var user = getUserData()
-  console.log(to);
-  console.log(find);
   if (!canNavigate(to)) {
     // Redirect to login if not logged in
     if (!isLoggedIn) return next({ name: 'auth-login' })
@@ -62,7 +60,6 @@ router.beforeEach((to, _, next) => {
   }
 
   if(!find && !to.path.includes('images/') && isLoggedIn && ((user.role == 'client') || (user.role == 'writer'))) {
-    console.log('not listed');
     return next({ name: 'error-404' })
   }
 

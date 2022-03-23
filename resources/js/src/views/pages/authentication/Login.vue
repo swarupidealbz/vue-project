@@ -351,9 +351,6 @@ export default {
           //  })
           this.$http.post(store.state.app.apiBaseUrl + 'login', {username: this.username, password: this.password})
             .then(response => {
-              console.log('api');
-              console.log(response.data);
-                console.log(response.data)
                 const userData = response.data.data.user
                 let ability = [];
                 ability.push({ action: "manage", subject: "all" });
@@ -363,6 +360,7 @@ export default {
                 //useJwt.setRefreshToken(response.data.refreshToken)
 
                 localStorage.setItem('userData', JSON.stringify(userData))
+                store.commit('app/setDashboardData', store.state.app.copyDashboardData);
 
                 //this.$ability.update(userData.ability)
 
@@ -383,7 +381,8 @@ export default {
                         title: `Welcome ${userData.fullName || userData.username}`,
                         icon: 'CoffeeIcon',
                         variant: 'success',
-                        text: `You have successfully logged in as ${userData.role}. Now you can start to explore!`,
+                        // text: `You have successfully logged in as ${userData.role}. Now you can start to explore!`,
+                        text: `Start exploring your Content Lab!`,
                       },
                     })
                   })

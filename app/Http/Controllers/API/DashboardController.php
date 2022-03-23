@@ -68,12 +68,15 @@ class DashboardController extends BaseController
     private function websites()
     {
         $loginUser = Auth::user();
-        $result = collect([
-            [
-                'id' => 0,
-                'name' => 'All'
-            ]
-        ]);
+        $result = collect([]);
+        if($loginUser->role == 'writer') {
+            $result = collect([
+                [
+                    'id' => 0,
+                    'name' => 'All'
+                ]
+            ]);
+        }
         $rec = Websites::all()->filter(function($item) use($loginUser){
             $owners = explode(',', $item->owners);
             return in_array($loginUser->id, $owners);
@@ -142,7 +145,9 @@ class DashboardController extends BaseController
             'articles' => $articles,
             'outlines' => $outlines,
             'comments' => $comments,
-            'self_topics_count' => $selfTopicCount
+            'self_topics_count' => $selfTopicCount,
+            'monthly_goal' => $loginUser->monthly_goal,
+            'unit_cost' => $loginUser->unit_cost
         ];       
 
     }
@@ -152,6 +157,13 @@ class DashboardController extends BaseController
         $user = Auth::user();
         $topics = Topics::when($websiteId, function($q) use($websiteId){
             $q->where('website_id', $websiteId);
+        })
+        ->when(($websiteId == '') && ($user->role == 'client'), function($q) use($user){
+            $webIds = Websites::all()->filter(function($item) use($user){
+                $owners = explode(',', $item->owners);
+                return in_array($user->id, $owners);
+            })->pluck('id')->toArray();
+            return $q->whereIn('website_id', $webIds);
         })
         ->whereBetween('created_at',[$startOfMonth, $currentDate]);
 
@@ -167,9 +179,17 @@ class DashboardController extends BaseController
 
     private function topicRecord($websiteId, $startOfMonth, $currentDate, $firstDayofPreviousMonth, $lastDayofPreviousMonth)
     {
+        $user = Auth::user();
         //getting topic
         $currentMonthTopics = Topics::when($websiteId, function($q) use($websiteId){
             $q->where('website_id', $websiteId);
+        })
+        ->when(($websiteId == '') && ($user->role == 'client'), function($q) use($user){
+            $webIds = Websites::all()->filter(function($item) use($user){
+                $owners = explode(',', $item->owners);
+                return in_array($user->id, $owners);
+            })->pluck('id')->toArray();
+            return $q->whereIn('website_id', $webIds);
         })
         ->whereBetween('created_at',[$startOfMonth, $currentDate])->count();
         $lastMonthTopics = Topics::when($websiteId, function($q) use($websiteId){
@@ -206,9 +226,17 @@ class DashboardController extends BaseController
 
     private function articleRecord($websiteId, $startOfMonth, $currentDate, $firstDayofPreviousMonth, $lastDayofPreviousMonth)
     {
+        $user = Auth::user();
         //getting content
         $currentMonthContent = Content::when($websiteId, function($q) use($websiteId){
             $q->where('website_id', $websiteId);
+        })
+        ->when(($websiteId == '') && ($user->role == 'client'), function($q) use($user){
+            $webIds = Websites::all()->filter(function($item) use($user){
+                $owners = explode(',', $item->owners);
+                return in_array($user->id, $owners);
+            })->pluck('id')->toArray();
+            return $q->whereIn('website_id', $webIds);
         })
         ->where('content_type', 'like', 'article')
         ->whereBetween('created_at',[$startOfMonth, $currentDate])->count();
@@ -249,9 +277,17 @@ class DashboardController extends BaseController
 
     private function outlineRecord($websiteId, $startOfMonth, $currentDate, $firstDayofPreviousMonth, $lastDayofPreviousMonth)
     {
+        $user = Auth::user();
         //getting outline
         $currentMonthOutline = Content::when($websiteId, function($q) use($websiteId){
             $q->where('website_id', $websiteId);
+        })
+        ->when(($websiteId == '') && ($user->role == 'client'), function($q) use($user){
+            $webIds = Websites::all()->filter(function($item) use($user){
+                $owners = explode(',', $item->owners);
+                return in_array($user->id, $owners);
+            })->pluck('id')->toArray();
+            return $q->whereIn('website_id', $webIds);
         })
         ->where('content_type', 'like', 'outline')
         ->whereBetween('created_at',[$startOfMonth, $currentDate])->count();
@@ -292,8 +328,16 @@ class DashboardController extends BaseController
 
     private function commentRecord($websiteId, $startOfMonth, $currentDate, $firstDayofPreviousMonth, $lastDayofPreviousMonth)
     {
+        $user = Auth::user();
         $currentMonthComment = Comments::when($websiteId, function($q) use($websiteId){
             $q->where('website_id', $websiteId);
+        })
+        ->when(($websiteId == '') && ($user->role == 'client'), function($q) use($user){
+            $webIds = Websites::all()->filter(function($item) use($user){
+                $owners = explode(',', $item->owners);
+                return in_array($user->id, $owners);
+            })->pluck('id')->toArray();
+            return $q->whereIn('website_id', $webIds);
         })
         ->whereBetween('created_at',[$startOfMonth, $currentDate])->count();
         $lastMonthComment = Comments::when($websiteId, function($q) use($websiteId){
@@ -345,7 +389,15 @@ class DashboardController extends BaseController
 		
 		$topics = Topics::when($websiteId, function($q) use($websiteId){
             $q->where('website_id', $websiteId);
-        })->latest()->take(10)->get();
+        })
+        ->when(($websiteId == '') && ($loginUser->role == 'client'), function($q) use($loginUser){
+            $webIds = Websites::all()->filter(function($item) use($loginUser){
+                $owners = explode(',', $item->owners);
+                return in_array($loginUser->id, $owners);
+            })->pluck('id')->toArray();
+            return $q->whereIn('website_id', $webIds);
+        })
+        ->latest()->take(10)->get();
 		
 		return $topics;
 	}

@@ -141,6 +141,13 @@ class PrimaryTopicController extends BaseController
                 ->when($website, function($q) use($website){
                     return $q->whereIn('website_id', $website);
                 })
+                ->when(($website == '') && ($loginUser->role == 'client'), function($q) use($loginUser){
+                    $webIds = Websites::all()->filter(function($item) use($loginUser){
+                        $owners = explode(',', $item->owners);
+                        return in_array($loginUser->id, $owners);
+                    })->pluck('id')->toArray();
+                   return  $q->whereIn('website_id', $webIds);
+                })
                 ->with(['groups.group'])->latest();
                 $more = $topicList->count();
                
@@ -304,8 +311,15 @@ class PrimaryTopicController extends BaseController
             ->when($website, function($q) use($website){
                 return $q->whereIn('website_id', $website);
             })
+            ->when(($website == '') && ($loginUser->role == 'client'), function($q) use($loginUser){
+                $webIds = Websites::all()->filter(function($item) use($loginUser){
+                    $owners = explode(',', $item->owners);
+                    return in_array($loginUser->id, $owners);
+                })->pluck('id')->toArray();
+                return $q->whereIn('website_id', $webIds);
+            })
             ->when($sort, function($q) use($sort) {
-                if(in_array($sort, [Topics::STATUS_APPROVED, Topics::STATUS_REJECTED])) {
+                if(in_array($sort, [Topics::STATUS_OPEN,Topics::STATUS_APPROVED, Topics::STATUS_REJECTED])) {
                     return $q->where('status', strtolower($sort));
                 }
                 else {
@@ -426,6 +440,13 @@ class PrimaryTopicController extends BaseController
             $topicList = Topics::where('is_primary_topic', 1)
             ->when($website, function($q) use($website){
                 return $q->whereIn('website_id', $website);
+            })
+            ->when(($website == '') && ($loginUser->role == 'client'), function($q) use($loginUser){
+                $webIds = Websites::all()->filter(function($item) use($loginUser){
+                    $owners = explode(',', $item->owners);
+                    return in_array($loginUser->id, $owners);
+                })->pluck('id')->toArray();
+                return $q->whereIn('website_id', $webIds);
             })
             ->when($sort, function($q) use($sort) {
                 if(in_array($sort, [Topics::STATUS_APPROVED, Topics::STATUS_REJECTED])) {
