@@ -72,7 +72,7 @@ export default {
       fields: [
         { key: 'profile_image', label: 'FULL NAME' },
         { key: 'level', label: 'LEVEL' },
-        { key: 'job_units', label: 'JOB COMPLETED' },
+        { key: 'job_units', label: 'JOBS COMPLETED' },
       ],
     }
   },

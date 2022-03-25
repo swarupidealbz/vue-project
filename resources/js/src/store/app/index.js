@@ -7,6 +7,7 @@ export default {
     windowWidth: 0,
     shallShowOverlay: false,
     apiBaseUrl: 'https://cl.99ideaz.com/api/',
+    // apiBaseUrl: 'http://localhost:8000/api/',
     topBar: {
       websites: [],
       languages: [],
@@ -187,7 +188,7 @@ export default {
           var userData = JSON.parse(localStorage.getItem('userData'));
           commit('setTopBar', top);
           let web = localStorage.getItem('website')
-          let index = userData.role == 'client' ? 0 : 1;
+          let index = userData.role == 'client' ? 0 : 0;
           commit('setSelectedWebsite', response.data.data.websites[index]);
           localStorage.setItem('website', response.data.data.websites.length ? JSON.stringify(response.data.data.websites[index]) : [])
           if(web) {
