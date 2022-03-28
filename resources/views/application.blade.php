@@ -43,6 +43,34 @@
   </div>
 
   <script src="{{ asset(mix('js/app.js')) }}"></script>
+  <!-- User segmentation start -->
+<script>
+let user = localStorage.getItem('userData');
+if(user) {
+  user = JSON.parse(user)
+  if(user.role) {
+    window.usetifulTags = { 
+      role : user.role,     
+    };
+  }
+}
+console.log(window.usetifulTags)
+</script>
+<!-- User segmentation end -->
+<!-- Usetiful script start -->
+            <script>
+(function (w, d, s) {
+    var a = d.getElementsByTagName('head')[0];
+    var r = d.createElement('script');
+    r.async = 1;
+    r.src = s;
+    r.setAttribute('id', 'usetifulScript');
+    r.dataset.token = "c048724c130f5e808988bc239714f85a";
+                        a.appendChild(r);
+  })(window, document, "https://www.usetiful.com/dist/usetiful.js");</script>
+
+<!-- Usetiful script end -->
+
 
 </body>
 

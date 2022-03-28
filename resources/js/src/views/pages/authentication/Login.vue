@@ -365,6 +365,10 @@ export default {
                 //this.$ability.update(userData.ability)
 
                 this.$ability.update(ability)
+                window.usetifulTags = { 
+                  role : userData.role,     
+                };
+                console.log(window.usetifulTags)
 
                 // ? This is just for demo purpose as well.
                 // ? Because we are showing eCommerce app's cart items count in navbar
