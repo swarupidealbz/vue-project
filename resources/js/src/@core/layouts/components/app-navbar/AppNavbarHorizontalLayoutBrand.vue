@@ -7,10 +7,11 @@
           to="/"
         >
           <span class="brand-logo">
-            <b-img
+            <!-- <b-img
               :src="appLogoImage"
               alt="logo"
-            />
+            /> -->
+            <vuexy-logo />
           </span>
           <h2 class="brand-text mb-0">
             {{ appName }}
@@ -23,12 +24,14 @@
 
 <script>
 import { BLink, BImg } from 'bootstrap-vue'
+import VuexyLogo from '@core/layouts/components/Logo.vue'
 import { $themeConfig } from '@themeConfig'
 
 export default {
   components: {
     BLink,
     BImg,
+    VuexyLogo,
   },
   setup() {
     // App Name
