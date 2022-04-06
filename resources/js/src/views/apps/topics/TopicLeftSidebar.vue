@@ -49,11 +49,11 @@
             </b-list-group>
 
             <!-- Status -->
-            <h6 class="section-label mt-3 mb-1 px-2">
+            <h6 class="section-label mt-3 mb-1 px-2" v-if="!isWriter">
               Status
             </h6>
 
-            <b-list-group class="list-group-labels">
+            <b-list-group class="list-group-labels"  v-if="!isWriter">
               <b-list-group-item
                 v-for="status in statusLists"
                 :key="status.name"

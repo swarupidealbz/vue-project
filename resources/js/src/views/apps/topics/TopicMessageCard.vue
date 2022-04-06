@@ -35,7 +35,7 @@
 
           <b-dropdown-item
           @click="showChild"
-          v-if="!isWriter"
+          v-if="!isWriter && isPrimary"
           >
             <feather-icon icon="GridIcon" />
             <span class="align-middle ml-50">Show Child Topics</span>
@@ -140,6 +140,9 @@ export default {
     },
     user() {
       return JSON.parse(localStorage.getItem('userData'));
+    },
+    isPrimary() {
+      return !this.$store.state.app.showChild;
     }
   },
   methods: {

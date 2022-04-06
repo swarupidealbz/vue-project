@@ -147,6 +147,9 @@ class PrimaryTopicController extends BaseController
                 ->when($website, function($q) use($website){
                     return $q->whereIn('website_id', $website);
                 })
+                ->when($loginUser->role == 'writer', function($q) {
+                    return $q->where('status', Topics::STATUS_APPROVED);
+                })
                 ->when(($website == '') && ($loginUser->role == 'client'), function($q) use($loginUser){
                     $webIds = Websites::all()->filter(function($item) use($loginUser){
                         $owners = explode(',', $item->owners);
@@ -191,6 +194,7 @@ class PrimaryTopicController extends BaseController
 					else {
                         $topic->is_favorite = false; 
                     }
+                    $topic->child_count = Topics::where('primary_topic_id', $topic->id)->count();
 					return $topic;
 				});
                 $response = [
@@ -329,6 +333,9 @@ class PrimaryTopicController extends BaseController
             ->when($request->primary_topic_id, function($q) use($request){
                 return $q->where('primary_topic_id', $request->primary_topic_id);
             })
+            ->when($loginUser->role == 'writer', function($q) {
+                return $q->where('status', Topics::STATUS_APPROVED);
+            })
             ->when($sort, function($q) use($sort) {
                 if(in_array($sort, [Topics::STATUS_OPEN,Topics::STATUS_APPROVED, Topics::STATUS_REJECTED])) {
                     return $q->where('status', strtolower($sort));
@@ -347,6 +354,7 @@ class PrimaryTopicController extends BaseController
                 else {
                     $topic->is_favorite = false; 
                 }
+                $topic->child_count = Topics::where('primary_topic_id', $topic->id)->count();
                 return $topic;
             });
             $list = [
@@ -469,6 +477,9 @@ class PrimaryTopicController extends BaseController
             ->when($request->primary_topic_id, function($q) use($request){
                 return $q->where('primary_topic_id', $request->primary_topic_id);
             })
+            ->when($loginUser->role == 'writer', function($q) {
+                return $q->where('status', Topics::STATUS_APPROVED);
+            })
             ->when($sort, function($q) use($sort) {
                 if(in_array($sort, [Topics::STATUS_APPROVED, Topics::STATUS_REJECTED])) {
                     return $q->where('status', strtolower($sort));
@@ -487,6 +498,7 @@ class PrimaryTopicController extends BaseController
                 else {
                     $topic->is_favorite = false; 
                 }
+                $topic->child_count = Topics::where('primary_topic_id', $topic->id)->count();
                 return $topic;
             });
             $skip = $request->off;

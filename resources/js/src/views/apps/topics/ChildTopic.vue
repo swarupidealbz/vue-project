@@ -124,8 +124,7 @@
               </div>
 
               <div class="mail-message">
-                <p class="text-truncate mb-0">
-                  {{ topic.description ? filterTags(topic.description) : '' }}
+                <p class="text-truncate mb-0" v-html="(topic.description ? filterTags(topic.description) : '')">
                 </p>
               </div>
             </b-media-body>
