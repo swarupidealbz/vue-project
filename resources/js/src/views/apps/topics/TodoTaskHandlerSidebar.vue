@@ -77,6 +77,29 @@
             </b-form-radio>
           </div>
 
+           <validation-provider
+              #default="validationTopicId"
+              name="Primary topic name"
+              rules="required"
+              v-if="taskLocal.type == 0"
+            >
+              <b-form-group
+                label="Primary topic name"
+                label-for="primary-topic-name"
+              >
+                  <b-form-select
+                    id="primary-topic-name"
+                    name="primary-topic-name"
+                    v-model="taskLocal.primary_topic_id"
+                    :state="getValidationState(validationTopicId)"
+                    :options="topicOptions"
+                  />
+              <b-form-invalid-feedback>
+                  {{ validationTopicId.errors[0] }}
+                </b-form-invalid-feedback>
+              </b-form-group>
+            </validation-provider>
+
             <!-- Title -->
             <validation-provider
               #default="validationContext"
@@ -143,7 +166,7 @@
 </template>
 
 <script>
-import { BSidebar, BForm, BFormGroup, BFormInput, BAvatar, BButton, BFormInvalidFeedback,BFormRadio } from 'bootstrap-vue'
+import { BSidebar, BForm, BFormGroup, BFormInput, BAvatar, BButton, BFormInvalidFeedback,BFormRadio, BFormSelect, BFormSelectOption } from 'bootstrap-vue'
 import vSelect from 'vue-select'
 import flatPickr from 'vue-flatpickr-component'
 import Ripple from 'vue-ripple-directive'
@@ -167,6 +190,8 @@ export default {
     BAvatar,
     BFormRadio,
     BFormInvalidFeedback,
+    BFormSelect,
+    BFormSelectOption,
 
     // 3rd party packages
     vSelect,
@@ -205,13 +230,45 @@ export default {
       url,
     }
   },
+  computed: {
+    topics() {
+      return this.$store.state.app.topics;
+    },
+    topicOptions() {
+      let result = [
+        { value: '', text: 'Select Primary Topic'}
+      ]
+      Object.values(this.topics).map(topic => {
+        result.push({
+          value: topic.id,
+          text: topic.topic
+        })
+      })
+
+      return result;
+    }
+  },
   methods: {
     addTopic() {
+      if((this.taskLocal.type == 0) && !this.taskLocal.primary_topic_id) {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: `Please select a primary topic from list.`,
+              },
+            })
+        return false
+      }
       let payload = {
         website: this.$store.state.app.selectedWebsite.id,
         is_primary: this.taskLocal.type,
         topic_name: this.taskLocal.topic,
-        description: this.taskLocal.description
+        description: this.taskLocal.description,
+        primary_topic_id: this.taskLocal.primary_topic_id
       }
       this.$store.dispatch('app/addOrUpdateTopic', payload).then((res) => {
         let payload = {
@@ -239,7 +296,7 @@ export default {
                 title: `Failed`,
                 icon: 'UserCheckIcon',
                 variant: 'danger',
-                text: error.message,
+                text: error.data.data[0],
               },
             })
       })

@@ -10,7 +10,28 @@
     <!-- Email List -->
     <div class="email-app-list">
 
-      
+      <div class="app-action">
+        <div class="action-left">
+          <span class="go-back mr-1">
+            <feather-icon
+              icon="XIcon"
+              size="25"
+              class="align-bottom"
+              
+              @click.stop="removeChildTopicShow"
+            />
+          </span>
+          <span class="justify">
+            <strong>{{ topicName }}</strong>
+          </span>
+        </div>
+        <div
+          class="align-items-center d-flex"
+        >
+        </div>        
+
+      </div>
+
       <!-- App Action Bar -->
       <div class="app-action">
         <div class="action-left">
@@ -48,8 +69,8 @@
           >
             Reject
           </b-button>
-
         </div>
+
       </div>
 
       <!-- Emails List -->
@@ -136,13 +157,6 @@
                   >
                     <feather-icon icon="FileIcon" />
                     <span class="align-middle ml-50">Remove from assign</span>
-                  </b-dropdown-item>
-                  <b-dropdown-item
-                  @click="showChildTopic(topic)"
-                  v-if="!isWriter"
-                  >
-                    <feather-icon icon="GridIcon" />
-                    <span class="align-middle ml-50">Show Child Topics</span>
                   </b-dropdown-item>
                   <b-dropdown-item
                   :to="{ name: 'topic-timeline', params: { id: topic.id } }"
@@ -292,7 +306,7 @@ export default {
   },
   computed: {
     topics() {
-      return this.$store.state.app.topics;
+      return this.$store.state.app.childtopics;
     },
     loader() {
       return this.$store.state.app.loading;
@@ -307,32 +321,31 @@ export default {
     show() {
       return this.$store.state.app.topicMore;
     },
-  },
-  beforeCreate() {
-    if(this.$store.state.app.showChild) {
-      localStorage.removeItem('selectedTopic')
-      this.$store.commit('app/setShowChild', false);
-      this.$store.commit('app/setTopicCount', 0);
-       this.$store.dispatch('app/loadTopics', {
-        website: this.$store.state.app.selectedWebsite.id, 
-      }).then(res => {
-      })
+    topicName() {
+      let local = localStorage.getItem('selectedTopic')
+      if(local) {
+        local = JSON.parse(local)
+      }
+      return local.topic
+    },
+    localTopic() {
+      let local = localStorage.getItem('selectedTopic')
+      if(local) {
+        local = JSON.parse(local)
+      }
+      return local
     }
   },
   methods: {
-    showChildTopic(topic) {
+    removeChildTopicShow() {
+      this.$store.commit('app/setShowChild', false);
       this.$store.commit('app/setTopics', []);
       this.$store.commit('app/setGroups', []);
       this.$store.commit('app/setTopicCount', 0);
-      this.$store.commit('app/setSelectedTopic', topic)
-      this.$store.commit('app/setShowChild', true);
-      localStorage.setItem('selectedTopic', JSON.stringify(topic));
-      this.$store.dispatch('app/loadChildTopics', {
-        website: this.$store.state.app.selectedWebsite.id, 
-        primary_topic_id:topic.id 
-      }).then(res => {
-        this.$router.push('child-topics');
-      })
+      this.$store.commit('app/setSelectedTopic', {})
+      this.$store.dispatch('app/loadTopics', {website:this.$store.state.app.selectedWebsite.id})
+      localStorage.removeItem('selectedTopic')
+      this.$router.push('topics');
     },
     more() {
       this.$store.commit('app/setTopicMore', false);
@@ -340,7 +353,7 @@ export default {
         website: this.$store.state.app.selectedWebsite.id, 
         order: this.$store.state.app.selectedOrder.id,
         off: this.loadingTopic,
-        primary_topic_id: this.$store.state.app.selectedTopic.id && this.$store.state.app.showChild ? this.$store.state.app.selectedTopic.id : ''
+        primary_topic_id: this.localTopic.id && this.$store.state.app.showChild ? this.localTopic.id : ''
       }).then(res => {
         this.loadingTopic += 10;
       });
@@ -394,7 +407,10 @@ export default {
                 text: res.message,
               },
             })
-        this.$store.dispatch('app/sortRecord', { website: this.$store.state.app.selectedWebsite.id });
+        this.$store.dispatch('app/sortRecord', { 
+          website: this.$store.state.app.selectedWebsite.id,
+          primary_topic_id: this.localTopic.id && this.$store.state.app.showChild ? this.localTopic.id : ''
+         });
       }).catch(error => {
         this.$toast({
               component: ToastificationContent,
@@ -424,7 +440,10 @@ export default {
                 text: res.message,
               },
             })
-        this.$store.dispatch('app/sortRecord', { website: this.$store.state.app.selectedWebsite.id });
+        this.$store.dispatch('app/sortRecord', { 
+          website: this.$store.state.app.selectedWebsite.id,
+          primary_topic_id: this.localTopic.id && this.$store.state.app.showChild ? this.localTopic.id : ''
+        });
       }).catch(error => {
         this.$toast({
               component: ToastificationContent,
@@ -504,7 +523,8 @@ export default {
         status: 'approved'
       }).then((res) => {
         let payload = {
-          website: this.$store.state.app.selectedWebsite.id
+          website: this.$store.state.app.selectedWebsite.id,
+          primary_topic_id: this.localTopic.id && this.$store.state.app.showChild ? this.localTopic.id : ''
         }
         if(this.$store.state.app.selectedOrder.id) {
           payload.order = this.$store.state.app.selectedOrder.id
@@ -541,7 +561,8 @@ export default {
         status: 'rejected'
       }).then((res) => {
         let payload = {
-          website: this.$store.state.app.selectedWebsite.id
+          website: this.$store.state.app.selectedWebsite.id,
+          primary_topic_id: this.localTopic.id && this.$store.state.app.showChild ? this.localTopic.id : ''
         }
         if(this.$store.state.app.selectedOrder.id) {
           payload.order = this.$store.state.app.selectedOrder.id
@@ -577,7 +598,8 @@ export default {
         status: 'approved'
       }).then((res) => {
         let payload = {
-          website: this.$store.state.app.selectedWebsite.id
+          website: this.$store.state.app.selectedWebsite.id,
+          primary_topic_id: this.localTopic.id && this.$store.state.app.showChild ? this.localTopic.id : ''
         }
         if(this.$store.state.app.selectedOrder.id) {
           payload.order = this.$store.state.app.selectedOrder.id
@@ -614,7 +636,8 @@ export default {
         status: 'rejected'
       }).then((res) => {
         let payload = {
-          website: this.$store.state.app.selectedWebsite.id
+          website: this.$store.state.app.selectedWebsite.id,
+          primary_topic_id: this.localTopic.id && this.$store.state.app.showChild ? this.localTopic.id : ''
         }
         if(this.$store.state.app.selectedOrder.id) {
           payload.order = this.$store.state.app.selectedOrder.id
@@ -653,7 +676,8 @@ export default {
         topic: topic.id,
       }).then((res) => {
         let payload = {
-          website: store.state.app.selectedWebsite.id
+          website: store.state.app.selectedWebsite.id,
+          primary_topic_id: this.localTopic.id && this.$store.state.app.showChild ? this.localTopic.id : ''
         }
         if(store.state.app.selectedOrder.id) {
           payload.order = store.state.app.selectedOrder.id
@@ -759,7 +783,7 @@ export default {
     const selectAllEmailCheckbox = computed(() => store.state.app.topics.length && (store.state.app.topics.length === selectedEmails.value.length))
     const isSelectAllEmailCheckboxIndeterminate = computed(() => Boolean(selectedEmails.value.length) && store.state.app.topics.length !== selectedEmails.value.length)
     const selectAllCheckboxUpdate = val => {
-      selectedEmails.value = val ? store.state.app.topics.map(mail => mail.id) : []
+      selectedEmails.value = val ? store.state.app.childtopics.map(mail => mail.id) : []
     }
     // ? Watcher to reset selectedEmails is somewhere below due to watch dependecy fullfilment
 

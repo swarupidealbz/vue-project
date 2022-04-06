@@ -34,9 +34,9 @@ class PrimaryTopicController extends BaseController
             if(empty($primaryTopic)) {
                 return $this->handleError([], 'Data not found', 404);
             }
-            if(!optional($primaryTopic)->is_primary_topic) {
-                return $this->handleError([], 'Primary Data not found', 404);
-            }
+            // if(!optional($primaryTopic)->is_primary_topic) {
+            //     return $this->handleError([], 'Primary Data not found', 404);
+            // }
             return $this->handleResponse($primaryTopic, 'Success');
         }
         catch(Exception $e) 
@@ -75,6 +75,7 @@ class PrimaryTopicController extends BaseController
             $inputData = [
                 'website_id' => $request->website,
                 'is_primary_topic' => ($request->is_primary == 'undefined') ? 1 : $request->is_primary,
+                'primary_topic_id' => $request->primary_topic_id ?? NULL,
                 'topic' => $request->topic_name,
                 'description' => $request->description,
                 'topic_image_path' => $storePath,
@@ -137,7 +138,12 @@ class PrimaryTopicController extends BaseController
                 $website = '';
             }
             //if($loginUser->role == 'client') {
-                $topicList = Topics::where('is_primary_topic', 1)
+                $topicList = Topics::when(($loginUser->role == 'client') && !$request->primary_topic_id, function($q) {
+                    return $q->where('is_primary_topic', 1);
+                })
+                ->when($request->primary_topic_id, function($q) use($request){
+                    return $q->where('primary_topic_id', $request->primary_topic_id);
+                })
                 ->when($website, function($q) use($website){
                     return $q->whereIn('website_id', $website);
                 })
@@ -307,7 +313,9 @@ class PrimaryTopicController extends BaseController
             if($request->website == 0) {
                 $website = '';
             }
-            $topicList = Topics::where('is_primary_topic', 1)
+            $topicList = Topics::when(($loginUser->role == 'client') && !$request->primary_topic_id, function($q) {
+                return $q->where('is_primary_topic', 1);
+            })
             ->when($website, function($q) use($website){
                 return $q->whereIn('website_id', $website);
             })
@@ -317,6 +325,9 @@ class PrimaryTopicController extends BaseController
                     return in_array($loginUser->id, $owners);
                 })->pluck('id')->toArray();
                 return $q->whereIn('website_id', $webIds);
+            })
+            ->when($request->primary_topic_id, function($q) use($request){
+                return $q->where('primary_topic_id', $request->primary_topic_id);
             })
             ->when($sort, function($q) use($sort) {
                 if(in_array($sort, [Topics::STATUS_OPEN,Topics::STATUS_APPROVED, Topics::STATUS_REJECTED])) {
@@ -340,7 +351,12 @@ class PrimaryTopicController extends BaseController
             });
             $list = [
                 'list' => $topicList,
-                'count' => Topics::where('is_primary_topic', 1)
+                'count' => Topics::when(($loginUser->role == 'client') && !$request->primary_topic_id, function($q) {
+                    return $q->where('is_primary_topic', 1);
+                })
+                ->when($request->primary_topic_id, function($q) use($request){
+                    return $q->where('primary_topic_id', $request->primary_topic_id);
+                })
                 ->when($website, function($q) use($website){
                     return $q->whereIn('website_id', $website);
                 })
@@ -437,7 +453,9 @@ class PrimaryTopicController extends BaseController
             if($request->website == 0) {
                 $website = '';
             }
-            $topicList = Topics::where('is_primary_topic', 1)
+            $topicList = Topics::when(($loginUser->role == 'client') && !$request->primary_topic_id, function($q) {
+                    return $q->where('is_primary_topic', 1);
+            })
             ->when($website, function($q) use($website){
                 return $q->whereIn('website_id', $website);
             })
@@ -447,6 +465,9 @@ class PrimaryTopicController extends BaseController
                     return in_array($loginUser->id, $owners);
                 })->pluck('id')->toArray();
                 return $q->whereIn('website_id', $webIds);
+            })
+            ->when($request->primary_topic_id, function($q) use($request){
+                return $q->where('primary_topic_id', $request->primary_topic_id);
             })
             ->when($sort, function($q) use($sort) {
                 if(in_array($sort, [Topics::STATUS_APPROVED, Topics::STATUS_REJECTED])) {

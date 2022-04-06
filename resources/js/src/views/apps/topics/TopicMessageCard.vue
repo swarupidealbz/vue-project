@@ -34,6 +34,14 @@
           </template>
 
           <b-dropdown-item
+          @click="showChild"
+          v-if="!isWriter"
+          >
+            <feather-icon icon="GridIcon" />
+            <span class="align-middle ml-50">Show Child Topics</span>
+          </b-dropdown-item>
+
+          <b-dropdown-item
           :to="{ name: 'topic-timeline', params: { id: message.id } }">
             <feather-icon icon="FileIcon" />
             <span class="align-middle ml-50">Show Content</span>
@@ -133,6 +141,22 @@ export default {
     user() {
       return JSON.parse(localStorage.getItem('userData'));
     }
+  },
+  methods: {
+    showChild() {
+      let topic = this.$store.state.app.selectedTopic
+      this.$store.commit('app/setTopics', []);
+      this.$store.commit('app/setGroups', []);
+      this.$store.commit('app/setTopicCount', 0);
+      this.$store.commit('app/setShowChild', true);
+      localStorage.setItem('selectedTopic', JSON.stringify(topic));
+      this.$store.dispatch('app/loadChildTopics', {
+        website: this.$store.state.app.selectedWebsite.id, 
+        primary_topic_id:topic.id 
+      }).then(res => {
+        this.$router.push('child-topics');
+      })
+    },
   },
   setup() {
     return {

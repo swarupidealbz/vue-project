@@ -118,6 +118,22 @@ export default [
     },
   },
   {
+    path: '/child-topics',
+    name: 'child-topics',
+    component: () => import('@/views/apps/topics/ChildTopic.vue'),
+    meta: {
+      contentRenderer: 'sidebar-left',
+      contentClass: 'email-application',
+      // pageTitle: 'Topics',
+      // breadcrumb: [
+      //   {
+      //     text: 'Topics',
+      //     active: true,
+      //   },
+      // ],
+    },
+  },
+  {
     path: '/topics-temp',
     name: 'topics-temp',
     component: () => import('@/views/apps/topics/TopicWrapper.vue'),

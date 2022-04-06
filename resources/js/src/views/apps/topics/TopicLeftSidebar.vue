@@ -8,7 +8,7 @@
               v-ripple.400="'rgba(255, 255, 255, 0.15)'"
               variant="primary"
               block
-              v-if="!isWriter"
+              v-if="!isWriter && isChild"
               @click="$emit('update:is-task-handler-sidebar-active', true); $emit('close-left-sidebar')"
             >
               Create Topic
@@ -131,6 +131,9 @@ export default {
       let user = JSON.parse(localStorage.getItem('userData'))
       return user.role == 'writer';
     },
+    isChild() {
+      return !this.$store.state.app.showChild;
+    }
   },
   methods: {
     isActive(group) {
@@ -140,11 +143,18 @@ export default {
       this.$emit('close-left-sidebar');
       this.$emit('close-topic-view');
       this.$store.commit('app/setSelectedOrder', group);
-      this.$store.dispatch('app/sortRecord', { website: this.$store.state.app.selectedWebsite.id, order: group.id});
+      this.$store.dispatch('app/sortRecord', { 
+        website: this.$store.state.app.selectedWebsite.id, 
+        order: group.id,
+        primary_topic_id: this.$store.state.app.selectedTopic.id && this.$store.state.app.showChild ? this.$store.state.app.selectedTopic.id : ''
+      });
     },
     showAll() {
       this.$store.commit('app/setSelectedOrder', {});
-      this.$store.dispatch('app/sortRecord', { website: this.$store.state.app.selectedWebsite.id });
+      this.$store.dispatch('app/sortRecord', { 
+        website: this.$store.state.app.selectedWebsite.id,
+        primary_topic_id: this.$store.state.app.selectedTopic.id && this.$store.state.app.showChild ? this.$store.state.app.selectedTopic.id : '' 
+      });
     }
   },
   setup() {

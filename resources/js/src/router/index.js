@@ -48,6 +48,7 @@ router.beforeEach((to, _, next) => {
     'notifications',
     'profile',
     'topics-temp',
+    'child-topics',
   ]  
   const find = rList.includes(to.name)
   var user = getUserData()

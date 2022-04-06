@@ -6,8 +6,8 @@ export default {
   state: {
     windowWidth: 0,
     shallShowOverlay: false,
-    apiBaseUrl: 'https://cl.99ideaz.com/api/',
-    // apiBaseUrl: 'http://localhost:8000/api/',
+    // apiBaseUrl: 'https://cl.99ideaz.com/api/',
+    apiBaseUrl: 'http://localhost:8000/api/',
     topBar: {
       websites: [],
       languages: [],
@@ -82,6 +82,7 @@ export default {
     },
     groups: [],
     topics: [],
+    childtopics: [],
     contents: [],
     comments:[],
     selectedOrder: {},
@@ -94,6 +95,7 @@ export default {
     topicCount: 0,
     loading: false,
     topicMore: false,
+    showChild: false,
   },
   getters: {
     currentBreakPoint: state => {
@@ -126,6 +128,9 @@ export default {
     },
     setTopics(state, val) {
       state.topics = val;
+    },
+    setChildTopics(state, val) {
+      state.childtopics = val;
     },
     setContents(state, val) {
       state.contents = val;
@@ -165,7 +170,10 @@ export default {
     },
     setTopicMore(state, val) {
       state.topicMore = val
-    }
+    },
+    setShowChild(state, val) {
+      state.showChild = val
+    }  
   },
   actions: {
     loadAppData({commit, state, dispatch}, payload){
@@ -200,7 +208,20 @@ export default {
             }
           }
           if(state.selectedWebsite) {
+            if(!state.selectedTopic.id) {
+              localStorage.removeItem('selectedTopic')
+              commit('setShowChild', false)
+            }
             dispatch('loadTopics', {website:state.selectedWebsite.id})
+            let local = localStorage.getItem('selectedTopic');
+            if(local) {
+              local = JSON.parse(local)
+              dispatch('loadChildTopics', {
+                website: state.selectedWebsite.id, 
+                primary_topic_id:local.id 
+              }).then(res => {
+              })
+            }
           }
           userData.top_bar = top;
           localStorage.setItem('userData', JSON.stringify(userData))
@@ -262,10 +283,31 @@ export default {
         })
       }
     },
+    loadChildTopics({commit, state, dispatch}, payload) {
+      commit('setLoading', true);
+      if((payload.website == 0) || payload.website) {        
+        axios.post(state.apiBaseUrl+'primary-topic/list-by-website', payload).then((res) => {
+          console.log('child topics list');
+          commit('setChildTopics', res.data.data.topics);
+          commit('setGroups', res.data.data.groups);
+          commit('setTopicCount', res.data.data.count);
+          commit('setLoading', false);
+          commit('setTopicMore', res.data.data.more);
+        }).catch(() => {
+          console.log('error load topics data');
+        })
+      }
+    },
     sortRecord({commit, state, dispatch}, payload) {
       axios.post(state.apiBaseUrl+'topic/sort-record', payload).then((res) => {
-        console.log('sort topics');
-        commit('setTopics', res.data.data.list);
+        if(state.showChild) {
+          console.log('sort child topics');
+          commit('setChildTopics', res.data.data.list);
+        }
+        else {
+          console.log('sort topics');
+          commit('setTopics', res.data.data.list);
+        }
         commit('setTopicCount', res.data.data.count);
         commit('setTopicMore', res.data.data.more);
       }).catch(() => {
@@ -439,9 +481,16 @@ export default {
     },
     loadMoreTopic({commit, state, dispatch}, payload) {
       axios.post(state.apiBaseUrl+'topic/load-more-topic', payload).then((res) => {
-        console.log('more topics');
-        let lists = state.topics.concat(res.data.data.list)
-        commit('setTopics', lists);
+        if(state.showChild) {
+          console.log('more child topics');
+          let lists = state.childtopics.concat(res.data.data.list)
+          commit('setChildTopics', lists);
+        }
+        else {
+          console.log('more topics');
+          let lists = state.topics.concat(res.data.data.list)
+          commit('setTopics', lists);
+        }
         commit('setTopicMore', res.data.data.more);
       }).catch(() => {
         console.log('error load sort record data');
