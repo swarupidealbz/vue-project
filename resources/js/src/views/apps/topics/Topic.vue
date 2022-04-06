@@ -91,7 +91,7 @@
             @click="openTopicDetails(topic)">
               <div class="mail-details">
                 <div class="mail-items">
-                  <span class="text-truncate">{{ topic.topic }}</span>
+                  <span class="text-truncate" v-html="topic.topic"></span>
                 </div>
                 <div class="mail-meta-item">
                   <span
@@ -103,8 +103,7 @@
               </div>
 
               <div class="mail-message">
-                <p class="text-truncate mb-0">
-                  {{ topic.description ? filterTags(topic.description) : '' }}
+                <p class="text-truncate mb-0" v-html="(topic.description ? filterTags(topic.description) : '')">
                 </p>
                 <b-badge
                   pill
