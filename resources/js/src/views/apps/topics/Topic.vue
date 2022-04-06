@@ -109,7 +109,6 @@
                   <b-badge
                     pill
                     variant="light-primary"
-                    class="float-right"
                   >
                   Child Topic: {{ topic.child_count }}
                   </b-badge>
