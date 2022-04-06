@@ -245,7 +245,7 @@ import {
 } from '@vue/composition-api'
 import {
   BFormInput, BInputGroup, BInputGroupPrepend, BDropdown, BDropdownItem,
-  BFormCheckbox, BMedia, BMediaAside, BMediaBody, BAvatar,BButton, BSpinner, BLink
+  BFormCheckbox, BMedia, BMediaAside, BMediaBody, BAvatar,BButton, BSpinner, BLink, BBadge
 } from 'bootstrap-vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import { filterTags, formatDateToMonthShort } from '@core/utils/filter'
@@ -277,6 +277,7 @@ export default {
     BButton,
     BSpinner,
     BLink,
+    BBadge,
 
     // 3rd Party
     VuePerfectScrollbar,
