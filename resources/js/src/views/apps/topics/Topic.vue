@@ -105,15 +105,14 @@
               <div class="mail-message">
                 <p class="text-truncate mb-0" v-html="(topic.description ? filterTags(topic.description) : '')">
                 </p>
-                <p class="text-truncate mb-0 mt-1">
-                  <b-badge
-                    pill
-                    variant="light-primary"
-                    class="float-right"
-                  >
-                  Child Topics: {{ topic.child_count }}
-                  </b-badge>
-                </p>
+                <b-badge
+                  pill
+                  variant="light-primary"
+                  class="float-right"
+                  v-if="!isWriter"
+                >
+                Child Topics: {{ topic.child_count }}
+                </b-badge>
               </div>
             </b-media-body>
               <!-- Dropdown -->
