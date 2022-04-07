@@ -144,6 +144,13 @@
                     />
                   </template>
                   <b-dropdown-item
+                  @click="editTopic(topic)"
+                  v-if="!isWriter"
+                  >
+                    <feather-icon icon="EditIcon" />
+                    <span class="align-middle ml-50">Edit</span>
+                  </b-dropdown-item>
+                  <b-dropdown-item
                   @click="assigneSelf(topic)"
                   v-if="canAssign(topic)"
                   >
@@ -208,6 +215,7 @@
       @toggle-topic-starred="toggleStarred(topicDetails)"
       @accept-status="acceptStatus"
       @reject-status="rejectStatus"
+      @edit-topic="editTopic(topicDetails)"
     />
 
     <!-- Sidebar -->
@@ -230,6 +238,7 @@
       v-model="isTaskHandlerSidebarActive"
       :task="task"
       :clear-task-data="clearTaskData" 
+      :topic-details.sync="topicDetails"
     />
 
     <content-task-handler-sidebar
@@ -336,6 +345,11 @@ export default {
     }
   },
   methods: {
+    editTopic(topic) {
+      this.isTaskHandlerSidebarActive = true;
+      topic.type = topic.is_primary_topic;
+      this.task = topic;
+    },
     removeChildTopicShow() {
       this.$store.commit('app/setShowChild', false);
       this.$store.commit('app/setTopics', []);

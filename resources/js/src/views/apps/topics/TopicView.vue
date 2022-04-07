@@ -45,6 +45,7 @@
       <b-row>
         <b-col cols="12 mt-2">
           <topic-message-card :message="topicViewData" 
+          @edit-topic="$emit('edit-topic')"
           @accept-status="$emit('accept-status')"
           @reject-status="$emit('reject-status')"/>
         </b-col>

@@ -15,27 +15,19 @@
       <template #default="{ hide }">
         <!-- Header -->
         <div class="d-flex justify-content-between align-items-center content-sidebar-header px-2 py-1">
-          <b-button
-            v-if="taskLocal.id"
-            size="sm"
-            :variant="taskLocal.isCompleted ? 'outline-success' : 'outline-secondary'"
-            @click="taskLocal.isCompleted = !taskLocal.isCompleted"
-          >
-            {{ taskLocal.isCompleted ? 'Completed' : 'Mark Complete' }}
-          </b-button>
+          
           <h5
-            v-else
             class="mb-0"
           >
             Create Topic
           </h5>
           <div>
-            <feather-icon
+            <!-- <feather-icon
               v-show="taskLocal.id"
               icon="TrashIcon"
               class="cursor-pointer"
               @click="$emit('remove-task'); hide();"
-            />
+            /> -->
             <feather-icon
               class="ml-1 cursor-pointer"
               icon="XIcon"
@@ -154,6 +146,7 @@
                 v-ripple.400="'rgba(186, 191, 199, 0.15)'"
                 type="reset"
                 variant="outline-secondary"
+                v-if="!taskLocal.id"
               >
                 Reset
               </b-button>
@@ -265,19 +258,22 @@ export default {
       }
       let payload = {
         website: this.$store.state.app.selectedWebsite.id,
+        id: this.taskLocal.id || null,
         is_primary: this.taskLocal.type,
         topic_name: this.taskLocal.topic,
         description: this.taskLocal.description,
         primary_topic_id: this.taskLocal.primary_topic_id
       }
+      this.$emit('update:topic-details', this.taskLocal);
       this.$store.dispatch('app/addOrUpdateTopic', payload).then((res) => {
         let payload = {
-          website: this.$store.state.app.selectedWebsite.id
+          website: this.$store.state.app.selectedWebsite.id,
+          primary_topic_id: this.$store.state.app.selectedTopic.id && this.$store.state.app.showChild ? this.$store.state.app.selectedTopic.id : ''
         }
         if(this.$store.state.app.selectedOrder.id) {
           payload.order = this.$store.state.app.selectedOrder.id
         }
-        this.$store.dispatch('app/sortRecord', payload);
+        this.$store.dispatch('app/sortRecord', payload);        
         this.$toast({
               component: ToastificationContent,
               position: 'top-right',

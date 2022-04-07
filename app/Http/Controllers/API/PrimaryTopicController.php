@@ -72,22 +72,40 @@ class PrimaryTopicController extends BaseController
                 $path = $request->image->move(storage_path('app/public/images'), $imageName); //public/images/filename
                 $storePath = asset('images/'.$imageName);
             }
-            $inputData = [
-                'website_id' => $request->website,
-                'is_primary_topic' => ($request->is_primary == 'undefined') ? 1 : $request->is_primary,
-                'primary_topic_id' => $request->primary_topic_id ?? NULL,
-                'topic' => $request->topic_name,
-                'description' => $request->description,
-                'topic_image_path' => $storePath,
-                'created_by_id' => $user->id,
-                'updated_by_id' => $user->id,
-                'created_at' => $time,
-                'updated_at' => $time
-            ];
+            if($request->id) {
+                $inputData = [
+                    'website_id' => $request->website,
+                    'is_primary_topic' => ($request->is_primary == 'undefined') ? 1 : $request->is_primary,
+                    'primary_topic_id' => $request->primary_topic_id ?? NULL,
+                    'topic' => $request->topic_name,
+                    'description' => $request->description,
+                    'topic_image_path' => $storePath,
+                    'updated_by_id' => $user->id,
+                    'updated_at' => $time
+                ];
 
-            $topic = Topics::create($inputData);
+                $topic = Topics::whereId($request->id)->update($inputData);
 
-            return $this->handleResponse($topic, 'Topic created successfully.');
+                return $this->handleResponse($topic, 'Topic updated successfully.');
+            }
+            else {                    
+                $inputData = [
+                    'website_id' => $request->website,
+                    'is_primary_topic' => ($request->is_primary == 'undefined') ? 1 : $request->is_primary,
+                    'primary_topic_id' => $request->primary_topic_id ?? NULL,
+                    'topic' => $request->topic_name,
+                    'description' => $request->description,
+                    'topic_image_path' => $storePath,
+                    'created_by_id' => $user->id,
+                    'updated_by_id' => $user->id,
+                    'created_at' => $time,
+                    'updated_at' => $time
+                ];
+
+                $topic = Topics::create($inputData);
+
+                return $this->handleResponse($topic, 'Topic created successfully.');
+            }
         }
         catch(Exception $e) 
         {

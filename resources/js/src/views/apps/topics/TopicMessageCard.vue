@@ -34,6 +34,14 @@
           </template>
 
           <b-dropdown-item
+          @click="$emit('edit-topic',message)"
+          v-if="!isWriter"
+          >
+            <feather-icon icon="EditIcon" />
+            <span class="align-middle ml-50">Edit</span>
+          </b-dropdown-item>
+
+          <b-dropdown-item
           @click="showChild"
           v-if="!isWriter && isPrimary"
           >
