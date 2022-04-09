@@ -6,8 +6,8 @@ export default {
   state: {
     windowWidth: 0,
     shallShowOverlay: false,
-    // apiBaseUrl: 'https://cl.99ideaz.com/api/',
-    apiBaseUrl: 'http://localhost:8000/api/',
+    apiBaseUrl: 'https://cl.99ideaz.com/api/',
+    // apiBaseUrl: 'http://localhost:8000/api/',
     topBar: {
       websites: [],
       languages: [],
