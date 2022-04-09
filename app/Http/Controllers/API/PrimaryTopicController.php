@@ -75,7 +75,7 @@ class PrimaryTopicController extends BaseController
             if($request->id) {
                 $inputData = [
                     'website_id' => $request->website,
-                    'is_primary_topic' => ($request->is_primary == 'undefined') ? 1 : $request->is_primary,
+                    'is_primary_topic' => $request->primary_topic_id ? 0 : (($request->is_primary == 'undefined') ? 1 : $request->is_primary),
                     'primary_topic_id' => $request->primary_topic_id ?? NULL,
                     'topic' => $request->topic_name,
                     'description' => $request->description,
