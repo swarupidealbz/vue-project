@@ -156,7 +156,7 @@ export default {
   methods: {
     showChild() {
       let topic = this.$store.state.app.selectedTopic
-      this.$store.commit('app/setTopics', []);
+      // this.$store.commit('app/setTopics', []);
       this.$store.commit('app/setGroups', []);
       this.$store.commit('app/setTopicCount', 0);
       this.$store.commit('app/setShowChild', true);
