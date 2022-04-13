@@ -12,8 +12,8 @@ class Topics extends Model
 
     protected $table = 'topics';
     protected $guarded = [];
-    protected $with = ['website', 'createdUser', 'updatedUser'];
-    public $appends = ['can_self_assign'];
+    protected $with = ['website', 'createdUser', 'updatedUser', 'childTopics'];
+    public $appends = ['can_self_assign', 'is_editable'];
 
     const STATUS_OPEN = 'open';
     const STATUS_WORKIN_PROGRESS = 'work in progress';
@@ -28,6 +28,11 @@ class Topics extends Model
     public function primaryTopic()
     {
         return $this->belongsTo(Topics::class, 'primary_topic_id')->where('is_primary_topic', 1);
+    }
+
+    public function childTopics()
+    {
+        return $this->hasMany(Topics::class, 'primary_topic_id');
     }
 
     public function content()
@@ -58,5 +63,10 @@ class Topics extends Model
     public function getCanSelfAssignAttribute()
     {
         return blank($this->assignee_id);
+    }
+
+    public function getIsEditableAttribute()
+    {
+        return $this->status != self::STATUS_APPROVED;
     }
 }

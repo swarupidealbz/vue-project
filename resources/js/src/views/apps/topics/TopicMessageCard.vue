@@ -35,7 +35,7 @@
 
           <b-dropdown-item
           @click="$emit('edit-topic',message)"
-          v-if="!isWriter"
+          v-if="!isWriter && message.is_editable"
           >
             <feather-icon icon="EditIcon" />
             <span class="align-middle ml-50">Edit</span>

@@ -145,7 +145,7 @@
                   </template>
                   <b-dropdown-item
                   @click="editTopic(topic)"
-                  v-if="!isWriter"
+                  v-if="!isWriter && topic.is_editable"
                   >
                     <feather-icon icon="EditIcon" />
                     <span class="align-middle ml-50">Edit</span>

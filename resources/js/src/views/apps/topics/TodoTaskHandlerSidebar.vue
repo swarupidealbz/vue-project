@@ -56,6 +56,7 @@
               plain
               name="primary"
               value="1"
+              :disabled="taskLocal.id && taskLocal.child_topics.length > 0"
             >
               Primary Topic
             </b-form-radio>
@@ -64,6 +65,7 @@
               plain
               name="child topic"
               value="0"
+              :disabled="taskLocal.id && taskLocal.child_topics.length > 0"
             >
               Child Topic
             </b-form-radio>
@@ -262,7 +264,7 @@ export default {
         is_primary: this.taskLocal.type,
         topic_name: this.taskLocal.topic,
         description: this.taskLocal.description,
-        primary_topic_id: this.taskLocal.primary_topic_id
+        primary_topic_id: this.taskLocal.type == '1' ? null : this.taskLocal.primary_topic_id
       }
       this.$emit('update:topic-details', this.taskLocal);
       this.$store.dispatch('app/addOrUpdateTopic', payload).then((res) => {
