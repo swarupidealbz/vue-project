@@ -104,6 +104,19 @@ class ContentController extends BaseController
             if(empty($content)) {
                 return $this->handleError('Invalid content', $validator->errors()->all(), 400);
             }
+            $accept = false;
+            $reject = false;
+            $content_user = $content->createdUser;
+            if(in_array($content->status, [Content::STATUS_REJECTED, Content::STATUS_OPEN, Content::STATUS_WORKIN_PROGRESS]) && ($status == Content::STATUS_APPROVED)) {
+                $accept = true;
+                $content_user->job_units += 1;
+                $content_user->save();
+            }
+            elseif(($status == Content::STATUS_REJECTED) && ($content->status == Content::STATUS_APPROVED)) {
+                $reject = true;
+                $content_user->job_units -= 1;
+                $content_user->save();
+            }
 
             $content->status = $status;
             $content->save();
