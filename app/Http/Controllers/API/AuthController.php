@@ -148,7 +148,7 @@ class AuthController extends BaseController
             
         }
         catch(Exception $e) {
-            logger('login error');
+            logger('login error: '.$e->getMessage());
             return $this->handleError('Something went wrong', [], 400);
         }
     }

@@ -94,6 +94,15 @@
                   <span class="text-truncate" v-html="topic.topic"></span>
                 </div>
                 <div class="mail-meta-item">
+                  <b-avatar
+                    size="30"
+                    :src="topic.assignee.profile_image"
+                    variant="light-primary"
+                    v-b-tooltip.hover.v-primary
+                    :title="topic.assignee.name"
+                    v-if="topic.assignee_id && !isWriter"
+                  >
+                  </b-avatar>
                   <span
                     class="mx-50 bullet bullet-sm"
                     :class="`bullet-${topic.status == 'approved' ? 'success' : (topic.status == 'rejected' ? 'danger' : 'warning')}`"
@@ -253,7 +262,7 @@ import {
 } from '@vue/composition-api'
 import {
   BFormInput, BInputGroup, BInputGroupPrepend, BDropdown, BDropdownItem,
-  BFormCheckbox, BMedia, BMediaAside, BMediaBody, BAvatar,BButton, BSpinner, BLink, BBadge
+  BFormCheckbox, BMedia, BMediaAside, BMediaBody, BAvatar,BButton, BSpinner, BLink, BBadge, VBTooltip
 } from 'bootstrap-vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import { filterTags, formatDateToMonthShort } from '@core/utils/filter'
@@ -286,6 +295,7 @@ export default {
     BSpinner,
     BLink,
     BBadge,
+    VBTooltip,
 
     // 3rd Party
     VuePerfectScrollbar,
@@ -298,6 +308,7 @@ export default {
     ContentTaskHandlerSidebar,
   },
   directives: {
+    'b-tooltip': VBTooltip,
     Ripple,
   },
   data() {

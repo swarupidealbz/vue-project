@@ -12,7 +12,7 @@ class Topics extends Model
 
     protected $table = 'topics';
     protected $guarded = [];
-    protected $with = ['website', 'createdUser', 'updatedUser', 'childTopics'];
+    protected $with = ['website', 'createdUser', 'updatedUser', 'childTopics', 'assignee'];
     public $appends = ['can_self_assign', 'is_editable'];
 
     const STATUS_OPEN = 'open';
@@ -58,6 +58,11 @@ class Topics extends Model
 	public function usersFavorite()
     {
         return $this->hasMany(TopicFavorite::class, 'topic_id');
+    }
+
+    public function assignee()
+    {
+        return $this->belongsTo(User::class, 'assignee_id');
     }
 
     public function getCanSelfAssignAttribute()
