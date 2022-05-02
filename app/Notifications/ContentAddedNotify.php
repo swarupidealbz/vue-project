@@ -15,15 +15,18 @@ class ContentAddedNotify extends Notification
 
     public $url;
 
+    public $user_name;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($message, $url)
+    public function __construct($message, $url, $user_name)
     {
         $this->message = $message;
         $this->url = $url;
+        $this->user_name = $user_name;
     }
 
     /**
@@ -46,6 +49,7 @@ class ContentAddedNotify extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->greeting('Hello '.$this->user_name.'!')
                     ->subject($this->message)
                     ->line($this->message)
                     ->action('Notification Action', $this->url)

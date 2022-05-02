@@ -422,7 +422,7 @@ class ContentController extends BaseController
                     $to = Auth::user($owner);
                     $url = url('/topic/timeline/'.$content->primary_topic_id);
                     Notifications::insert($notify);
-                    Notification::send($to, new ContentAddedNotify($msg, $url));
+                    Notification::send($to, new ContentAddedNotify($msg, $url, $to->first_name));
                 }
 
                 return $this->handleResponse($content, 'Content created successfully');
