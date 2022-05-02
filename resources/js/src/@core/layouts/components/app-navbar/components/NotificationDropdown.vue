@@ -41,14 +41,16 @@
         v-for="(notification, key) in list"
         :key="notification.heading+key"
       >
-        <b-media>
-          <p class="media-heading">
+        <!-- <b-media @click="readNotification(notification)"> -->
+        <b-dropdown-item @click="readNotification(notification)">
+          <p class="media-heading mb-0">
             <span class="font-weight-bolder">
               {{ notification.heading }}
             </span>
           </p>
           <small class="notification-text">{{ notification.details }}</small>
-        </b-media>
+        </b-dropdown-item>
+        <!-- </b-media> -->
       </b-link>
 
       <!-- System Notification Toggler -->
@@ -110,6 +112,8 @@ import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import Ripple from 'vue-ripple-directive'
 import store from '@/store/index'
 import { isUserLoggedIn, getUserData, isAdmin } from '@/auth/utils'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+
 
 export default {
   components: {
@@ -146,6 +150,30 @@ export default {
       return isAdmin();
     },
   },
+  methods: {
+    readNotification(notification) {
+      notification.is_read = true;
+      this.updateNotification(notification)
+    },
+    updateNotification(notification) {
+      console.log(notification)
+      this.$store.dispatch('app/updateNotification', notification).then(res => {
+        this.$store.dispatch('app/loadTop');
+        this.$router.push('/topic/timeline/'+notification.object_to_id )
+      }).catch(err => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: 'Can not show topic.',
+              },
+            })
+      })
+    }
+  }
 }
 </script>
 

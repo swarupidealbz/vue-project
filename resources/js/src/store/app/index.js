@@ -208,12 +208,12 @@ export default {
             }
           }
           if(state.selectedWebsite) {
-            if(!state.selectedTopic.id) {
+            let local = localStorage.getItem('selectedTopic');
+            if(!local) {
               localStorage.removeItem('selectedTopic')
               commit('setShowChild', false)
             }
             dispatch('loadTopics', {website:state.selectedWebsite.id})
-            let local = localStorage.getItem('selectedTopic');
             if(local) {
               local = JSON.parse(local)
               dispatch('loadChildTopics', {

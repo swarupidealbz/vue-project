@@ -32,12 +32,12 @@
             />
             <div class="todo-title-wrapper">
               <div class="todo-title-area">
-                <div class="title-wrapper">
-                  <b-form-checkbox
+                <div class="title-wrapper" @click="readNotification(notification)">
+                  <!-- <b-form-checkbox
                     :checked="isChecked(notification)"
                     @click.native.stop
                     @change="updateTaskIsCompleted(notification)"
-                  />
+                  /> -->
                   <span class="todo-title">{{ notification.heading }}</span>
                   <small class="text-muted">{{ notification.details }}</small>
                 </div>
@@ -127,6 +127,27 @@ export default {
   methods: {
     isChecked(notify) {
       return notify.is_read ? true : false;
+    },
+    readNotification(notification) {
+      notification.is_read = true;
+      this.updateNotification(notification)
+    },
+    updateNotification(notification) {
+      this.$store.dispatch('app/updateNotification', notification).then(res => {
+        this.$store.dispatch('app/loadTop');
+        this.$router.push('/topic/timeline/'+notification.object_to_id );
+      }).catch(err => {
+        this.$toast({
+              component: ToastificationContent,
+              position: 'top-right',
+              props: {
+                title: `Failed`,
+                icon: 'UserCheckIcon',
+                variant: 'danger',
+                text: 'Can not show topic.',
+              },
+            })
+      })
     }
   },
   setup() {

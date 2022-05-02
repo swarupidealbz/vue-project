@@ -344,8 +344,11 @@ export default {
       let local = localStorage.getItem('selectedTopic')
       if(local) {
         local = JSON.parse(local)
+        console.log(local);
+        return local.topic
       }
-      return local.topic
+
+      return '';
     },
     localTopic() {
       let local = localStorage.getItem('selectedTopic')

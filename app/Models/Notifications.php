@@ -11,4 +11,8 @@ class Notifications extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'notifications';
+
+    const CONTENT = 'content';
+    const PRIMARY_TOPICS = 'primary_topic';
+    const CHILD_TOPICS = 'child_topic';
 }
