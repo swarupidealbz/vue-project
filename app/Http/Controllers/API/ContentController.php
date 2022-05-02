@@ -11,8 +11,10 @@ use App\Models\Comments;
 use App\Models\Notifications;
 use App\Models\User;
 use App\Models\Websites;
+use App\Notifications\ContentAddedNotify;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 
 class ContentController extends BaseController
@@ -416,8 +418,13 @@ class ContentController extends BaseController
 						'created_at' => $time,
 						'updated_at' => $time
                     ];
+                    $msg = sprintf('New %s has been added to %s, %s.', $request->content_type, $content->topic->topic, $website->name);
+                    $to = Auth::user($owner);
+                    $url = url('/topic/timeline/'.$content->primary_topic_id);
+                    Notifications::insert($notify);
+                    Notification::send($to, new ContentAddedNotify($msg, $url));
                 }
-                Notifications::insert($notify);
+
                 return $this->handleResponse($content, 'Content created successfully');
             }
             
