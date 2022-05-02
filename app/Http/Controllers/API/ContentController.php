@@ -406,7 +406,7 @@ class ContentController extends BaseController
                         'sender_user_id' => $loginUser->id,
 						'website_id' => $website->id,
                         'heading' => 'New record Created',
-                        'details' => sprintf('New %s has been added to %s.', $request->content_type, $website->name),
+                        'details' => sprintf('New %s has been added to %s, %s.', $request->content_type, $content->topic->topic, $website->name),
                         'object_from_type' => Notifications::CONTENT,
                         'object_from_id' => $content->id,
                         'object_to_type' => Notifications::PRIMARY_TOPICS,

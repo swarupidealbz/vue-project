@@ -38,6 +38,11 @@ class Content extends Model
         return $this->belongsTo(Topics::class, 'child_topic_id');
     }
 
+    public function topic()
+    {
+        return $this->belongsTo(Topics::class, 'primary_topic_id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
