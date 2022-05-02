@@ -419,7 +419,7 @@ class ContentController extends BaseController
 						'updated_at' => $time
                     ];
                     $msg = sprintf('New %s has been added to %s, %s.', $request->content_type, $content->topic->topic, $website->name);
-                    $to = Auth::user($owner);
+                    $to = User::find($owner);
                     $url = url('/topic/timeline/'.$content->primary_topic_id);
                     Notifications::insert($notify);
                     Notification::send($to, new ContentAddedNotify($msg, $url, $to->first_name));
