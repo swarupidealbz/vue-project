@@ -140,6 +140,7 @@
                 variant="primary"
                 class="mr-2"
                 type="submit"
+                :disabled="!taskLocal.topic || !taskLocal.description"
                 @click="addTopic"
               >
                 {{ taskLocal.id ? 'Update' : 'Create Topic' }}
