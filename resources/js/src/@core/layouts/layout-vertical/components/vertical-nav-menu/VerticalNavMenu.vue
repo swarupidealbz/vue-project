@@ -25,10 +25,11 @@
               to="/"
             >
               <span class="brand-logo">
-                <b-img
+                <!-- <b-img
                   :src="appLogoImage"
                   alt="logo"
-                />
+                /> -->
+                <vuexy-logo />
               </span>
               <h2 class="brand-text">
                 {{ appName }}
@@ -87,6 +88,7 @@ import { provide, computed, ref } from '@vue/composition-api'
 import useAppConfig from '@core/app-config/useAppConfig'
 import { $themeConfig } from '@themeConfig'
 import VerticalNavMenuItems from './components/vertical-nav-menu-items/VerticalNavMenuItems.vue'
+import VuexyLogo from '@core/layouts/components/Logo.vue'
 import useVerticalNavMenu from './useVerticalNavMenu'
 
 export default {
@@ -95,6 +97,7 @@ export default {
     VerticalNavMenuItems,
     BLink,
     BImg,
+    VuexyLogo,
   },
   props: {
     isVerticalMenuActive: {
