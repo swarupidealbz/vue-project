@@ -24,7 +24,7 @@ class CommentController extends BaseController
         }
         catch(Exception $e) 
         {
-            logger('comment list error');
+            logger('comment list error:'.$e->getMessage());
             return $this->handleError('Something went wrong', [], 500);
         }
     }
@@ -40,7 +40,7 @@ class CommentController extends BaseController
         }
         catch(Exception $e) 
         {
-            logger('Comment show error');
+            logger('Comment show error:'.$e->getMessage());
             return $this->handleError('Something went wrong', [], 500);
         }
     }
@@ -68,7 +68,7 @@ class CommentController extends BaseController
         }
         catch(Exception $e) 
         {
-            logger('Comment list by user error');
+            logger('Comment list by user error:'.$e->getMessage());
             return $this->handleError('Something went wrong', [], 500);
         }
 
@@ -100,16 +100,20 @@ class CommentController extends BaseController
             // if(($childTopic->status != Topics::STATUS_APPROVED) && !in_array($loginUser->role, [User::ROLE_CLIENT, User::ROLE_WRITER])) {
             //     return $this->handleError('You are not permitted to comment.', [], 403);
             // }
-            $primaryTopic = Topics::where('website_id', $request->website)
+			
+            $primaryTopic = Topics::when($loginUser->role == 'client', function($q) use($request) {
+				return $q->where('website_id', $request->website);
+			})			
             ->where('id', $request->primary_topic)
             ->first();
-
+			
             if(($primaryTopic->status != Topics::STATUS_APPROVED) && !in_array($loginUser->role, [User::ROLE_CLIENT, User::ROLE_WRITER])) {
                 return $this->handleError('You are not permitted to comment.', [], 403);
             }
 
             $message = 'success';
-            if($request->action == 'edit') {
+			$website = filled($request->website) && ($request->website != 0) ? $request->website : $primaryTopic->website_id;
+			if($request->action == 'edit') {
                 $comment_id = $request->comment_id;
                 $commentDetails = Comments::find($comment_id);                
                 if(!$commentDetails || !$comment_id) {
@@ -118,7 +122,7 @@ class CommentController extends BaseController
                 if($commentDetails->user_id != $loginUser->id) {
                     return $this->handleError('You are not permitted to edit this comment.', $commentDetails, 403);
                 }
-                $commentDetails->website_id = $request->website;
+                $commentDetails->website_id =  $website ;
                 $commentDetails->primary_topic_id = $request->primary_topic;
                 $commentDetails->child_topic_id = $request->child_topic;
                 $commentDetails->comment = $request->comment;
@@ -130,7 +134,7 @@ class CommentController extends BaseController
             elseif($request->action == 'add') {
                 $time = Carbon::now()->toDateTimeString();
                 $insertData = [
-                    'website_id' => $request->website,
+                    'website_id' => $website,
                     'primary_topic_id' => $request->primary_topic,
                     'child_topic_id' => $request->child_topic,
                     'user_id' => $loginUser->id,
@@ -177,7 +181,7 @@ class CommentController extends BaseController
         }
         catch(Exception $e) 
         {
-            logger('Comment add edit error');
+            logger('Comment add edit error:'.$e->getMessage());
             return $this->handleError('Something went wrong', [], 500);
         }
 
