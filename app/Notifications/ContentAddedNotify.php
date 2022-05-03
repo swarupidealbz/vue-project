@@ -52,7 +52,7 @@ class ContentAddedNotify extends Notification
                     ->greeting('Hello '.$this->user_name.'!')
                     ->subject($this->message)
                     ->line($this->message)
-                    ->action('Notification Action', $this->url)
+                    ->action('Take a Look', $this->url)
                     ->line('Thank you for using our application!');
     }
 

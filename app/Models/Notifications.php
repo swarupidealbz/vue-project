@@ -15,4 +15,5 @@ class Notifications extends Model
     const CONTENT = 'content';
     const PRIMARY_TOPICS = 'primary_topic';
     const CHILD_TOPICS = 'child_topic';
+    const COMMENT = 'comment';
 }

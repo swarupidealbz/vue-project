@@ -7,10 +7,14 @@ use App\Models\Comments;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Content;
+use App\Models\Notifications;
 use App\Models\Topics;
 use App\Models\User;
+use App\Models\Websites;
+use App\Notifications\ContentAddedNotify;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 
 class CommentController extends BaseController
@@ -149,6 +153,38 @@ class CommentController extends BaseController
             }
             else {
                 return $this->handleError('Comment can not save, Wrong action', [], 500);
+            }
+
+            if($commentDetails) {
+                $websites = Websites::find($website);
+                $owners = explode(',', $websites->owners);
+                $notify = [];
+                foreach($owners as $owner) {
+                    if($owner != $loginUser->id) {                            
+                        $notify[] = [
+                            'recipient_user_id' => $owner,
+                            'sender_user_id' => $loginUser->id,
+                            'website_id' => $website->id,
+                            'heading' => 'New comment added by '.$loginUser->name,
+                            'details' => sprintf('New comment has been added to %s by %s.', $primaryTopic->topic, $loginUser->name),
+                            'object_from_type' => Notifications::COMMENT,
+                            'object_from_id' => $commentDetails->id,
+                            'object_to_type' => Notifications::PRIMARY_TOPICS,
+                            'object_to_id' => $commentDetails->primary_topic_id,
+                            'created_by_id' => $loginUser->id,
+                            'updated_by_id' => $loginUser->id,
+                            'created_at' => $time,
+                            'updated_at' => $time
+                        ];
+                        $msg = sprintf('New comment has been added to %s by %s.', $primaryTopic->topic, $loginUser->name);
+                        $to = User::find($owner);
+                        $url = url('/topic/timeline/'.$commentDetails->primary_topic_id);
+                        Notifications::insert($notify);
+                        if($to->email) {
+                            Notification::send($to, new ContentAddedNotify($msg, $url, $to->first_name));
+                        }
+                    }
+                }
             }
 
             $contentLists = Content::where('primary_topic_id', trim($request->primary_topic))
