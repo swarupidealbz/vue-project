@@ -123,6 +123,7 @@
                 variant="primary"
                 class="mr-2"
                 type="submit"
+                :disabled="!taskLocal.title || !taskLocal.description"
                 @click="addContent"
               >
                 {{ taskLocal.id ? 'Update' : 'Add ' }}
