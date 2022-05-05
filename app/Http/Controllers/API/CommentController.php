@@ -164,7 +164,7 @@ class CommentController extends BaseController
                         $notify[] = [
                             'recipient_user_id' => $owner,
                             'sender_user_id' => $loginUser->id,
-                            'website_id' => $website->id,
+                            'website_id' => $websites->id,
                             'heading' => 'New comment added by '.$loginUser->name,
                             'details' => sprintf('New comment has been added to %s by %s.', $primaryTopic->topic, $loginUser->name),
                             'object_from_type' => Notifications::COMMENT,
@@ -188,7 +188,7 @@ class CommentController extends BaseController
             }
 
             $contentLists = Content::where('primary_topic_id', trim($request->primary_topic))
-            ->where('website_id',trim($request->website));
+            ->where('website_id',$website);
             if($request->child_topic) {
                 $contentLists = $contentLists
                 ->where('child_topic_id', trim($request->child_topic));
@@ -196,7 +196,7 @@ class CommentController extends BaseController
             $contentLists = $contentLists->get();
             
             $commentLists = Comments::where('primary_topic_id', trim($request->primary_topic))
-            ->where('website_id',trim($request->website));
+            ->where('website_id',$website);
             if($request->child_topic) {
                 $commentLists = $commentLists
                 ->where('child_topic_id', trim($request->child_topic));
