@@ -148,7 +148,8 @@ export default {
       return this.$store.state.app.dashboardData.statistics || []
     },
     percentage() {
-      return ((this.completed / this.monthlyGoal) *100).toFixed(2);
+      let number = ((this.completed / this.monthlyGoal) *100);
+      return number ? number.toFixed(0) : number;
     },
     monthlyGoal() {
       return this.stat.monthly_goal || 0;
