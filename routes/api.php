@@ -126,6 +126,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 		Route::post('/load-more-topic', [PrimaryTopicController::class, 'loadMore'])->name('load-more-topic');
     });
 
+    Route::post('/all-groups', [PrimaryTopicController::class, 'getAllGroups']);
+    Route::post('/groups', [PrimaryTopicController::class, 'getUserGroup']);
     Route::post('/notifications', [DashboardController::class, 'allNotifications']);
     Route::post('/notification/update', [DashboardController::class, 'updateNotification']);
 

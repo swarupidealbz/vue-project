@@ -42,7 +42,7 @@ class Topics extends Model
 
     public function groups()
     {
-        return $this->hasMany(TopicGroup::class, 'topic_id');
+        return $this->belongsToMany(Groups::class, TopicGroup::class, 'topic_id', 'group_id');
     }
 
     public function createdUser()

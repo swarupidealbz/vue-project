@@ -94,6 +94,32 @@
               </b-form-group>
             </validation-provider>
 
+            <!-- category / group -->
+            <validation-provider
+              #default="validationContext"
+              name="Groups"
+              rules="required"
+            >
+              <b-form-group
+                label="Groups"
+                label-for="group"
+              >
+                <v-select
+                  v-model="taskLocal.groups"
+                  multiple
+                  taggable
+                  push-tags
+                  placeholder="Select Groups"
+                  label="name"
+                  :options="groupOption"
+                />
+
+                <b-form-invalid-feedback>
+                  {{ validationContext.errors[0] }}
+                </b-form-invalid-feedback>
+              </b-form-group>
+            </validation-provider>
+
             <!-- Title -->
             <validation-provider
               #default="validationContext"
@@ -242,6 +268,9 @@ export default {
       })
 
       return result;
+    },
+    groupOption() {
+      return Object.values(this.$store.state.app.allGroups) || [];
     }
   },
   methods: {
@@ -265,7 +294,8 @@ export default {
         is_primary: this.taskLocal.type,
         topic_name: this.taskLocal.topic,
         description: this.taskLocal.description,
-        primary_topic_id: this.taskLocal.type == '1' ? null : this.taskLocal.primary_topic_id
+        primary_topic_id: this.taskLocal.type == '1' ? null : this.taskLocal.primary_topic_id,
+        groups: this.taskLocal.groups,
       }
       this.$emit('update:topic-details', this.taskLocal);
       this.$store.dispatch('app/addOrUpdateTopic', payload).then((res) => {
@@ -276,7 +306,8 @@ export default {
         if(this.$store.state.app.selectedOrder.id) {
           payload.order = this.$store.state.app.selectedOrder.id
         }
-        this.$store.dispatch('app/sortRecord', payload);        
+        this.$store.dispatch('app/sortRecord', payload);     
+        this.$store.dispatch('app/loadGroups', {website: this.$store.state.app.selectedWebsite.id});   
         this.$toast({
               component: ToastificationContent,
               position: 'top-right',
@@ -287,6 +318,7 @@ export default {
                 text: res.message,
               },
             })
+        this.$emit('update:is-task-handler-sidebar-active', false);
       }).catch(error => {
         this.$toast({
               component: ToastificationContent,

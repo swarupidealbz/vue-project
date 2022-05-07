@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Topics;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Models\Groups;
 use App\Models\Websites;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class PrimaryTopicController extends BaseController
@@ -49,69 +51,108 @@ class PrimaryTopicController extends BaseController
 	public function create(Request $request)
     {
         try {
-            $user = Auth::user();
-            $time = now()->toDateTimeString();
-            $input = $request->only('website', 'is_primary', 'topic_name', 'description');
+            return DB::transaction(function() use(&$request){
                     
-            $validator = Validator::make($input,[
-                'website' => 'required',
-                'is_primary' => 'required',
-                'topic_name' => 'required',
-                'description' => 'required',
-                // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-            ]);
-			
-			if ($validator->fails()) {
-                return $this->handleError('Required field missing.', $validator->errors()->all(), 422);
-            }
+                $user = Auth::user();
+                $time = now()->toDateTimeString();
+                $input = $request->only('website', 'is_primary', 'topic_name', 'description');
+                        
+                $validator = Validator::make($input,[
+                    'website' => 'required',
+                    'is_primary' => 'required',
+                    'topic_name' => 'required',
+                    'description' => 'required',
+                    // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+                ]);
+                
+                if ($validator->fails()) {
+                    return $this->handleError('Required field missing.', $validator->errors()->all(), 422);
+                }
 
-            $storePath = '';
-            if($request->image) {
-                $name = \Str::beforeLast($request->image->getClientOriginalName(),'.');
-                $imageName = $name.'_'.time().'.'.$request->image->extension(); 
-                $path = $request->image->move(storage_path('app/public/images'), $imageName); //public/images/filename
-                $storePath = asset('images/'.$imageName);
-            }
-            if($request->id) {
-                $inputData = [
-                    'website_id' => $request->website,
-                    'is_primary_topic' => $request->primary_topic_id ? 0 : (($request->is_primary == 'undefined') ? 1 : $request->is_primary),
-                    'primary_topic_id' => $request->primary_topic_id ?? NULL,
-                    'topic' => $request->topic_name,
-                    'description' => $request->description,
-                    'topic_image_path' => $storePath,
-                    'updated_by_id' => $user->id,
-                    'updated_at' => $time
-                ];
+                $storePath = '';
+                if($request->image) {
+                    $name = \Str::beforeLast($request->image->getClientOriginalName(),'.');
+                    $imageName = $name.'_'.time().'.'.$request->image->extension(); 
+                    $path = $request->image->move(storage_path('app/public/images'), $imageName); //public/images/filename
+                    $storePath = asset('images/'.$imageName);
+                }
+                $groupNames = $request->groups;
+                $groupIds = $this->getGroupIds($groupNames);
 
-                $topic = Topics::whereId($request->id)->update($inputData);
+                if($request->id) {
+                    $inputData = [
+                        'website_id' => $request->website,
+                        'is_primary_topic' => $request->primary_topic_id ? 0 : (($request->is_primary == 'undefined') ? 1 : $request->is_primary),
+                        'primary_topic_id' => $request->primary_topic_id ?? NULL,
+                        'topic' => $request->topic_name,
+                        'description' => $request->description,
+                        'topic_image_path' => $storePath,
+                        'updated_by_id' => $user->id,
+                        'updated_at' => $time
+                    ];
 
-                return $this->handleResponse($topic, 'Topic updated successfully.');
-            }
-            else {                    
-                $inputData = [
-                    'website_id' => $request->website,
-                    'is_primary_topic' => ($request->is_primary == 'undefined') ? 1 : $request->is_primary,
-                    'primary_topic_id' => $request->primary_topic_id ?? NULL,
-                    'topic' => $request->topic_name,
-                    'description' => $request->description,
-                    'topic_image_path' => $storePath,
-                    'created_by_id' => $user->id,
-                    'updated_by_id' => $user->id,
-                    'created_at' => $time,
-                    'updated_at' => $time
-                ];
+                    Topics::whereId($request->id)->update($inputData);
+                    $topic = Topics::find($request->id);
+                    $topic->groups()->sync($groupIds);
 
-                $topic = Topics::create($inputData);
+                    return $this->handleResponse($topic, 'Topic updated successfully.');
+                }
+                else {                    
+                    $inputData = [
+                        'website_id' => $request->website,
+                        'is_primary_topic' => ($request->is_primary == 'undefined') ? 1 : $request->is_primary,
+                        'primary_topic_id' => $request->primary_topic_id ?? NULL,
+                        'topic' => $request->topic_name,
+                        'description' => $request->description,
+                        'topic_image_path' => $storePath,
+                        'created_by_id' => $user->id,
+                        'updated_by_id' => $user->id,
+                        'created_at' => $time,
+                        'updated_at' => $time
+                    ];
 
-                return $this->handleResponse($topic, 'Topic created successfully.');
-            }
+                    $topic = Topics::create($inputData);
+                    $topic->groups()->sync($groupIds);
+
+                    return $this->handleResponse($topic, 'Topic created successfully.');
+                }
+            });
         }
         catch(Exception $e) 
         {
             logger('create topic show error: '.$e->getMessage());
             return $this->handleError('Something went wrong', [], 500);
         }
+    }
+
+    public function getAllGroups()
+    {
+        return Groups::all();
+    }
+
+    public function getGroupIds(array $groups)
+    {
+        $ids = [];
+        $loginUser = Auth::user();
+        foreach($groups as $name) {
+            $name = is_array($name) ? $name['name'] : $name;
+            $group = Groups::whereName(strtolower(trim($name)))->first();
+            if($group) {
+                array_push($ids, $group->id);                
+            }
+            else {
+                $input = [
+                    'name' => trim($name),
+                    'description' => trim($name),
+                    'created_by_id' => $loginUser->id,
+                    'updated_by_id' => $loginUser->id,
+                ];
+                $group = Groups::create($input);
+                array_push($ids, $group->id); 
+            }
+        }
+
+        return $ids;
     }
 
     public function primaryTopicByRole()
@@ -136,6 +177,85 @@ class PrimaryTopicController extends BaseController
             logger('primary topic by role error: '.$e->getMessage());
             return $this->handleError('Something went wrong', [], 500);
         }   
+    }
+
+    public function getUserGroup(Request $request)
+    {
+        try {
+                
+            $input = $request->only('website');
+                
+            $validator = Validator::make($input,['website' => 'required']);
+
+            if ($validator->fails()) {
+                return $this->handleError('Required field missing.', $validator->errors()->all(), 422);
+            }
+
+            $loginUser = Auth::user();
+            $website = is_array($request->website) ? $request->website : explode(',',$request->website);
+            if($request->website == 0) {
+                $website = '';
+            }
+                $topicList = Topics::when(($loginUser->role == 'client') && !$request->primary_topic_id, function($q) {
+                    return $q->where('is_primary_topic', 1);
+                })
+                ->when($request->primary_topic_id, function($q) use($request){
+                    return $q->where('primary_topic_id', $request->primary_topic_id);
+                })
+                ->when($website, function($q) use($website){
+                    return $q->whereIn('website_id', $website);
+                })
+                ->when($loginUser->role == 'writer', function($q) {
+                    return $q->where('status', Topics::STATUS_APPROVED);
+                })
+                ->when(($website == '') && ($loginUser->role == 'client'), function($q) use($loginUser){
+                    $webIds = Websites::all()->filter(function($item) use($loginUser){
+                        $owners = explode(',', $item->owners);
+                        return in_array($loginUser->id, $owners);
+                    })->pluck('id')->toArray();
+                   return  $q->whereIn('website_id', $webIds);
+                })
+                ->with(['groups'])->latest();
+                $more = $topicList->count();
+               
+				
+				$selectedGroups = [
+                    Topics::STATUS_OPEN => [
+                        'id' => Topics::STATUS_OPEN,
+                        'name' => ucwords(Topics::STATUS_OPEN),
+                        'static' => true,
+                        'color' => 'warning',
+                    ],
+                    Topics::STATUS_APPROVED => [
+                        'id' => Topics::STATUS_APPROVED,
+                        'name' => ucwords(Topics::STATUS_APPROVED),
+                        'static' => true,
+                        'color' => 'success',
+                    ],
+                    Topics::STATUS_REJECTED => [
+                        'id' => Topics::STATUS_REJECTED,
+                        'name' => ucwords(Topics::STATUS_REJECTED),
+                        'static' => true,
+                        'color' => 'danger',
+                    ]
+                ];
+                $topicList->each(function($topic) use(&$selectedGroups){
+                    $topic->groups->each(function($group) use(&$selectedGroups){
+                        $selectedGroups[$group->id] = $group;
+                    });
+                });
+
+                $response = [
+                    'groups' => $selectedGroups,
+                ];
+
+            return $this->handleResponse($response, 'Fetched matched website lists.');
+        }
+        catch(Exception $e) 
+        {
+            logger('groups by website error: '.$e->getMessage());
+            return $this->handleError('Something went wrong', [], 500);
+        }
     }
 
     public function primaryTopicByWebsite(Request $request)
@@ -175,7 +295,7 @@ class PrimaryTopicController extends BaseController
                     })->pluck('id')->toArray();
                    return  $q->whereIn('website_id', $webIds);
                 })
-                ->with(['groups.group'])->latest();
+                ->with(['groups'])->latest();
                 $more = $topicList->count();
                
 				
@@ -201,7 +321,7 @@ class PrimaryTopicController extends BaseController
                 ];
                 $topicList->each(function($topic) use(&$selectedGroups){
                     $topic->groups->each(function($group) use(&$selectedGroups){
-                        $selectedGroups[$group->group_id] = $group->group;
+                        $selectedGroups[$group->id] = $group;
                     });
                 });
                 $topicList = $topicList->take(10)->get()
@@ -213,6 +333,9 @@ class PrimaryTopicController extends BaseController
                         $topic->is_favorite = false; 
                     }
                     $topic->child_count = Topics::where('primary_topic_id', $topic->id)->count();
+                    $groups = $topic->groups->pluck('name')->toArray();
+                    $topic->groups = $groups;
+
 					return $topic;
 				});
                 $response = [
@@ -373,6 +496,9 @@ class PrimaryTopicController extends BaseController
                     $topic->is_favorite = false; 
                 }
                 $topic->child_count = Topics::where('primary_topic_id', $topic->id)->count();
+                $groups = $topic->groups->pluck('name')->toArray();
+                $topic->groups = $groups;
+
                 return $topic;
             });
             $list = [
@@ -517,6 +643,9 @@ class PrimaryTopicController extends BaseController
                     $topic->is_favorite = false; 
                 }
                 $topic->child_count = Topics::where('primary_topic_id', $topic->id)->count();
+                $groups = $topic->groups->pluck('name')->toArray();
+                $topic->groups = $groups;
+
                 return $topic;
             });
             $skip = $request->off;

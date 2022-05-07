@@ -81,6 +81,7 @@ export default {
       side_menus: []
     },
     groups: [],
+    allGroups: [],
     topics: [],
     childtopics: [],
     contents: [],
@@ -125,6 +126,9 @@ export default {
     },
     setGroups(state, val) {
       state.groups = val;
+    },
+    setAllGroups(state, val) {
+      state.allGroups = val;
     },
     setTopics(state, val) {
       state.topics = val;
@@ -268,11 +272,30 @@ export default {
         console.log('error load menu data');
       })
     },
+    loadAllGroups({commit, state, dispatch}, payload) {
+      axios.post(state.apiBaseUrl+'all-groups', payload).then((res) => {
+        console.log('all group list');
+        commit('setAllGroups', res.data);
+      }).catch(() => {
+        console.log('error load all groups');
+      })
+    },
+    loadGroups({commit, state, dispatch}, payload) {
+      if((payload.website == 0) || payload.website) {        
+        axios.post(state.apiBaseUrl+'groups', payload).then((res) => {
+          console.log('group list');
+          commit('setGroups', res.data.data.groups);
+        }).catch(() => {
+          console.log('error load groups data');
+        })
+      }
+    },
     loadTopics({commit, state, dispatch}, payload) {
       commit('setLoading', true);
       if((payload.website == 0) || payload.website) {        
         axios.post(state.apiBaseUrl+'primary-topic/list-by-website', payload).then((res) => {
           console.log('topics list');
+          dispatch('loadAllGroups');
           commit('setTopics', res.data.data.topics);
           commit('setGroups', res.data.data.groups);
           commit('setTopicCount', res.data.data.count);
@@ -302,6 +325,7 @@ export default {
       axios.post(state.apiBaseUrl+'topic/sort-record', payload).then((res) => {
         if(state.showChild) {
           console.log('sort child topics');
+          dispatch('loadAllGroups');
           commit('setChildTopics', res.data.data.list);
         }
         else {
