@@ -1020,6 +1020,9 @@ export default {
    display: none !important;
  } 
 }
+.email-application .content-area-wrapper .email-user-list {
+    height: calc( 100% - calc(0.49rem + 1.50rem) );
+}
 </style>
 
 <style lang="scss">
