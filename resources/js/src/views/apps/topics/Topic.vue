@@ -196,7 +196,7 @@
               </div>
               
           </b-media>
-              <div class="text-center mt-1" v-if="show">
+              <div class="text-center my-1" v-if="show">
                 <b-link @click="more">Show more</b-link>
               </div>
         </ul>
