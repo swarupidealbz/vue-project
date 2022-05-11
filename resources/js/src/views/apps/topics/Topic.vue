@@ -100,7 +100,7 @@
                     variant="light-primary"
                     v-b-tooltip.hover.v-primary
                     :title="topic.assignee.name"
-                    v-if="topic.assignee_id && !isWriter"
+                    v-if="topic.assignee_id"
                   >
                   </b-avatar>
                   <span

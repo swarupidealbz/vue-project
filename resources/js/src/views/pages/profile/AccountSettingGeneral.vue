@@ -241,6 +241,8 @@ export default {
                 text: res.message,
               },
             })
+        // this call is to reflect user icon in topic assign pic
+        this.$store.dispatch('app/sortRecord', { website: this.$store.state.app.selectedWebsite.id });
       }).catch(err => {
         this.$toast({
               component: ToastificationContent,
