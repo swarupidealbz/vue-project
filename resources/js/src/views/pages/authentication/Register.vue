@@ -403,7 +403,8 @@ export default {
       options: [
         { value: '', text: 'select' },
         { value: 'client', text: 'Client' },
-        { value: 'writer', text: 'Writer' }
+        { value: 'writer', text: 'Writer' },
+        { value: 'reviewer', text: 'Reviewer' },
       ],
       website: '',
       sideImg: require('@/assets/images/pages/register-v2.svg'),

@@ -105,13 +105,13 @@ class CommentController extends BaseController
             //     return $this->handleError('You are not permitted to comment.', [], 403);
             // }
 			
-            $primaryTopic = Topics::when($loginUser->role == 'client', function($q) use($request) {
+            $primaryTopic = Topics::when(in_array($loginUser->role, [User::ROLE_CLIENT, User::ROLE_REVIEWER]), function($q) use($request) {
 				return $q->where('website_id', $request->website);
 			})			
             ->where('id', $request->primary_topic)
             ->first();
 			
-            if(($primaryTopic->status != Topics::STATUS_APPROVED) && !in_array($loginUser->role, [User::ROLE_CLIENT, User::ROLE_WRITER])) {
+            if(($primaryTopic->status != Topics::STATUS_APPROVED) && !in_array($loginUser->role, [User::ROLE_CLIENT, User::ROLE_WRITER, User::ROLE_REVIEWER])) {
                 return $this->handleError('You are not permitted to comment.', [], 403);
             }
 
@@ -208,7 +208,7 @@ class CommentController extends BaseController
             $timeline = [
                 'contents' => $contentLists,
                 'comments' => $commentLists,
-                'content_comment' => $allData->reverse(),
+                'content_comment' => $allData,
                 'show_more' => ($contentLists->count() + $commentLists->count()) > $allData->count(),
             ];
 

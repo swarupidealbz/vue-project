@@ -6,6 +6,7 @@ use Exception;
 use App\Models\Topics;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -56,7 +57,7 @@ class ChildTopicController extends BaseController
                 $primaryTopic = is_array($request->primary_topic) ? $request->primary_topic : explode(',',$request->primary_topic);
             }
             $loginUser = Auth::user();
-            if($loginUser->role == 'client') {
+            if(in_array($loginUser->role, [User::ROLE_CLIENT, User::ROLE_REVIEWER])) {
                 $topicList = Topics::where('is_primary_topic', 0)->where('status', 'like', Topics::STATUS_APPROVED);
                 if($website) {
                     $topicList = $topicList->whereIn('website_id', $website);
@@ -91,7 +92,7 @@ class ChildTopicController extends BaseController
                 $primaryTopic = is_array($request->primary_topic) ? $request->primary_topic : explode(',',$request->primary_topic);
             }
             $loginUser = Auth::user();
-            if($loginUser->role == 'client') {
+            if(in_array($loginUser->role, [User::ROLE_CLIENT, User::ROLE_REVIEWER])) {
                 $topicList = Topics::where('is_primary_topic', 0)->where('status', 'like', Topics::STATUS_OPEN);
                 if($website) {
                     $topicList = $topicList->whereIn('website_id', $website);
@@ -128,7 +129,7 @@ class ChildTopicController extends BaseController
             
             $loginUser = Auth::user();
             $website = is_array($request->website) ? $request->website : explode(',',$request->website);
-            if($loginUser->role == 'client') {
+            if(in_array($loginUser->role, [User::ROLE_CLIENT, User::ROLE_REVIEWER])) {
                 $topicList = Topics::where('is_primary_topic', 0)->whereIn('website_id', $website);
                 if($request->status) {
                     $topicList = $topicList->where('status', 'like', trim($request->status));
@@ -167,7 +168,7 @@ class ChildTopicController extends BaseController
             $loginUser = Auth::user();
             $website = is_array($request->website) ? $request->website : explode(',',$request->website);
             $primaryTopic = is_array($request->primary_topic) ? $request->primary_topic : explode(',',$request->primary_topic);
-            if($loginUser->role == 'client') {
+            if(in_array($loginUser->role, [User::ROLE_CLIENT, User::ROLE_REVIEWER])) {
                 $topicList = Topics::where('is_primary_topic', 0)->whereIn('website_id', $website)
                 ->whereIn('primary_topic_id', $primaryTopic);
                 if($request->status) {

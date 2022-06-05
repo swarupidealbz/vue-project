@@ -10,7 +10,7 @@
     <h3 class="mb-75 mt-2 pt-50">
       <b-link>${{ kFormatter(cost_amount) }}</b-link>
     </h3>
-    <small class="mt-1">{{ data.role == 'client' ? $t('congratulation_card.client_text') : $t('congratulation_card.writer_text') }}</small>
+    <small class="mt-1">{{ ['client', 'reviewer'].includes(data.role) ? $t('congratulation_card.client_text') : $t('congratulation_card.writer_text') }}</small>
     <b-img
       :src="require('@/assets/images/illustration/badge.svg')"
       class="congratulation-medal"

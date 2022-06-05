@@ -19,6 +19,7 @@ class User extends Authenticatable
 
     const ROLE_CLIENT = 'client';
     const ROLE_WRITER = 'writer';
+    const ROLE_REVIEWER = 'reviewer';
 
     /**
      * The attributes that should be hidden for serialization.

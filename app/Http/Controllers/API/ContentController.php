@@ -161,6 +161,7 @@ class ContentController extends BaseController
         try {
 
             $input = $request->only('website', 'primary_topic');
+            $loginUser = Auth::user();
                 
             $validator = Validator::make($input,[
                 'website' => 'required|integer', 
@@ -170,9 +171,20 @@ class ContentController extends BaseController
             if ($validator->fails()) {
                 return $this->handleError('Required field missing.', $validator->errors()->all(), 422);
             }
+
             if($request->website == 0) {
                 $topic = Topics::find($request->primary_topic);
                 $request->website = $topic->website_id;
+            }
+
+            if(in_array($loginUser->role, [User::ROLE_CLIENT, User::ROLE_REVIEWER])) {
+                $websites = Websites::all()->filter(function($item) use($loginUser){
+                    $owners = explode(',', $item->owners);
+                    return in_array($loginUser->id, $owners);
+                })->pluck('id')->toArray();
+                if(!in_array($topic->website_id, $websites)) {
+                    return $this->handleError('You do not have access to this topic.', ['Website id not found in your list'], 404);
+                }
             }
 
             $limit = 1*2;
@@ -180,16 +192,16 @@ class ContentController extends BaseController
                 $limit = $request->limit * 2;
             }
 
-            $contentALists = Content::select('id','title', 'created_at')->where('primary_topic_id', trim($request->primary_topic))
-            ->where('website_id',trim($request->website));
+            $contentALists = Content::select('id','title', 'created_at')->where('primary_topic_id', trim($request->primary_topic));
+            // ->where('website_id',trim($request->website));
             if($request->child_topic) {
                 $contentALists = $contentALists
                 ->where('child_topic_id', trim($request->child_topic));
             }
             $contentALists = $contentALists->get();
             
-            $commentALists = Comments::select('id','created_at')->where('primary_topic_id', trim($request->primary_topic))
-            ->where('website_id',trim($request->website));
+            $commentALists = Comments::select('id','created_at')->where('primary_topic_id', trim($request->primary_topic));
+            // ->where('website_id',trim($request->website));
             if($request->child_topic) {
                 $commentALists = $commentALists
                 ->where('child_topic_id', trim($request->child_topic));
@@ -213,7 +225,10 @@ class ContentController extends BaseController
             
             $commentLists = Comments::whereIn('id', $commentIds)->get();
 
-            $allData = $contentLists->merge($commentLists)->sortBy('created_at');
+            $allData = $contentLists->merge($commentLists)->map(function($data){
+                $data->time = $data->updated_at->timestamp;
+                return $data;
+            })->sortBy('time')->values();
 
             $timeline = [
                 'contents' => $contentLists,
@@ -243,7 +258,7 @@ class ContentController extends BaseController
             if(($loginUser->role == User::ROLE_WRITER) && !in_array($content->status, [Content::STATUS_OPEN, Content::STATUS_WORKIN_PROGRESS])) {
                 return $this->handleError('You are not permitted to view this content', [], 403);
             }
-            elseif(($loginUser->role == User::ROLE_CLIENT) && !in_array($content->status, [Content::STATUS_APPROVED])) {
+            elseif(in_array($loginUser->role, [User::ROLE_CLIENT, User::ROLE_REVIEWER]) && !in_array($content->status, [Content::STATUS_APPROVED])) {
                 return $this->handleError('You are not permitted to view this content', [], 403);
             }
             return $this->handleResponse($content, 'Success');
@@ -281,7 +296,7 @@ class ContentController extends BaseController
 
             $contentDetails = Content::find($request->content_id);
 
-            if(($childTopic->content()->latest()->first()->id != $contentDetails->id) && ($loginUser->role != User::ROLE_CLIENT)) {
+            if(($childTopic->content()->latest()->first()->id != $contentDetails->id) && !in_array($loginUser->role, [User::ROLE_CLIENT, User::ROLE_REVIEWER])) {
                 return $this->handleError('You are not permitted to update status to this content.', [], 403);
             }
 
@@ -324,7 +339,7 @@ class ContentController extends BaseController
                     ];
                 }
             }
-            elseif($loginUser->role == 'client') {
+            elseif(in_array($loginUser->role, [User::ROLE_CLIENT, User::ROLE_REVIEWER])) {
                 $notify[] = [
                     'recipient_user_id' => $contentDetails->created_by_id,
                     'sender_user_id' => $loginUser->id,
@@ -407,7 +422,7 @@ class ContentController extends BaseController
                         'recipient_user_id' => $owner,
                         'sender_user_id' => $loginUser->id,
 						'website_id' => $website->id,
-                        'heading' => 'New record Created',
+                        'heading' => sprintf('New activity on %s',$content->topic->topic),
                         'details' => sprintf('New %s has been added to %s, %s.', $request->content_type, $content->topic->topic, $website->name),
                         'object_from_type' => Notifications::CONTENT,
                         'object_from_id' => $content->id,
@@ -421,9 +436,10 @@ class ContentController extends BaseController
                     $msg = sprintf('New %s has been added to %s, %s.', $request->content_type, $content->topic->topic, $website->name);
                     $to = User::find($owner);
                     $url = url('/topic/timeline/'.$content->primary_topic_id);
+                    $sub = sprintf('New activity on %s',$content->topic->topic);
                     Notifications::insert($notify);
                     if($to->email) {
-                        Notification::send($to, new ContentAddedNotify($msg, $url, $to->first_name));
+                        Notification::send($to, new ContentAddedNotify($msg, $url, $to->first_name, $sub));
                     }
                 }
 
